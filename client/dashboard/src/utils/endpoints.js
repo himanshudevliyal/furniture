@@ -1,0 +1,26 @@
+export const endpoints = {
+  auth: {
+    login: "/auth/login",
+    logout: "/auth/logout",
+    signup: "/auth/signup",
+    refresh: "/auth/refresh",
+    username: "/auth/username",
+    acceptInvite: "/auth/accept-invite",
+  },
+  profile: "/users/me",
+  files: {
+    upload: "/upload/files",
+    getFiles: "/upload",
+    deleteKey: "/upload/s3",
+    preSignedUrl: "/upload/presigned-url",
+    preSignedUrls: "/upload/presigned-urls",
+  },
+  users: { getAll: "/users" },
+  products: { getAll: "/products" },
+  orders: { getAll: "/orders" },
+  reports: { getAll: "/reports" },
+  inventories: { getAll: "/inventories" },
+  categories: { getAll: "/categories" },
+  subCategories: { getAll: "/sub-categories" },
+  queries: { getAll: "/queries" },
+};
