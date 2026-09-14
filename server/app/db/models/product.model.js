@@ -29,6 +29,13 @@ const init = async (sequelize) => {
         allowNull: false,
       },
 
+      // Single primary image used on product cards/listings. Distinct from
+      // hero.images[]/gallery.images[] which are for the detail page.
+      thumbnail: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+
       short_description: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -128,6 +135,7 @@ const create = async (req, transaction) => {
     {
       slug: req.body.slug,
       title: req.body.title,
+      thumbnail: req.body.thumbnail,
       short_description: req.body.short_description,
       content: req.body.content,
       category_id: req.body.category_id,
@@ -165,6 +173,7 @@ const update = async (req, id, transaction) => {
     {
       slug: req.body.slug,
       title: req.body.title,
+      thumbnail: req.body.thumbnail,
       short_description: req.body.short_description,
       content: req.body.content,
       category_id: req.body.category_id,
@@ -218,7 +227,7 @@ const get = async (req) => {
 
   const query = `
   SELECT
-      prd.id, prd.slug, prd.title, prd.short_description,
+      prd.id, prd.slug, prd.title, prd.thumbnail, prd.short_description,
       prd.created_at, prd.category_id, prd.sub_category_id, prd.is_active, prd.sort_order,
       cat.title AS category_title, cat.slug AS category_slug,
       sc.title AS sub_category_title, sc.slug AS sub_category_slug

@@ -3,6 +3,7 @@ import cors from "@fastify/cors";
 import config from "../config/index.js";
 
 export default fp(async (fastify) => {
+  console.log("config.allowedOrigins",config.allowedOrigins)
   return fastify.register(cors, {
     origin: config.allowedOrigins,
     credentials: true,

@@ -13,6 +13,8 @@ import { productSchema } from "../../validation-schema/product-schema.js";
 const extractFilePaths = (product = {}) => {
   const paths = [];
 
+  if (product.thumbnail) paths.push(product.thumbnail);
+
   paths.push(...(product.hero?.images || []));
   paths.push(...(product.gallery?.images || []));
 

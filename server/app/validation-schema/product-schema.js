@@ -71,6 +71,7 @@ const gallerySchema = z.object({
 
 export const productSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  thumbnail: z.string().optional(),
   category_id: z.uuid({ message: "Invalid category id" }),
   sub_category_id: z.uuid({ message: "Invalid sub category id" }).nullish(),
 

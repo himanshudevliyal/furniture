@@ -9,7 +9,7 @@ import inventoryRoutes from "../../api/inventory/routes.js";
 import categoryRoutes from "../../api/category/routes.js";
 import subCategoryRoutes from "../../api/sub-category/routes.js";
 import queryRoutes from "../../api/query/routes.js";
-import uploadFilesRoutes from "../../api/upload_files/routes.js";
+import productInquiryRoutes from "../../api/product-inquiry/routes.js";
 
 export default async function routes(fastify, options) {
   fastify.addHook("onRequest", jwtVerify.verifyToken);
@@ -28,5 +28,5 @@ export default async function routes(fastify, options) {
   fastify.register(addressRoutes, { prefix: "addresses" });
   fastify.register(inventoryRoutes, { prefix: "inventories" });
   fastify.register(queryRoutes, { prefix: "queries" });
-  fastify.register(uploadFilesRoutes, { prefix: "upload" });
+  fastify.register(productInquiryRoutes, { prefix: "product-inquiries" });
 }

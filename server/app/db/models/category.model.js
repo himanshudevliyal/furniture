@@ -91,55 +91,102 @@ const get = async (req) => {
   const queryParams = {};
 
   const q = req.query.q ? req.query.q : null;
+
   if (q) {
     whereConditions.push(`(cat.title ILIKE :query)`);
     queryParams.query = `%${q}%`;
   }
 
+  // Sub-category filter
+  const subCategories = req.query?.sub_category
+    ? req.query.sub_category.split(".")
+    : null;
+
+  if (subCategories && subCategories.length) {
+    whereConditions.push(`
+      EXISTS (
+        SELECT 1
+        FROM ${constants.models.SUB_CATEGORY_TABLE} sc_filter
+        WHERE sc_filter.category_id = cat.id
+        AND sc_filter.id = ANY(:subCategories)
+      )
+    `);
+
+    queryParams.subCategories = toPgArray(subCategories);
+  }
+
   const page = req.query.page ? Number(req.query.page) : 1;
   const limit = req.query.limit ? Number(req.query.limit) : null;
-  const offset = (page - 1) * limit;
+  const offset = limit ? (page - 1) * limit : 0;
 
   let whereClause = "";
+
   if (whereConditions.length) {
     whereClause = `WHERE ${whereConditions.join(" AND ")}`;
   }
 
   const query = `
-  SELECT
+    SELECT
       cat.*,
+
       (
-        SELECT COALESCE(JSON_AGG(JSON_BUILD_OBJECT('id', sc.id, 'title', sc.title, 'slug', sc.slug)), '[]')
+        SELECT COALESCE(
+          JSON_AGG(
+            JSON_BUILD_OBJECT(
+              'id', sc.id,
+              'title', sc.title,
+              'slug', sc.slug,
+              'pictures', sc.pictures
+            )
+            ORDER BY sc.created_at DESC
+          ),
+          '[]'::json
+        )
         FROM ${constants.models.SUB_CATEGORY_TABLE} sc
         WHERE sc.category_id = cat.id
       ) AS sub_categories
+
     FROM ${constants.models.CATEGORY_TABLE} cat
+
     ${whereClause}
+
     ORDER BY cat.created_at DESC
+
     LIMIT :limit OFFSET :offset
   `;
 
   const countQuery = `
-  SELECT 
-      COUNT(cat.id) OVER()::integer as total
+    SELECT
+      COUNT(cat.id) OVER()::integer AS total
+
     FROM ${constants.models.CATEGORY_TABLE} cat
+
     ${whereClause}
   `;
 
   const categories = await CategoryModel.sequelize.query(query, {
-    replacements: { ...queryParams, limit, offset },
+    replacements: {
+      ...queryParams,
+      limit,
+      offset,
+    },
     type: QueryTypes.SELECT,
     raw: true,
   });
 
   const count = await CategoryModel.sequelize.query(countQuery, {
-    replacements: { ...queryParams },
+    replacements: {
+      ...queryParams,
+    },
     type: QueryTypes.SELECT,
     raw: true,
     plain: true,
   });
 
-  return { categories, total: count?.total ?? 0 };
+  return {
+    categories,
+    total: count?.total ?? 0,
+  };
 };
 
 const getById = async (req, id) => {

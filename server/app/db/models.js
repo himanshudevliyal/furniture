@@ -10,6 +10,7 @@ import inventoryModel from "./models/inventory.model.js";
 import categoryModel from "./models/category.model.js";
 import subCategoryModel from "./models/sub-category.model.js";
 import queryModel from "./models/query.model.js";
+import productInquiryModel from "./models/product-inquiry.model.js";
 
 export default {
   UserModel: userModel,
@@ -23,4 +24,5 @@ export default {
   UserAddressModel: userAddressModel,
   InventoryModel: inventoryModel,
   QueryModel: queryModel,
+  ProductInquiryModel: productInquiryModel,
 };
