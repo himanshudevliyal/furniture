@@ -19,6 +19,8 @@ const getFileCategory = (mime) => {
     return { type: "audio", ext };
   if (["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx"].includes(ext))
     return { type: "document", ext };
+  if (["zip", "rar", "7z", "x-zip-compressed"].includes(ext))
+    return { type: "archive", ext: ext === "x-zip-compressed" ? "zip" : ext };
 
   return { type: "other", ext };
 };
@@ -39,6 +41,7 @@ export const saveFile = async (file) => {
     image: "public/images",
     audio: "public/audio",
     document: "public/docs",
+    archive: "public/archives",
     other: "public/files",
   };
 

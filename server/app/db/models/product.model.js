@@ -41,6 +41,18 @@ const init = async (sequelize) => {
         allowNull: true,
       },
 
+      color: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+
+      // Rich-text HTML content (from the dashboard's TinyMCE editor) for
+      // any extra/misc details that don't fit the structured sections.
+      other_details: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+
       category_id: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -137,6 +149,8 @@ const create = async (req, transaction) => {
       title: req.body.title,
       thumbnail: req.body.thumbnail,
       short_description: req.body.short_description,
+      color: req.body.color,
+      other_details: req.body.other_details,
       content: req.body.content,
       category_id: req.body.category_id,
       sub_category_id: req.body.sub_category_id || null,
@@ -175,6 +189,8 @@ const update = async (req, id, transaction) => {
       title: req.body.title,
       thumbnail: req.body.thumbnail,
       short_description: req.body.short_description,
+      color: req.body.color,
+      other_details: req.body.other_details,
       content: req.body.content,
       category_id: req.body.category_id,
       sub_category_id: req.body.sub_category_id || null,
@@ -216,6 +232,15 @@ const get = async (req) => {
     queryParams.categories = toPgArray(categories);
   }
 
+  const subCategories = req.query?.sub_category
+    ? req.query.sub_category?.split(".")
+    : null;
+
+  if (subCategories && subCategories?.length) {
+    whereConditions.push("prd.sub_category_id = ANY(:subCategories)");
+    queryParams.subCategories = toPgArray(subCategories);
+  }
+
   const page = req.query.page ? Number(req.query.page) : 1;
   const limit = req.query.limit ? Number(req.query.limit) : null;
   const offset = (page - 1) * limit;
@@ -227,7 +252,7 @@ const get = async (req) => {
 
   const query = `
   SELECT
-      prd.id, prd.slug, prd.title, prd.thumbnail, prd.short_description,
+      prd.id, prd.slug, prd.title, prd.thumbnail, prd.short_description, prd.hero, prd.gallery,
       prd.created_at, prd.category_id, prd.sub_category_id, prd.is_active, prd.sort_order,
       cat.title AS category_title, cat.slug AS category_slug,
       sc.title AS sub_category_title, sc.slug AS sub_category_slug

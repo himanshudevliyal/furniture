@@ -1,54 +1,19 @@
 "use strict";
 
-import pump from "pump";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
-
-const imageMime = ["jpeg", "jpg", "png", "gif", "webp"];
-const videoMime = ["mp4", "mpeg", "ogg", "webm", "m4v", "mov", "mkv"];
-const docsMime = [
-  "pdf",
-  "ppt",
-  "pptx",
-  "docx",
-  "application/msword",
-  "msword",
-  "vnd.openxmlformats-officedocument.wordprocessingml.document",
-];
+import { saveFile } from "../../utils/file.js";
 
 const uploadFiles = async (req, res) => {
-  let path = [];
+  let paths = [];
   try {
     const files = req.files();
     for await (const file of files) {
-      let folder;
-      const mime = file.mimetype.split("/").pop();
-      if (imageMime.includes(mime)) {
-        folder = "public/images/";
-      } else if (videoMime.includes(mime)) {
-        folder = "public/videos/";
-      } else if (docsMime.includes(mime)) {
-        folder = "public/";
-      } else {
-        folder = "public/";
-      }
-
-      const filePath =
-        `${folder}` +
-        Date.now() +
-        "_" +
-        file.filename
-          .replaceAll(" ", "_")
-          .replaceAll("'", "_")
-          .replaceAll("/", "_");
-
-      await fs.promises.mkdir(folder, { recursive: true });
-
-      path.push(await pump(file.file, fs.createWriteStream(filePath)).path);
+      paths.push(await saveFile(file));
     }
     return res.send({
-      path: path,
+      path: paths,
     });
   } catch (error) {
     console.log(error);
@@ -102,6 +67,14 @@ const getFile = async (req, res) => {
 
   if (mime === "doc") {
     res.type("application/msword");
+  }
+
+  if (mime === "zip") {
+    res.type("application/zip");
+  }
+
+  if (mime === "rar") {
+    res.type("application/vnd.rar");
   }
 
   try {
