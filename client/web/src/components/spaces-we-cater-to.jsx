@@ -22,9 +22,9 @@ import { Section } from "./layout/section";
 
 const featuredSpace = {
   key: "hospitality",
-  title: "HOSPITALITY",
+  title: "OFFICE WORKSPACES",
   description:
-    "Elegant furniture solutions for hotels, resorts, restaurants and lounges.",
+    "Smart and functional furniture solutions designed for modern offices, workspaces and professional environments.",
   image: "/img/hospitality.jpg",
   href: "/spaces/hospitality",
   icon: ConciergeBell,
@@ -34,26 +34,27 @@ const featuredSpace = {
 const secondarySpaces = [
   {
     key: "corporate",
-    title: "CORPORATE",
+    title: "EXECUTIVE SPACES",
     description:
-      "Functional and stylish furniture for offices and corporate environments.",
+      "Premium desks and workspace furniture designed for productive and professional corporate environments.",
     image: "/img/corporate.jpg",
     href: "/spaces/corporate",
     icon: BriefcaseBusiness,
   },
   {
     key: "residential",
-    title: "RESIDENTIAL",
-    description: "Comfort-driven designs that transform houses into homes.",
+    title: "OFFICE SEATING",
+    description:
+      "Ergonomic and comfortable seating solutions designed for everyday work and professional spaces.",
     image: "/img/residential.jpg",
     href: "/spaces/residential",
     icon: House,
   },
   {
     key: "retail",
-    title: "RETAIL",
+    title: "STORAGE SOLUTIONS",
     description:
-      "Eye-catching furniture that enhances brand presence and customer experience.",
+      "Practical and stylish storage furniture that keeps modern workspaces organized and efficient.",
     image: "/img/retail.jpg",
     href: "/spaces/retail",
     icon: ShoppingBag,
@@ -63,26 +64,26 @@ const secondarySpaces = [
 const featureStrip = [
   {
     key: "bespoke",
-    title: "BESPOKE DESIGNS",
-    description: "Tailored to match your vision",
+    title: "BESPOKE SOLUTIONS",
+    description: "Furniture tailored to your workspace",
     icon: PencilRuler,
   },
   {
     key: "quality",
     title: "PREMIUM QUALITY",
-    description: "Crafted for lasting elegance",
+    description: "Built for durability and everyday use",
     icon: BadgeCheck,
   },
   {
     key: "solutions",
-    title: "END-TO-END SOLUTIONS",
-    description: "From concept to completion",
+    title: "COMPLETE WORKSPACE SOLUTIONS",
+    description: "From furniture selection to setup",
     icon: Layers3,
   },
   {
     key: "support",
     title: "DEDICATED SUPPORT",
-    description: "Always here to assist you",
+    description: "Reliable assistance for every project",
     icon: Headphones,
   },
 ];
@@ -158,21 +159,24 @@ export default function SpacesWeCaterTo() {
       className="w-full bg-[#F7F4EF] "
     >
       {/* Heading */}
-      <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
-        <span className="text-xs font-medium tracking-[0.3em] text-[#B08D57]">
-          DESIGNED FOR EVERY SPACE
-        </span>
-        <h2
-          id="spaces-we-cater-to-heading"
-          className="mt-4 font-serif text-4xl leading-tight text-[#1C1710] sm:text-5xl lg:text-6xl"
-        >
-          Spaces We Cater To
-        </h2>
-        <p className="mt-5 text-balance text-base leading-relaxed text-[#5B5347] sm:text-lg">
-          From luxurious hospitality to modern workspaces, we create furniture
-          solutions that elevate experiences and redefine comfort.
-        </p>
-      </div>
+<div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+  <span className="text-xs font-medium tracking-[0.3em] text-[#B08D57]">
+    FURNITURE FOR MODERN WORKSPACES
+  </span>
+
+  <h2
+    id="spaces-we-cater-to-heading"
+    className="mt-4 font-serif text-4xl leading-tight text-[#1C1710] sm:text-5xl lg:text-6xl"
+  >
+    Furniture Solutions for Every Workspace
+  </h2>
+
+  <p className="mt-5 text-balance text-base leading-relaxed text-[#5B5347] sm:text-lg">
+    From executive offices and workstations to seating and storage, we create
+    functional furniture solutions designed for modern, productive, and
+    professional workspaces.
+  </p>
+</div>
 
       {/* Content grid */}
       <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">

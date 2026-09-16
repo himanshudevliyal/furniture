@@ -14,7 +14,7 @@ export default function CategoriesCard({ product }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
       <div className="absolute inset-0 flex h-full flex-col justify-end px-7 pb-5 sm:px-9">
-        <h3 className="mt-3 line-clamp-2 whitespace-pre-line text-[28px] font-bold leading-[1.15] text-white sm:text-[32px]">
+        <h3 className="mt-3 line-clamp-2 whitespace-pre-line text-2xl font-bold leading-[1.15] text-white">
           {product.title}
         </h3>
 

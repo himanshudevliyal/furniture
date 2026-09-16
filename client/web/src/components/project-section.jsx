@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import { Section } from "./layout/section";
-import Card from "./ui/card";
+import Card from "./card";
+import Heading from "./layout/heading";
 
 // ---------------------------------------------------------------------------
 // Data — swap images/copy anytime
@@ -67,8 +68,13 @@ export default function FurnitureProductsShowcase() {
       aria-labelledby="products-heading"
       className="w-full bg-white py-14 sm:py-16"
     >
-      <h2 id="products-heading">Our Projects</h2>
-
+   
+<Heading
+  heading="Our Projects"
+  subheading="Explore our completed workspace projects, featuring thoughtfully designed office furniture solutions built for modern, functional, and professional environments."
+  eyebrowClassName="justify-center"
+  className="text-center  max-w-5xl mx-auto"
+/>
       <Carousel
         setApi={setApi}
         opts={{ align: "start", loop: false }}

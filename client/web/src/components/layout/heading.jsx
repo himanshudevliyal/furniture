@@ -38,7 +38,7 @@ export default function Heading({
       {subheading && (
         <p
           className={cn(
-            "mt-4 font-body text-base leading-relaxed text-muted-foreground",
+            "mt-4 font-body text-base leading-relaxed ",
             subheadingClassName,
           )}
         >

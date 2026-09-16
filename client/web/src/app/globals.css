@@ -206,3 +206,119 @@
     font-family: inherit;
   }
 }
+
+
+
+
+
+
+
+
+@layer components {
+  .product-content {
+    @apply max-w-2xl text-muted-foreground;
+  }
+
+  /* Headings */
+  .product-content h1 {
+    @apply mb-5 text-4xl font-semibold leading-tight text-foreground;
+  }
+
+  .product-content h2 {
+    @apply mb-4 text-3xl font-semibold leading-tight text-foreground;
+  }
+
+  .product-content h3 {
+    @apply mb-4 text-2xl font-semibold leading-tight text-foreground;
+  }
+
+  .product-content h4 {
+    @apply mb-2 mt-6 text-xl font-semibold leading-snug text-foreground;
+  }
+
+  .product-content h5 {
+    @apply mb-2 mt-5 text-lg font-semibold leading-snug text-foreground;
+  }
+
+  .product-content h6 {
+    @apply mb-2 mt-4 text-base font-semibold leading-snug text-foreground;
+  }
+
+  /* Paragraph */
+  .product-content p {
+    @apply my-3 text-base leading-7 text-muted-foreground;
+  }
+
+  /* Text */
+  .product-content strong {
+    @apply font-semibold text-foreground;
+  }
+
+  .product-content span {
+    @apply leading-7;
+  }
+
+  /* Lists */
+  .product-content ul {
+    @apply my-4 list-disc pl-6;
+  }
+
+  .product-content ol {
+    @apply my-4 list-decimal pl-6;
+  }
+
+  .product-content li {
+    @apply my-1 pl-1 leading-7 text-muted-foreground;
+  }
+
+  /* Links */
+  .product-content a {
+    @apply font-medium text-primary no-underline;
+  }
+
+  .product-content a:hover {
+    @apply underline;
+  }
+
+  /* Images */
+  .product-content img {
+    @apply h-auto max-w-full rounded-xl;
+  }
+
+  /* Horizontal line */
+  .product-content hr {
+    @apply my-8 border-border;
+  }
+
+  /* Blockquote */
+  .product-content blockquote {
+    @apply border-l-4 border-primary text-muted-foreground;
+  }
+
+  /* Tables */
+  .product-content table {
+    @apply w-full;
+  }
+
+  .product-content th {
+    @apply text-left font-semibold text-foreground;
+  }
+
+  .product-content td {
+    @apply text-muted-foreground;
+  }
+
+  /* Code */
+  .product-content code {
+    @apply font-medium text-foreground;
+  }
+
+  .product-content pre {
+    @apply bg-muted text-foreground;
+  }
+
+  /* Generic div */
+  .product-content > div {
+    @apply my-4;
+  }
+}

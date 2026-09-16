@@ -1,12 +1,12 @@
 export const heroSlides = [
   {
-    id: "summer",
+    id: "workspaces",
     image: "/img/hero.png",
-    eyebrow: "Now Trending for Summer",
-    title: "NURFIA",
+    eyebrow: "Designed for Modern Workspaces",
+    title: "NATRAJ FURNITURE",
     description:
-      "Timeless silhouettes meet modern confidence. Clean lines, effortless elegance, and a refined look designed for everyday sophistication.",
-    cta: "View Collection",
+      "Transform your workplace with thoughtfully designed office furniture, modular workstations, ergonomic seating, and customized workspace solutions built for productivity and comfort.",
+    cta: "Explore Products",
     ctaHref: "/shop",
   },
 ];

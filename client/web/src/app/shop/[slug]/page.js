@@ -1,12 +1,9 @@
-"use clinet"
-
 import { notFound } from "next/navigation";
 
 import FeaturedProducts from "@/components/featured-products";
-import ProductDetail from "../_components/ProductDetail";
-import FurnitureProductsShowcase from "../_components/productsimgs";
-import ProductTabs from "../_components/ProductTabs";
-
+import ProductDetail from "./_components/ProductDetail";
+import FurnitureProductsShowcase from "./_components/productsimgs";
+import ProductTabs from "./_components/ProductTabs";
 
 async function getProduct(slug) {
   const base = (process.env.NEXT_PUBLIC_API_URL ?? "")
@@ -35,7 +32,7 @@ export default async function ProductPage({ params }) {
     <>
       <ProductDetail product={product} />
       <ProductTabs product={product} />
-      <FurnitureProductsShowcase />
+      <FurnitureProductsShowcase product={product} />
       <FeaturedProducts />
     </>
   );

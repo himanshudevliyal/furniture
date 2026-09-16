@@ -1,14 +1,22 @@
-import FeaturedProducts from "@/components/featured-products";
-import ProductDetail from "./_components/ProductDetail";
-import FurnitureProductsShowcase from "./_components/productsimgs";
-import ProductTabs from "./_components/ProductTabs";
+import { Suspense } from "react";
+import ProductFilter from "./_components/productFilter";
+import { BreadcrumbBanner } from "@/components/breadcrumb";
 
-export default function ProductPage() {
-  return<>
-    <ProductDetail />
-    <ProductTabs />
-    <FurnitureProductsShowcase></FurnitureProductsShowcase>
- <FeaturedProducts /> 
+export default function SearchPage(params) {
+  return (
+    <>
+
+     <BreadcrumbBanner
+            title="Shop"
+            breadcrumbs={[
+              { label: "Home", href: "/" },
+              { label: "Contact", href: "/shop" },
+            ]}
+          />
     
-  </>;
+      <Suspense fallback="Loading...">
+        <ProductFilter></ProductFilter>
+      </Suspense>
+    </>
+  );
 }

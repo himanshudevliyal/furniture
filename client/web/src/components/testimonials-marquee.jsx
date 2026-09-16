@@ -4,6 +4,7 @@ import { Quote } from "lucide-react";
 import { Marquee } from "@/components/ui/marquee";
 import { cn } from "@/lib/utils";
 import { Section } from "./layout/section";
+import Heading from "./layout/heading";
 
 // ---------------------------------------------------------------------------
 // Data — replace anytime
@@ -24,55 +25,54 @@ function initialsOf(name) {
     .join("")
     .toUpperCase();
 }
-
 const columnOne = [
   {
-    name: "Daniel Kim",
-    role: "Founder, ScaleLabs Education",
+    name: "Rahul Sharma",
+    role: "Director, Corporate Office",
     quote:
-      "Our enrollment process used to require manual follow-ups and spreadsheet tracking. Now, AI handles lead qualification, scheduling, reminders, and CRM updates automatically. We've increased enrollment conversion by 35% in just one quarter.",
+      "Natraj Furniture helped us create a professional workspace with the right combination of workstations, seating, and storage. The quality and finish exceeded our expectations.",
   },
   {
-    name: "Alex Johnson",
-    role: "Head of Operations, Finovate Consulting",
+    name: "Amit Mehta",
+    role: "Founder, Business Solutions",
     quote:
-      "Security and compliance were major concerns for us. They designed an automation architecture that was not only efficient but enterprise-grade secure.",
+      "We were looking for furniture that was both functional and elegant. The team understood our requirements and delivered a workspace that perfectly matched our vision.",
   },
 ];
 
 const columnTwo = [
   {
-    name: "David Lee",
-    role: "Founder, Atodio Studio",
+    name: "Neha Kapoor",
+    role: "Operations Head, Gurgaon",
     quote:
-      "We were spending hours on repetitive tasks. Their automation system saved us 30+ hours per week and dramatically improved our sales performance.",
+      "From selecting the right workstations to completing the office setup, the entire experience was smooth and professional. The furniture quality is excellent.",
   },
   {
-    name: "Sarah Mitchell",
-    role: "COO, BrightPath SaaS",
+    name: "Vikas Malhotra",
+    role: "Managing Director, Delhi",
     quote:
-      "We struggled with inconsistent lead follow-ups and slow response times. Their AI automation blueprint gave us clarity first, then execution. We've increased demo bookings by 40% while reducing operational friction.",
+      "The customized furniture solutions made a big difference to our office. Everything was designed around our space, requirements, and day-to-day workflow.",
   },
   {
-    name: "Jonathan Reed",
-    role: "Managing Director, Nexora Digital Agency",
+    name: "Saurabh Jain",
+    role: "Business Owner, Faridabad",
     quote:
-      "We were scaling fast but drowning in manual workflows. Their automation system connected our CRM, email marketing, and reporting into one intelligent flow.",
+      "We wanted a modern office with a clean and professional look. Natraj Furniture provided practical solutions with excellent finishing and attention to detail.",
   },
 ];
 
 const columnThree = [
   {
-    name: "Michael Tran",
-    role: "Founder & CEO, Skyline Realty Group",
+    name: "Priya Verma",
+    role: "HR & Administration Head",
     quote:
-      "We reduced admin work by nearly 50% and doubled our qualified appointment bookings. The ROI was faster than we expected — and the system continues to scale with us.",
+      "The seating and workstation solutions have made our office much more comfortable and organized. The team was responsive throughout the project.",
   },
   {
-    name: "Laura Martinez",
-    role: "CMO, Elevate Commerce Co.",
+    name: "Rohit Agarwal",
+    role: "Director, Commercial Workspace",
     quote:
-      "Marketing automation always felt fragmented — too many tools, not enough cohesion. They unified everything into one intelligent ecosystem, all automated with precision.",
+      "What stood out was the balance of design, quality, and functionality. Natraj Furniture delivered exactly what our workspace needed.",
   },
 ];
 
@@ -125,18 +125,13 @@ export default function TestimonialsMasonryMarquee() {
       aria-labelledby="testimonials-heading"
       className="w-full bg-white "
     >
-      <div className="mx-auto max-w-5xl px-5 text-center sm:px-8">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-[11px] font-medium tracking-wide text-neutral-500">
-          <span className="h-1.5 w-1.5 rounded-full bg-neutral-400" />
-          TESTIMONIAL
-        </span>
-        <h2
-          id="testimonials-heading"
-          className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl"
-        >
-          What They&rsquo;re Saying
-        </h2>
-      </div>
+<Heading
+  heading="What Our Clients Say"
+  subheading="Hear from businesses and professionals who have transformed their workspaces with Natraj Furniture's quality, functionality, and customized furniture solutions."
+  eyebrowClassName="justify-center"
+  headingClassName="text-3xl sm:text-4xl lg:text-5xl"
+  className="max-5-xl mx-auto text-center"
+/>
 
       <div className="relative mx-auto mt-12 grid  grid-cols-1 gap-2 px-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">
         <div className="h-[560px] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)]">

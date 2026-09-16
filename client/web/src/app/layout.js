@@ -6,6 +6,9 @@ import Navbar from "@/components/navbar";
 import SiteFooter from "@/components/site-footer";
 import QueryProvider from "@/providers/query-client-provider";
 import { NuqsProvider } from "@/providers/nuqs-provider";
+import ProductProvider from "@/providers/product-povider";
+import CartSidebar from "@/components/ui/cart-sidebar";
+import { Toaster } from "sonner";
 
 const oppoSans = localFont({
   src: [
@@ -39,25 +42,30 @@ const oppoSans = localFont({
 });
 
 export const metadata = {
-  title: "NURFIA",
-  description: "NURFIA Furniture",
+  title: "Natraj Furniture",
+  description:
+    "Modern office furniture, workstations, seating, storage, and customized workspace solutions by Natraj Furniture.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${oppoSans.variable} h-full antialiased`}>
-      <body
+     <body
         className="min-h-full flex flex-col font-oppo"
         suppressHydrationWarning
       >
+      <ProductProvider>
+
         <QueryProvider>
           <NuqsProvider>
             <Navbar />
             {children}
             <SiteFooter />
+            <CartSidebar />
+            <Toaster position="top-center" />
           </NuqsProvider>
         </QueryProvider>
-
+</ProductProvider>
       </body>
     </html>
   );

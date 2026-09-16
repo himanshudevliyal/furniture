@@ -1,9 +1,18 @@
-import HeroSlider from "@/components/hero-slider";
+"use client";
 
-export default function HeroSection() {
+export default function HeroSlider() {
   return (
-    <section aria-label="Hero" className="relative w-full">
-      <HeroSlider />
-    </section>
+    <div className="relative h-[82vh] w-full overflow-hidden ">
+    <div className="absolute inset-0 bg-black/20" />
+      <video
+        className=" h-full w-full object-cover"
+        src="/vedio/banner-video.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+      />
+    </div>
   );
 }
