@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import { handleError } from "@/lib/handle-error-toast";
 import {
   QueryClient,
@@ -8,7 +9,9 @@ import {
 } from "@tanstack/react-query";
 
 export default function QueryProvider({ children }) {
-  const queryClient = new QueryClient({
+  // Created once per browser session; a new client on every render would
+  // throw away the whole query cache.
+  const [queryClient] = useState(() => new QueryClient({
     defaultOptions: {
       queries: {
         retry: 0,
@@ -27,11 +30,10 @@ export default function QueryProvider({ children }) {
         handleError(error, "Failed to perform action.");
       },
       onSuccess: (data, variables, context, mutation) => {
-        console.log("Mutation success:", mutation.options.mutationKey);
         // toast.success("Operation successful!");
       },
     }),
-  });
+  }));
 
   return (
     <QueryClientProvider client={queryClient}>

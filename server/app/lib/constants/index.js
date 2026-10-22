@@ -57,6 +57,10 @@ const constants = {
     CONTACT_INQUIRY_TABLE: "contact_inquiries",
     QUERY_TABLE: "queries",
     PRODUCT_INQUIRY_TABLE: "product_inquiries",
+    PROJECT_QUOTE_TABLE: "project_quotes",
+    BLOG_TABLE: "blogs",
+    JOB_TABLE: "jobs",
+    JOB_APPLICATION_TABLE: "job_applications",
   },
   bcrypt: {
     SALT_ROUNDS: 10,

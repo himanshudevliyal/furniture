@@ -1,5 +1,20 @@
 import { z } from "zod";
 
+// Backend columns are nullable, so Postgres can return `null` for these
+// fields (not just `undefined`) - plain `.optional()` rejects `null` and
+// throws "Expected string, received null" on submit. These normalize both
+// null and undefined to a safe default.
+const nullableString = () =>
+  z
+    .string()
+    .nullish()
+    .transform((v) => v ?? "");
+const nullableStringArray = () =>
+  z
+    .array(z.string())
+    .nullish()
+    .transform((v) => v ?? []);
+
 // ---- Reusable sub-schemas ----
 
 const heroSchema = z.object({
@@ -17,6 +32,7 @@ const featuresSchema = z.object({
 const overviewSchema = z.object({
   heading: z.string().optional(),
   descriptions: z.array(z.string()).optional().default([]),
+  image: z.string().optional().default(""),
   features: featuresSchema.optional(),
 });
 
@@ -71,12 +87,13 @@ const gallerySchema = z.object({
 
 export const productSchema = z.object({
   title: z.string().min(1, "Title is required"),
-  thumbnail: z.string().optional(),
+  thumbnail: nullableString(),
   category_id: z.uuid({ message: "Invalid category id" }),
   sub_category_id: z.uuid({ message: "Invalid sub category id" }).nullish(),
 
-  short_description: z.string().optional(),
-  content: z.string().optional(),
+  short_description: nullableString(),
+  colors: nullableStringArray(),
+  content: nullableString(),
 
   is_active: z.coerce.boolean().optional().default(true),
   sort_order: z.coerce.number().int().optional().default(0),
@@ -90,7 +107,7 @@ export const productSchema = z.object({
   downloads: z.array(fileEntrySchema).optional().default([]),
   gallery: gallerySchema.optional().default({}),
 
-  meta_title: z.string().optional(),
-  meta_description: z.string().optional(),
-  meta_keywords: z.string().optional(),
+  meta_title: nullableString(),
+  meta_description: nullableString(),
+  meta_keywords: nullableString(),
 });

@@ -82,21 +82,27 @@ const items = useMemo( () => galleryImages .map((file, index) => { if (!file) re
 
       {/* Dots only when multiple images */}
       {items.length > 1 && (
-        <div className="mt-4 flex items-center justify-center gap-1.5">
+        <div className="mt-4 flex items-center justify-center">
           {items.map((item, index) => (
+            // 24px hit area (touch target) around the small visual dot.
             <button
               key={item.key}
               type="button"
               aria-label={`Go to slide ${index + 1}`}
               aria-current={index === activeIndex}
               onClick={() => api?.scrollTo(index)}
-              className={cn(
-                "h-2 w-2 rounded-full transition-all",
-                index === activeIndex
-                  ? "w-4 bg-neutral-900"
-                  : "bg-neutral-300 hover:bg-neutral-400"
-              )}
-            />
+              className="group flex h-6 min-w-6 items-center justify-center"
+            >
+              <span
+                aria-hidden
+                className={cn(
+                  "h-2 w-2 rounded-full transition-all",
+                  index === activeIndex
+                    ? "w-4 bg-neutral-900"
+                    : "bg-neutral-300 group-hover:bg-neutral-400"
+                )}
+              />
+            </button>
           ))}
         </div>
       )}

@@ -1,5 +1,21 @@
 import { z } from "zod";
 
+// The backend can return `null` for any of these (columns are nullable),
+// not just `undefined` - plain `.optional()` rejects `null` and throws
+// "Expected string, received null" the moment the form loads existing data
+// and you submit without touching that field. These normalize both to a
+// safe default so validation never blocks on it.
+const nullableString = () =>
+  z
+    .string()
+    .nullish()
+    .transform((v) => v ?? "");
+const nullableStringArray = () =>
+  z
+    .array(z.string())
+    .nullish()
+    .transform((v) => v ?? []);
+
 // ---- Reusable sub-schemas (mirrors app/validation-schema/product-schema.js on the server) ----
 
 export const heroSchema = z.object({
@@ -17,6 +33,7 @@ export const featuresSchema = z.object({
 export const overviewSchema = z.object({
   heading: z.string().optional().default(""),
   descriptions: z.array(z.string().min(1, "Required")).optional().default([]),
+  image: z.string().optional().default(""),
   features: featuresSchema.optional().default({ heading: "", list: [] }),
 });
 
@@ -76,9 +93,11 @@ export const productBaseSchema = z.object({
     .nullish(),
 
   title: z.string().min(1, "Title is required"),
+  thumbnail: nullableString(),
 
-  short_description: z.string().optional(),
-  content: z.string().optional(),
+  short_description: nullableString(),
+  colors: nullableStringArray(),
+  content: nullableString(),
 
   is_active: z.boolean().optional().default(true),
   sort_order: z.coerce.number().int().optional().default(0),
@@ -92,9 +111,9 @@ export const productBaseSchema = z.object({
   downloads: z.array(fileEntrySchema).optional().default([]),
   gallery: gallerySchema.optional().default({}),
 
-  meta_title: z.string().optional(),
-  meta_description: z.string().optional(),
-  meta_keywords: z.string().optional(),
+  meta_title: nullableString(),
+  meta_description: nullableString(),
+  meta_keywords: nullableString(),
 });
 
 export const productCreateSchema = productBaseSchema;

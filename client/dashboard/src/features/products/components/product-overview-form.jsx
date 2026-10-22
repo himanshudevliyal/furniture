@@ -1,8 +1,9 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import StringArrayField from "@/components/string-array-field";
+import FileUrlUploader from "@/components/file-url-uploader";
 
 export default function ProductOverviewForm() {
   const { register, control } = useFormContext();
@@ -25,6 +26,22 @@ export default function ProductOverviewForm() {
           name="overview.descriptions"
           placeholder="Enter a description"
           addLabel="Add description"
+        />
+      </div>
+
+      <div className="col-span-full space-y-2">
+        <Label>Image</Label>
+        <Controller
+          control={control}
+          name="overview.image"
+          render={({ field }) => (
+            <FileUrlUploader
+              value={field.value}
+              onUploaded={field.onChange}
+              accept="image/*"
+              label="Upload image"
+            />
+          )}
         />
       </div>
 

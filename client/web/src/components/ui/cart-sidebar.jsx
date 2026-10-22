@@ -126,7 +126,7 @@ export default function CartSidebar() {
             }}
             className="w-full"
           >
-            CHECKOUT
+            Send Inquiry
           </Button>
         </div>
       </SheetContent>

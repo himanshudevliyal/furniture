@@ -1,27 +1,22 @@
 import { StatusCodes } from "http-status-codes";
-import table from "../../db/models.js"; // where you export UserModel, OrderModel, etc.
+import table from "../../db/models.js";
 
+// NOTE: this previously called several model methods that no longer exist
+// (UserModel.getUserStats, OrderModel.*, BookModel.getTopBooks) and crashed
+// on every request. Trimmed down to the data that's actually available.
 const getDashboardData = async (req, res) => {
   try {
-    const users = await table.UserModel.getUserStats(req); // user stats
-    const orders = await table.OrderModel.getOrderStats(req); // order stats
-    const revenue_by_month = await table.OrderModel.getRevenueByMonth(req);
-    const new_users_by_month = await table.UserModel.getNewUsersByMonth(req);
-    const orders_trend = await table.OrderModel.getOrdersLast7Days(req);
     const products_by_category =
       await table.ProductModel.getProductByCategory(req);
-    const top_books = await table.BookModel.getTopBooks(req);
+    const inquiries_trend =
+      await table.ProductInquiryModel.getInquiriesTrend(req);
 
     res.code(StatusCodes.OK).send({
       status: true,
       data: {
-        cards: { users, orders },
         charts: {
-          revenue_by_month,
-          new_users_by_month,
-          orders_trend,
           products_by_category,
-          top_books,
+          inquiries_trend,
         },
       },
     });

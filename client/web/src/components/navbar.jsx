@@ -1,149 +1,119 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { ChevronDown, Search, ShoppingBag } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowRight, ChevronDown, Search, ShoppingBag } from "lucide-react";
 import MobileMenu from "@/components/mobile-menu";
 import CategoryMegaMenu from "@/components/category-mega-menu";
-import Image from "next/image";
 import { useCategories } from "@/hooks/use-categories";
 import { useCart } from "@/hooks/use-cart";
-
-function IconBadge({ count, isWhite }) {
+import { buttonVariants } from "./ui/button";
+import { sortCategoriesByPriority } from "@/lib/category-order";
+import SearchBar from "./search-bar";
+function IconBadge({ count }) {
   if (count === undefined || count === null) return null;
 
   return (
-    <span
-      className={`absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold leading-none ${
-        isWhite ? "bg-black text-white" : "bg-white text-black"
-      }`}
-    >
+    <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-black text-[10px] font-semibold leading-none text-white">
       {count}
     </span>
   );
 }
 
-function IconButton({
-  label,
-  children,
-  badge,
-  className = "",
-  isWhite = false,
-  onClick,
-}) {
+function IconButton({ label, children, badge, className = "", onClick }) {
   return (
     <button
       type="button"
       aria-label={label}
       title={label}
       onClick={onClick}
-      className={`
-        relative
-        flex h-9 w-9 shrink-0
-        items-center justify-center
-        rounded-full
-        bg-transparent
-        p-0
-        text-current
-        transition-opacity
-        hover:opacity-70
-        focus:outline-none
-        ${className}
-      `}
+      className={`relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-transparent p-0 text-current transition-opacity hover:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-black/40 ${className}`}
     >
-      {badge !== undefined && (
-        <IconBadge count={badge} isWhite={isWhite} />
-      )}
-
+      {badge !== undefined && <IconBadge count={badge} />}
       {children}
     </button>
   );
 }
 
-// centered nav links
-const centerLinks = [
-  { label: "ABOUT US", href: "/about" },
-  { label: "WE ARE HIRING", href: "/careers" },
-  { label: "RESOURCES", href: "/resources", hasDropdown: true },
-  { label: "CONTACT US", href: "/contact" },
+// Nav links shown after "Products"
+const navLinks = [
+  { label: "About Us", href: "/about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Our Blogs", href: "/blog" },
+  { label: "Careers", href: "/careers" },
+  { label: "Contact Us", href: "/contact" },
+
 ];
+
+const linkClass =
+  "flex items-center gap-1.5 whitespace-nowrap text-[13px] font-semibold tracking-[0.08em] text-neutral-800 transition-colors hover:text-black xl:text-[15px] xl:tracking-[0.1em]";
 
 export default function Navbar() {
   const pathname = usePathname();
 
-  const {
-    data: categoriesData,
-    isLoading: categoriesLoading,
-  } = useCategories();
-
-  // Cart
+  const { data: categoriesData, isLoading: categoriesLoading } =
+    useCategories();
   const { cartCount, toggleCart } = useCart();
+  const [searchOpen, setSearchOpen] = useState(false);
 
-  // fetchCategories() already unwraps the outer
-  // `{ status, data }` envelope in category-service.js
-  const categories = categoriesData?.categories ?? [];
-
-  const [activeCategoryId, setActiveCategoryId] = useState(null);
+  // fetchCategories() already unwraps `{ status, data }`
+// fetchCategories() already unwraps `{ status, data }`
+const categories = sortCategoriesByPriority(categoriesData?.categories ?? []);
+  const [productsOpen, setProductsOpen] = useState(false);
   const closeTimeoutRef = useRef(null);
 
-  // Close the sub-category panel whenever route changes
-  useEffect(() => {
-    setActiveCategoryId(null);
-  }, [pathname]);
-
-  const cancelClose = () => {
+  const cancelClose = useCallback(() => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = null;
     }
-  };
+  }, []);
 
-  const openCategory = (id) => {
+  const openMenu = useCallback(() => {
     cancelClose();
-    setActiveCategoryId(id);
-  };
+    setProductsOpen(true);
+  }, [cancelClose]);
 
-  const scheduleClose = () => {
+  const closeNow = useCallback(() => {
     cancelClose();
+    setProductsOpen(false);
+  }, [cancelClose]);
 
-    closeTimeoutRef.current = setTimeout(() => {
-      setActiveCategoryId(null);
-    }, 150);
-  };
+  const scheduleClose = useCallback(() => {
+    cancelClose();
+    closeTimeoutRef.current = setTimeout(() => setProductsOpen(false), 150);
+  }, [cancelClose]);
 
-  const activeCategory = categories.find(
-    (category) =>
-      String(category.id) === String(activeCategoryId)
-  );
+  // Close on route change (adjusting state during render avoids the extra
+  // render an effect would cause). Any pending close timer just sets false.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setProductsOpen(false);
+  }
 
-  // Shop page keeps a plain white nav.
-  // Every other page gets the dark glass nav.
-  const isShopPage =
-    pathname === "/shop" || pathname.startsWith("/shop/");
+  // Close on Escape
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") closeNow();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [closeNow]);
 
-  const isWhiteNav = isShopPage;
-
-  // Dark nav needs the light/white logo mark;
-  // white shop nav needs the solid/dark logo mark.
-  const logoSrc = isWhiteNav ? "/logo.png" : "/logo-5.png";
+  // Clear pending timer on unmount
+  useEffect(() => cancelClose, [cancelClose]);
 
   return (
     <header
       onMouseLeave={scheduleClose}
-      data-nav-theme={isWhiteNav ? "white" : "dark"}
-      className={`site-header sticky inset-x-0 top-0 z-[9] flex flex-col transition-colors duration-300 ${
-        isWhiteNav
-          ? "border-b border-black/10 bg-white text-black shadow-sm"
-          : "text-white"
-      }`}
+      className="sticky  relative inset-x-0 top-0 z-[9999] w-full border-b border-neutral-200 bg-white text-neutral-900"
     >
-      {/* ROW 1 — TOP UTILITY NAV */}
-      <div className="mx-auto flex h-[72px] w-full max-w-[1600px] items-center justify-between px-5 md:h-[88px] md:px-10">
-
-        {/* LEFT — menu icon + logo */}
-        <div className="flex shrink-0 items-center gap-4">
-          <MobileMenu />
+      <div className="mx-auto flex h-[68px] w-full max-w-[1600px] items-center justify-between gap-4 px-5 md:h-[80px] md:px-10">
+        {/* LEFT — hamburger (mobile/tablet) + logo */}
+        <div className="flex shrink-0 items-center gap-3">
 
           <Link
             href="/"
@@ -153,71 +123,90 @@ export default function Navbar() {
             <Image
               width={220}
               height={90}
-              className="h-auto w-[120px] object-contain md:w-[150px]"
-              src={logoSrc}
+              className="h-auto w-[150px] object-contain md:w-[200px]"
+              src="/logo.png"
               alt="Natraj Office Furniture logo"
               priority
             />
           </Link>
         </div>
 
-        {/* CENTER NAVIGATION */}
-        <nav className="hidden items-center gap-6 lg:flex">
-          {centerLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`flex items-center gap-1 whitespace-nowrap text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors ${
-                isWhiteNav
-                  ? "text-black/80 hover:text-black"
-                  : "text-white/90 hover:text-white"
-              }`}
-            >
-              {link.label}
-
-              {link.hasDropdown && (
-                <ChevronDown
-                  aria-hidden="true"
-                  className="h-3.5 w-3.5 shrink-0"
-                  strokeWidth={2}
-                />
-              )}
-            </Link>
-          ))}
-        </nav>
-
-        {/* RIGHT — get inquiry + icons */}
-        <div className="flex shrink-0 items-center gap-3 md:gap-5">
-          <Link
-            href="/get-a-quote"
-            className={`hidden shrink-0 items-center rounded-full border px-4 py-1.5 text-[12px] font-semibold uppercase tracking-wide transition-colors lg:flex ${
-              isWhiteNav
-                ? "border-black bg-black text-white hover:bg-neutral-800"
-                : "border-white bg-white text-black hover:bg-neutral-200"
-            }`}
+        {/* RIGHT — nav links + CTA + icons */}
+        <div className="flex min-w-0 items-center gap-4 xl:gap-8">
+          <nav
+            aria-label="Main"
+            className="hidden items-center gap-5 lg:flex xl:gap-9"
           >
-            Get Inquiry
-          </Link>
+            {/* PRODUCTS — hover opens the mega menu */}
+            <Link
+              href="/shop"
+              onMouseEnter={openMenu}
+              onFocus={openMenu}
+              aria-haspopup="true"
+              aria-expanded={productsOpen}
+              className={linkClass}
+            >
+              Products
+              <ChevronDown
+                aria-hidden="true"
+                className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 ${
+                  productsOpen ? "rotate-180" : ""
+                }`}
+                strokeWidth={2.25}
+              />
+            </Link>
+
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onMouseEnter={closeNow}
+                className={linkClass}
+              >
+                {link.label}
+                {link.hasDropdown && (
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 shrink-0"
+                    strokeWidth={2.25}
+                  />
+                )}
+              </Link>
+            ))}
+          </nav>
+
+   <Link
+  href="/contact"
+  onMouseEnter={closeNow}
+  className={buttonVariants({
+    variant: "default",
+    size: "default",
+    className:
+      "group !hidden bg-black py-5 text-white items-center gap-2.5 whitespace-nowrap text-[13px] font-semibold lg:!flex xl:text-[15px]",
+  })}
+>
+  Get Inquiry
+
+  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-neutral-700 text-white transition-transform duration-200 group-hover:translate-x-0.5">
+    <ArrowRight
+      aria-hidden="true"
+      className="h-3.5 w-3.5"
+      strokeWidth={2.25}
+    />
+  </span>
+</Link>
 
           <div
-            className={`flex items-center gap-1 md:gap-2 ${
-              isWhiteNav ? "text-black" : "text-white"
-            }`}
+            onMouseEnter={closeNow}
+            className="flex items-center gap-1 text-neutral-900 md:gap-2   "
           >
-            {/* SEARCH */}
-            <IconButton label="Search">
-              <Search
-                aria-hidden="true"
-                className="h-5 w-5 shrink-0"
-                strokeWidth={1.8}
-              />
-            </IconButton>
+         <IconButton label="Search" onClick={() => setSearchOpen((v) => !v)}>
+  <Search aria-hidden="true" className="h-5 w-5 shrink-0" strokeWidth={1.8} />
+</IconButton>
 
-            {/* CART */}
             <IconButton
               label="Cart"
               badge={cartCount > 0 ? cartCount : undefined}
-              isWhite={isWhiteNav}
               onClick={toggleCart}
             >
               <ShoppingBag
@@ -227,79 +216,49 @@ export default function Navbar() {
               />
             </IconButton>
           </div>
+
+                    <MobileMenu categories={categories} links={navLinks} />
+
         </div>
       </div>
 
-      {/* ROW 2 — CATEGORY NAV */}
-      <div
-        className={`hidden border-t lg:block ${
-          isWhiteNav
-            ? "border-black/10 bg-neutral-50"
-            : "border-white/10 bg-black/25"
-        }`}
-      >
-        <nav
-          aria-label="Categories"
-          className="mx-auto flex max-w-[1600px] items-center justify-center gap-10 px-5 py-3 md:px-10"
-        >
-          {categoriesLoading &&
-            Array.from({ length: 4 }).map((_, i) => (
-              <div
-                key={i}
-                className={`h-3 w-16 animate-pulse rounded ${
-                  isWhiteNav ? "bg-black/10" : "bg-white/20"
-                }`}
-              />
-            ))}
+      {/* MEGA MENU — all categories + sub-categories (desktop) */}
+      {/* Always mounted so both opening and closing can animate. */}
+      <CategoryMegaMenu
+        open={productsOpen}
+        categories={categories}
+        loading={categoriesLoading}
+        onMouseEnter={cancelClose}
+        onMouseLeave={scheduleClose}
+        onNavigate={closeNow}
+      />
 
-          {!categoriesLoading &&
-            categories.map((category) => {
-              const isActive =
-                String(category.id) === String(activeCategoryId);
-
-              const categorySlug =
-                category.slug ?? category.id;
-
-              return (
-                <Link
-                  key={category.id}
-                  href={`/categories/${categorySlug}`}
-                  onMouseEnter={() =>
-                    openCategory(category.id)
-                  }
-                  className={`whitespace-nowrap text-[13px] font-bold uppercase tracking-[0.12em] transition-colors ${
-                    isWhiteNav
-                      ? isActive
-                        ? "text-black"
-                        : "text-black/70 hover:text-black"
-                      : isActive
-                        ? "text-white"
-                        : "text-white/80 hover:text-white"
-                  }`}
-                >
-                  {category.title}
-                </Link>
-              );
-            })}
-        </nav>
-      </div>
-
-      {/* SUB-CATEGORY PANEL */}
-      {activeCategory && (
-        <CategoryMegaMenu
-          category={activeCategory}
-          onMouseEnter={cancelClose}
-          onMouseLeave={scheduleClose}
-        />
-      )}
-
-      <style jsx>{`
-        .site-header[data-nav-theme="dark"] {
-          background: rgba(10, 10, 10, 0.92);
-          backdrop-filter: blur(16px);
-          -webkit-backdrop-filter: blur(16px);
-        }
-      `}</style>
+      <SearchBar
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        categories={categories}
+      />
     </header>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

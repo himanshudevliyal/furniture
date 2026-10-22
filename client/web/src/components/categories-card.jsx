@@ -1,8 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function CategoriesCard({ product }) {
   return (
-    <div className="relative h-[320px] w-full overflow-hidden rounded-2xl sm:h-[370px] lg:h-[420px]">
+    <Link  href={`/categories/${product.slug}`} className="relative h-[320px] w-full overflow-hidden rounded-2xl sm:h-[370px] lg:h-[420px]">
       <Image
         width={500}
         height={500}
@@ -22,6 +23,6 @@ export default function CategoriesCard({ product }) {
           {product.subtitle}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }

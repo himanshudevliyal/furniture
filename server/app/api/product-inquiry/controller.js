@@ -1,7 +1,10 @@
 "use strict";
 import table from "../../db/models.js";
 import { StatusCodes } from "http-status-codes";
-import { productInquirySchema } from "../../validation-schema/product-inquiry-schema.js";
+import {
+  productInquirySchema,
+  productInquiryUpdateSchema,
+} from "../../validation-schema/product-inquiry-schema.js";
 
 const create = async (req, res) => {
   try {
@@ -99,6 +102,24 @@ const updateStatus = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const record = await table.ProductInquiryModel.getById(req);
+    if (!record) {
+      return res
+        .code(StatusCodes.NOT_FOUND)
+        .send({ status: false, message: "Inquiry not found!" });
+    }
+
+    req.body = productInquiryUpdateSchema.parse(req.body);
+
+    await table.ProductInquiryModel.update(req);
+    res.code(StatusCodes.OK).send({ status: true, message: "Inquiry updated." });
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteById = async (req, res) => {
   try {
     const record = await table.ProductInquiryModel.getById(req);
@@ -119,6 +140,7 @@ export default {
   create: create,
   get: get,
   getById: getById,
+  update: update,
   updateStatus: updateStatus,
   deleteById: deleteById,
 };

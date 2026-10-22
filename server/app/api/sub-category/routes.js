@@ -14,9 +14,10 @@ export default async function routes(fastify, options) {
     controller.updateById,
   );
   fastify.delete("/:id", {}, controller.deleteById);
-  fastify.get("/:id", {}, controller.getById);
 }
 
 export async function subCategoryPublicRoutes(fastify, opt) {
   fastify.get("/", {}, controller.get);
+    fastify.get("/:id", {}, controller.getById);
+
 }

@@ -151,17 +151,64 @@ const getById = async (req, id) => {
   });
 };
 
+// Updates only the editable fields present in req.body (products stay as submitted).
+const EDITABLE_FIELDS = [
+  "full_name",
+  "company_name",
+  "email",
+  "contact_number",
+  "city",
+  "state",
+  "message",
+  "status",
+];
+
 const update = async (req, id) => {
-  return await ProductInquiryModel.update(
-    { status: req.body.status },
-    { where: { id: req?.params?.id || id } },
+  const values = Object.fromEntries(
+    EDITABLE_FIELDS.filter((key) => req.body[key] !== undefined).map((key) => [
+      key,
+      req.body[key],
+    ]),
   );
+
+  return await ProductInquiryModel.update(values, {
+    where: { id: req?.params?.id || id },
+  });
 };
 
 const deleteById = async (req, id) => {
   return await ProductInquiryModel.destroy({
     where: { id: req?.params?.id || id },
   });
+};
+
+// Day-by-day inquiry count for the last 7 days (for a dashboard trend chart).
+// Missing days are filled in with 0 so the chart always has 7 points.
+const getInquiriesTrend = async () => {
+  const query = `
+    SELECT TO_CHAR(created_at::date, 'YYYY-MM-DD') AS day, COUNT(*)::int AS count
+    FROM ${constants.models.PRODUCT_INQUIRY_TABLE}
+    WHERE created_at >= NOW() - INTERVAL '6 days'
+    GROUP BY day
+    ORDER BY day ASC
+  `;
+
+  const rows = await ProductInquiryModel.sequelize.query(query, {
+    type: QueryTypes.SELECT,
+    raw: true,
+  });
+
+  const byDay = Object.fromEntries(rows.map((r) => [r.day, r.count]));
+
+  const trend = [];
+  for (let i = 6; i >= 0; i--) {
+    const date = new Date();
+    date.setDate(date.getDate() - i);
+    const day = date.toISOString().slice(0, 10);
+    trend.push({ day, count: byDay[day] || 0 });
+  }
+
+  return trend;
 };
 
 export default {
@@ -171,4 +218,5 @@ export default {
   getById: getById,
   update: update,
   deleteById: deleteById,
+  getInquiriesTrend: getInquiriesTrend,
 };

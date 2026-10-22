@@ -11,6 +11,7 @@ export const searchParams = {
   string: parseAsString,
   q: parseAsString,
   categories: parseAsString,
+  status: parseAsString,
   role: parseAsString,
   start_date: parseAsString,
   end_date: parseAsString,

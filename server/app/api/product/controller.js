@@ -16,6 +16,7 @@ const extractFilePaths = (product = {}) => {
   if (product.thumbnail) paths.push(product.thumbnail);
 
   paths.push(...(product.hero?.images || []));
+  if (product.overview?.image) paths.push(product.overview.image);
   paths.push(...(product.gallery?.images || []));
 
   (product.details?.sections || []).forEach((section) => {

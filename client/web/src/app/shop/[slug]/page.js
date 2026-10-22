@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
-
-import FeaturedProducts from "@/components/featured-products";
+import { absoluteFileUrl, toDescription } from "@/lib/site";
 import ProductDetail from "./_components/ProductDetail";
 import FurnitureProductsShowcase from "./_components/productsimgs";
 import ProductTabs from "./_components/ProductTabs";
-
+import RelatedProducts from "./_components/related-products";
 async function getProduct(slug) {
   const base = (process.env.NEXT_PUBLIC_API_URL ?? "")
     .trim()
@@ -17,6 +16,33 @@ async function getProduct(slug) {
   if (!res.ok) return null;
   const data = await res.json();
   return data?.data ?? null;
+}
+
+// Same request as the page; Next.js dedupes it within one render.
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+  if (!product) return { title: "Product not found" };
+
+  const title = product.meta_title || product.title;
+  const description =
+    toDescription(product.meta_description) ||
+    toDescription(product.short_description) ||
+    `${product.title} by Natraj Office Furniture.`;
+  const image = absoluteFileUrl(product.thumbnail);
+
+  return {
+    title,
+    description,
+    ...(product.meta_keywords ? { keywords: product.meta_keywords } : {}),
+    alternates: { canonical: `/shop/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `/shop/${slug}`,
+      ...(image ? { images: [{ url: image, alt: product.title }] } : {}),
+    },
+  };
 }
 
 export default async function ProductPage({ params }) {
@@ -32,8 +58,10 @@ export default async function ProductPage({ params }) {
     <>
       <ProductDetail product={product} />
       <ProductTabs product={product} />
-      <FurnitureProductsShowcase product={product} />
-      <FeaturedProducts />
+      <FurnitureProductsShowcase product={product}></FurnitureProductsShowcase>
+
+      <RelatedProducts product={product} />
+      <FurnitureProductsShowcase />
     </>
   );
 }

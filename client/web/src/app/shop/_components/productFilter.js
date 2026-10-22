@@ -7,11 +7,9 @@ import Link from "next/link";
 
 import { useCategories } from "@/hooks/use-categories";
 import { useProducts } from "@/hooks/use-products";
-
 import ProductCard from "@/components/ProductCard";
 import CategoryNav from "./category-nav";
 import { FilterSidebar } from "./filter-sidebar";
-
 import { Skeleton } from "@/components/ui/skeleton";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -24,15 +22,30 @@ import {
 } from "@/components/ui/sheet";
 
 import { cn } from "@/lib/utils";
+import { Section } from "@/components/layout/section";
 
 export default function ProductFilter() {
   const searchParams = useSearchParams();
   const searchParamsStr = searchParams.toString();
 
-  const categoryFilter = searchParams.get("categories");
-  const subCategoryFilter = searchParams.get("sub-categories");
+  // MULTIPLE CATEGORY IDS
+  const categoryFilters = useMemo(() => {
+    return searchParams
+      .getAll("categories")
+      .flatMap((value) => value.split(","))
+      .filter(Boolean);
+  }, [searchParamsStr]);
 
-  const isAnyFilterActive = !!categoryFilter || !!subCategoryFilter;
+  // MULTIPLE SUB-CATEGORY IDS
+  const subCategoryFilters = useMemo(() => {
+    return searchParams
+      .getAll("sub-categories")
+      .flatMap((value) => value.split(","))
+      .filter(Boolean);
+  }, [searchParamsStr]);
+
+  const isAnyFilterActive =
+    categoryFilters.length > 0 || subCategoryFilters.length > 0;
 
   const {
     data: categoriesData,
@@ -47,56 +60,63 @@ export default function ProductFilter() {
 
   const categories = categoriesData?.categories ?? [];
 
-
-
   const products = useMemo(() => {
     const allProducts = productsData?.products ?? [];
 
     return allProducts
-      .filter((product) =>
-        categoryFilter
-          ? product?.category_id === categoryFilter
-          : true
-      )
-      .filter((product) =>
-        subCategoryFilter
-          ? product?.sub_category_id === subCategoryFilter
-          : true
-      )
+      .filter((product) => {
+        // No category selected = show all
+        if (categoryFilters.length === 0) return true;
+
+        return categoryFilters.includes(
+          String(product?.category_id ?? "")
+        );
+      })
+      .filter((product) => {
+        // No sub-category selected = show all
+        if (subCategoryFilters.length === 0) return true;
+
+        return subCategoryFilters.includes(
+          String(product?.sub_category_id ?? "")
+        );
+      })
       .sort(
         (a, b) =>
           (a?.sort_order ?? 0) - (b?.sort_order ?? 0)
       );
   }, [
     productsData,
-    categoryFilter,
-    subCategoryFilter,
+    categoryFilters,
+    subCategoryFilters,
   ]);
 
   return (
     <div>
       {/* Header */}
-      <div className="mx-auto max-w-[1600px] px-5 pt-28 md:px-10 md:pt-36">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-400">
+      <Section>
+        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
           Shop
         </p>
 
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl mb-8">
           All Categories
         </h1>
-      </div>
 
-      {/* Main Categories */}
-      {!categoriesLoading && (
+
+            {!categoriesLoading && (
         <CategoryNav categories={categories} />
       )}
+      </Section>
 
-      <div className="mx-auto max-w-[1600px] px-5 py-12 md:px-10 md:py-16">
+      {/* Main Categories */}
+  
+
+      <Section >
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
 
-          {/* Desktop Filter Sidebar */}
+         
           <aside className="hidden lg:col-span-3 lg:block">
-            <div className="sticky top-28">
+            <div>
               <h2 className="mb-6 text-lg font-semibold text-neutral-900">
                 Filters
               </h2>
@@ -115,7 +135,7 @@ export default function ProductFilter() {
           </aside>
 
           {/* Products */}
-          <section className="lg:col-span-9">
+          <div className="lg:col-span-9">
 
             {/* Toolbar */}
             <div className="mb-8 flex items-center justify-between gap-4 lg:mb-10">
@@ -173,14 +193,13 @@ export default function ProductFilter() {
                     className="flex flex-col gap-4 border-b border-neutral-200 px-5 py-6 sm:border-r sm:px-6"
                   >
                     <Skeleton className="aspect-square w-full" />
-
                     <Skeleton className="h-4 w-2/3" />
-
                     <Skeleton className="h-3 w-full" />
                   </div>
                 ))}
               </div>
             ) : productsIsError ? (
+
               /* Error */
               <div className="flex flex-col items-center justify-center gap-2 py-20 text-center">
                 <p className="text-base font-medium text-neutral-900">
@@ -192,7 +211,9 @@ export default function ProductFilter() {
                   Please try again.
                 </p>
               </div>
+
             ) : products.length === 0 ? (
+
               /* No Products */
               <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
                 <p className="text-base font-medium text-neutral-900">
@@ -213,7 +234,9 @@ export default function ProductFilter() {
                   </Link>
                 )}
               </div>
+
             ) : (
+
               /* Product Grid */
               <div className="grid grid-cols-1 border-l border-t border-neutral-200 sm:grid-cols-2 lg:grid-cols-3">
                 {products.map((product) => (
@@ -224,9 +247,9 @@ export default function ProductFilter() {
                 ))}
               </div>
             )}
-          </section>
+          </div>
         </div>
-      </div>
+      </Section>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
-import { ArrowUpDown } from "lucide-react";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,69 +8,68 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import moment from "moment";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Paperclip } from "lucide-react";
+import moment from "moment";
 
-export const columns = (openModal, setQueryId) => [
+const reasonLabels = {
+  domestic_sales_enquiry: "Domestic Sales",
+  export_sales_enquiry: "Export Sales",
+  after_sales_services: "After Sales",
+  career: "Career",
+  become_a_vendor: "Become a Vendor",
+};
+
+export const columns = (openModal, setId) => [
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "phone",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Mobile
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Name",
   },
   {
     accessorKey: "email",
-    header: ({ column }) => {
+    header: "Email",
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
+    accessorKey: "reason",
+    header: "Reason",
+    cell: ({ row }) => {
+      const reason = row.getValue("reason");
+      if (!reason) return "-";
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
+        <Badge variant="outline" className="font-normal">
+          {reasonLabels[reason] || reason}
+        </Badge>
       );
     },
   },
   {
+    accessorKey: "attachment",
+    header: "Attachment",
+    cell: ({ row }) =>
+      row.getValue("attachment") ? (
+        <Paperclip className="text-muted-foreground size-4" />
+      ) : (
+        "-"
+      ),
+  },
+  {
     accessorKey: "created_at",
-    header: ({ column }) => {
-      return <Button variant="ghost">Date</Button>;
-    },
-    cell: ({ row }) => {
-      return (
-        <div>{moment(row.getValue("created_at")).format("DD/MM/YYYY")}</div>
-      );
-    },
+    header: "Date",
+    cell: ({ row }) => (
+      <div>{moment(row.getValue("created_at")).format("DD/MM/YYYY")}</div>
+    ),
   },
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
       const id = row.original.id;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -83,18 +81,16 @@ export const columns = (openModal, setQueryId) => [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                setQueryId(id);
-                openModal("view");
-              }}
-            >
-              View
+            <DropdownMenuItem asChild>
+              <Link href={`/queries/${id}`}>View</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href={`/queries/${id}/edit`}>Edit</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
               onClick={() => {
-                setQueryId(id);
+                setId(id);
                 openModal("delete");
               }}
             >

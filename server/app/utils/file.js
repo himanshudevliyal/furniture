@@ -10,8 +10,21 @@ const IMAGE_CONFIG = {
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
 
+// Office mime types don't end with their file extension.
+const MIME_EXTENSIONS = {
+  "application/msword": "doc",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    "docx",
+  "application/vnd.ms-excel": "xls",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": "xlsx",
+  "application/vnd.ms-powerpoint": "ppt",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation":
+    "pptx",
+};
+
 const getFileCategory = (mime) => {
-  const ext = mime.split("/").pop().toLowerCase();
+  const ext =
+    MIME_EXTENSIONS[mime.toLowerCase()] ?? mime.split("/").pop().toLowerCase();
 
   if (["jpeg", "jpg", "png", "webp", "heic", "avif"].includes(ext))
     return { type: "image", ext };

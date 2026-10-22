@@ -8,6 +8,14 @@ import Image from "next/image";
   Headset,
 } from "lucide-react";
 import NatrajTimeline from "@/components/timeline-Section";
+import CertificatesGallery from "@/components/certificates-gallery";
+
+export const metadata = {
+  title: "About Us",
+  description:
+    "Natraj Office Furniture has been designing and manufacturing office furniture since 1989 — workstations, desks, seating and storage built for modern workplaces.",
+  alternates: { canonical: "/about" },
+};
 
 
 export default function AboutPage() {
@@ -151,6 +159,8 @@ export default function AboutPage() {
 </Section>
 
 <NatrajTimeline></NatrajTimeline>
+
+<CertificatesGallery />
     </>
   );
 }

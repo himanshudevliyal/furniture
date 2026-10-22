@@ -59,7 +59,7 @@ export function FilterSidebar({ categories = [] }) {
       {/* Category */}
       {categories.length > 0 && (
         <div>
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
             Category
           </p>
  
@@ -101,12 +101,12 @@ export function FilterSidebar({ categories = [] }) {
         <div>
           <Separator className="mb-8" />
  
-          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
             Sub-category
           </p>
  
           {subCategories.length === 0 ? (
-            <p className="text-sm text-neutral-400">
+            <p className="text-sm text-neutral-500">
               No sub-categories for this category.
             </p>
           ) : (

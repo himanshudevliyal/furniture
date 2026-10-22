@@ -24,7 +24,7 @@ export default function PageContainer({
   const content = isloading ? <PageSkeleton /> : children;
 
   return scrollable ? (
-    <ScrollArea className="h-[calc(100dvh-64px)]">
+    <div className="h-[calc(100dvh-64px)] overflow-auto">
       <div className={cn("flex flex-1 flex-col p-4", className)}>
         <div className="flex flex-wrap items-start justify-between">
           <div>
@@ -37,7 +37,7 @@ export default function PageContainer({
         </div>
         <div>{content}</div>
       </div>
-    </ScrollArea>
+    </div>
   ) : (
     <div className={cn("flex flex-1 flex-col p-4", className)}>
       <div className="flex flex-wrap items-start justify-between">

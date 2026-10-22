@@ -15,8 +15,29 @@ import Link from "next/link";
 import { ArrowUpDown } from "lucide-react";
 
 import { Switch } from "@/components/ui/switch";
+import Image from "next/image";
+import config from "@/config";
 
 export const columns = (openModal, setId, updateMutation) => [
+  {
+    accessorKey: "thumbnail",
+    header: "Image",
+    cell: ({ row }) => {
+      const thumbnail = row.getValue("thumbnail");
+      return thumbnail ? (
+        <Image
+          src={`${config.file_base}/${thumbnail}`}
+          alt=""
+          width={40}
+          height={40}
+          className="size-10 rounded-md object-cover"
+          unoptimized
+        />
+      ) : (
+        <div className="bg-accent size-10 rounded-md" />
+      );
+    },
+  },
   {
     accessorKey: "title",
     header: ({ column }) => {
@@ -32,10 +53,11 @@ export const columns = (openModal, setId, updateMutation) => [
     },
     cell: ({ row }) => {
       const title = row.getValue("title");
-      const productId = row.original.id;
+      const slug = row.original.slug;
       return (
         <Link
-          href={`/products/${productId}/edit`}
+          href={`/shop/${slug}`}
+          target="_black"
           className="hover:underline capitalize"
         >
           {title}

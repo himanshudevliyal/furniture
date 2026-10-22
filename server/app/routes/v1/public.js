@@ -6,7 +6,10 @@ import { paymentPublicRoutes } from "../../api/payment/routes.js";
 import { productPublicRoutes } from "../../api/product/routes.js";
 import { queryPublicRoutes } from "../../api/query/routes.js";
 import { productInquiryPublicRoutes } from "../../api/product-inquiry/routes.js";
+import { projectQuotePublicRoutes } from "../../api/project-quote/routes.js";
 import uploadFilesRoutes from "../../api/upload_files/routes.js";
+import { blogPublicRoutes } from "../../api/blog/routes.js";
+import { careerPublicRoutes } from "../../api/job/routes.js";
 
 export default async function routes(fastify, options) {
   fastify.register(productPublicRoutes, { prefix: "products" });
@@ -14,6 +17,10 @@ export default async function routes(fastify, options) {
   fastify.register(subCategoryPublicRoutes, { prefix: "sub-categories" });
   fastify.register(queryPublicRoutes, { prefix: "queries" });
   fastify.register(productInquiryPublicRoutes, { prefix: "product-inquiries" });
+  fastify.register(projectQuotePublicRoutes, { prefix: "project-quotes" });
   fastify.register(paymentPublicRoutes, { prefix: "payments" });
-  fastify.register(uploadFilesRoutes, { prefix: "upload" });
+    fastify.register(uploadFilesRoutes, { prefix: "upload" });
+    fastify.register(blogPublicRoutes, { prefix: "blogs" });
+  fastify.register(careerPublicRoutes, { prefix: "careers" });
+
 }

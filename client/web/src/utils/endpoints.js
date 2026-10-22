@@ -19,6 +19,6 @@ export const endpoints = {
   products: { getAll: "/products" },
   stories: { getAll: "/stories" },
   users: { getAll: "/users" },
-    productInquiries: { getAll: "/product-inquiries" },
-
+  productInquiries: { getAll: "/product-inquiries" },
+  blogs: { getAll: "/blogs" },
 };

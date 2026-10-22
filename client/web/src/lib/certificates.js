@@ -1,0 +1,65 @@
+// Certificates shown on the homepage strip and the About page.
+// `pdf` opens in a new tab; logos without a certificate PDF are not clickable.
+export const certificates = [
+  {
+    slug: "bifma",
+    title: "BIFMA",
+    description: "Sustainability standard compliance",
+    logo: "/img/certificate/bifma.png",
+    image: "/img/certificates/bifma.jpg",
+    pdf: "/certificates/bifma.pdf",
+    number: "UQ-2023121926",
+    validTill: "18 Dec 2026",
+  },
+  {
+    slug: "iso-9001-2015",
+    title: "ISO 9001:2015",
+    description: "Quality Management System",
+    logo: "/img/certificate/iso2015-2.png",
+    image: "/img/certificates/iso-9001-2015.jpg",
+    pdf: "/certificates/iso-9001-2015.pdf",
+    number: "CCPL-E/QMS/A1328",
+    validTill: "12 Dec 2026",
+  },
+  {
+    slug: "iso-14001-2015",
+    title: "ISO 14001:2015",
+    description: "Environmental Management System",
+    logo: "/img/certificate/iso2015.png",
+    image: "/img/certificates/iso-14001-2015.jpg",
+    pdf: "/certificates/iso-14001-2015.pdf",
+    number: "CCPL-E/EMS/A1069",
+    validTill: "12 Dec 2026",
+  },
+  {
+    slug: "iso-45001-2018",
+    title: "ISO 45001:2018",
+    description: "Occupational Health & Safety",
+    logo: "/img/certificate/iso2015-3.png",
+    image: "/img/certificates/iso-45001-2018.jpg",
+    pdf: "/certificates/iso-45001-2018.pdf",
+    number: "CCPL-E/OH&S/A1041",
+    validTill: "12 Dec 2026",
+  },
+  {
+    slug: "greenguard",
+    title: "GREENGUARD",
+    description: "Low-emitting products & materials",
+    logo: "/img/certificate/greenguard.png",
+    image: "/img/certificates/greenguard.jpg",
+    pdf: "/certificates/greenguard.pdf",
+    number: "UQ-2023121927",
+    validTill: "18 Dec 2026",
+  },
+  // Logos without a certificate PDF yet (not clickable, not on About page).
+  {
+    slug: "iso-50001-2018",
+    title: "ISO 50001:2018",
+    logo: "/img/certificate/iso2018.png",
+  },
+  {
+    slug: "level-3",
+    title: "BIFMA LEVEL 3",
+    logo: "/img/certificate/level-3.png",
+  },
+];

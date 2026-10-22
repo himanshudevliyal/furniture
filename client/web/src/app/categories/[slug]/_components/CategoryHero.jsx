@@ -23,23 +23,14 @@ export default function CategoryHero({ category }) {
       )}
 
       {/* BEAUTIFUL OVERLAY - top light, bottom dark */}
-     <div
-  aria-hidden="true"
-  className="
-    absolute inset-0 z-0
-    bg-gradient-to-b
-    from-black/65
-    via-black/20
-    to-black/70
-  "
-/>
+    
 
 
       {/* Extra bottom gradient for heading */}
       <div
         aria-hidden="true"
         className="
-          absolute inset-x-0 bottom-0 z-0 h-1/2
+          absolute inset-x-0 bottom-0 z-2 h-1/2
           bg-gradient-to-t from-black/70 via-black/30 to-transparent
         "
       />

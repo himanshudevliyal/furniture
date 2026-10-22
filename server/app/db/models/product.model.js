@@ -37,20 +37,15 @@ const init = async (sequelize) => {
       },
 
       short_description: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-
-      color: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
-
-      // Rich-text HTML content (from the dashboard's TinyMCE editor) for
-      // any extra/misc details that don't fit the structured sections.
-      other_details: {
         type: DataTypes.TEXT,
         allowNull: true,
+      },
+
+      // Multiple colors this product is available in (e.g. ["Matte Black", "Oak Brown"])
+      colors: {
+        type: DataTypes.JSONB,
+        allowNull: true,
+        defaultValue: [],
       },
 
       category_id: {
@@ -149,8 +144,7 @@ const create = async (req, transaction) => {
       title: req.body.title,
       thumbnail: req.body.thumbnail,
       short_description: req.body.short_description,
-      color: req.body.color,
-      other_details: req.body.other_details,
+      colors: req.body.colors,
       content: req.body.content,
       category_id: req.body.category_id,
       sub_category_id: req.body.sub_category_id || null,
@@ -189,8 +183,7 @@ const update = async (req, id, transaction) => {
       title: req.body.title,
       thumbnail: req.body.thumbnail,
       short_description: req.body.short_description,
-      color: req.body.color,
-      other_details: req.body.other_details,
+      colors: req.body.colors,
       content: req.body.content,
       category_id: req.body.category_id,
       sub_category_id: req.body.sub_category_id || null,

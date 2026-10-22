@@ -11,6 +11,11 @@ import categoryModel from "./models/category.model.js";
 import subCategoryModel from "./models/sub-category.model.js";
 import queryModel from "./models/query.model.js";
 import productInquiryModel from "./models/product-inquiry.model.js";
+import projectQuoteModel from "./models/project-quote.model.js";
+import blogModel from "./models/blog.model.js";
+import jobModel from "./models/job.model.js";
+import jobApplicationModel from "./models/job-application.model.js";
+
 
 export default {
   UserModel: userModel,
@@ -25,4 +30,8 @@ export default {
   InventoryModel: inventoryModel,
   QueryModel: queryModel,
   ProductInquiryModel: productInquiryModel,
+  ProjectQuoteModel: projectQuoteModel,
+  BlogModel: blogModel,
+  JobModel: jobModel,
+  JobApplicationModel: jobApplicationModel,
 };

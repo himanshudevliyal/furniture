@@ -106,7 +106,7 @@ function TestimonialCard({ name, role, quote }) {
           <p className="truncate text-md font-semibold leading-tight text-neutral-900">
             {name}
           </p>
-          <p className="truncate  text-neutral-500">{role}</p>
+          <p className="truncate text-neutral-600">{role}</p>
         </div>
       </div>
 

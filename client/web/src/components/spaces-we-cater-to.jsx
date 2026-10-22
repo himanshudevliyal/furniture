@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Section } from "./layout/section";
+import Heading from "./layout/heading";
 
 // ---------------------------------------------------------------------------
 // Data
@@ -45,7 +46,7 @@ const secondarySpaces = [
     key: "residential",
     title: "OFFICE SEATING",
     description:
-      "Ergonomic and comfortable seating solutions designed for everyday work and professional spaces.",
+      "Ergonomic and comfortable seating solutions designed for everyday work.",
     image: "/img/residential.jpg",
     href: "/spaces/residential",
     icon: House,
@@ -54,7 +55,7 @@ const secondarySpaces = [
     key: "retail",
     title: "STORAGE SOLUTIONS",
     description:
-      "Practical and stylish storage furniture that keeps modern workspaces organized and efficient.",
+      "Practical and stylish storage furniture that keeps modern workspaces organized.",
     image: "/img/retail.jpg",
     href: "/spaces/retail",
     icon: ShoppingBag,
@@ -132,7 +133,7 @@ function SpaceCard({
 
       {/* Content */}
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 transition-transform duration-500 ease-out group-hover:-translate-y-1 sm:p-8">
-        <h3 className="font-serif text-2xl tracking-wide text-white sm:text-3xl">
+        <h3 className="font-serif text-xl tracking-wide text-white md:text-2xl">
           {space.title}
         </h3>
 
@@ -140,7 +141,7 @@ function SpaceCard({
           <span className="h-px w-12 bg-[#C9A165]" aria-hidden />
         )}
 
-        <p className="max-w-[34ch] text-sm leading-relaxed text-white/85 sm:text-[15px]">
+        <p className=" text-sm leading-relaxed text-white/85 sm:text-[14px]">
           {space.description}
         </p>
       </div>
@@ -158,25 +159,23 @@ export default function SpacesWeCaterTo() {
       aria-labelledby="spaces-we-cater-to-heading"
       className="w-full bg-[#F7F4EF] "
     >
-      {/* Heading */}
-<div className="mx-auto flex max-w-2xl flex-col items-center text-center">
-  <span className="text-xs font-medium tracking-[0.3em] text-[#B08D57]">
-    FURNITURE FOR MODERN WORKSPACES
-  </span>
 
-  <h2
-    id="spaces-we-cater-to-heading"
-    className="mt-4 font-serif text-4xl leading-tight text-[#1C1710] sm:text-5xl lg:text-6xl"
-  >
-    Furniture Solutions for Every Workspace
-  </h2>
 
-  <p className="mt-5 text-balance text-base leading-relaxed text-[#5B5347] sm:text-lg">
-    From executive offices and workstations to seating and storage, we create
+
+<Heading
+  heading=" Furniture Solutions for Every Workspace"
+  eyebrow="FURNITURE FOR MODERN WORKSPACES"
+  subheading=" From executive offices and workstations to seating and storage, we create
     functional furniture solutions designed for modern, productive, and
-    professional workspaces.
-  </p>
-</div>
+    professional workspaces."
+  eyebrowClassName="justify-center"
+  headingClassName="text-3xl sm:text-4xl lg:text-5xl"
+  className="max-5-xl mx-auto text-center"
+/>
+
+
+
+
 
       {/* Content grid */}
       <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-6">

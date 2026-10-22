@@ -39,3 +39,12 @@ export const productInquirySchema = z.object({
     .array(inquiryProductSchema)
     .min(1, "At least one product is required"),
 });
+
+// Admin edit: same contact fields, products stay as submitted, status editable.
+export const productInquiryUpdateSchema = productInquirySchema
+  .omit({ products: true })
+  .extend({
+    status: z.enum(["pending", "contacted", "closed"], {
+      message: "Invalid status",
+    }),
+  });

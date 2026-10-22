@@ -1,7 +1,6 @@
 "use strict";
 import constants from "../../lib/constants/index.js";
-import sequelizeFwk, { QueryTypes } from "sequelize";
-const { DataTypes } = sequelizeFwk;
+import { DataTypes, QueryTypes } from "sequelize";
 
 let UserQueryModel = null;
 
@@ -24,10 +23,6 @@ const init = async (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // address: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // },
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -40,37 +35,52 @@ const init = async (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      // domestic_sales_enquiry | export_sales_enquiry | after_sales_services | career | become_a_vendor
+      reason: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      // Optional reference image/PDF for custom requests.
+      attachment: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       createdAt: "created_at",
       updatedAt: "updated_at",
+      indexes: [{ fields: ["email"] }, { fields: ["reason"] }],
     },
   );
 
   return UserQueryModel;
 };
 
-const create = async (req) => {
-  return await UserQueryModel.create({
-    name: req.body.name,
-    email: req.body.email,
-    // address: req.body.address,
-    phone: req.body.phone,
-    subject: req.body.subject,
-    message: req.body.message,
-  });
+const create = async (req, transaction) => {
+  const options = {};
+  if (transaction) options.transaction = transaction;
+
+  const data = await UserQueryModel.create(
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      subject: req.body.subject,
+      message: req.body.message,
+      reason: req.body.reason,
+      attachment: req.body.attachment || null,
+    },
+    options,
+  );
+
+  return data.dataValues;
 };
 
 const get = async (req) => {
   const whereConditions = [];
   const queryParams = {};
 
-  // -----------------------------
-  // SEARCH
-  // -----------------------------
-
   const search = req.query.search || req.query.q;
-
   if (search) {
     whereConditions.push(`
       (
@@ -78,71 +88,31 @@ const get = async (req) => {
         OR uq.email ILIKE :search
         OR uq.phone ILIKE :search
         OR uq.subject ILIKE :search
-        OR uq.message ILIKE :search
       )
     `);
-
     queryParams.search = `%${search}%`;
   }
 
-  // -----------------------------
-  // SORTING
-  // -----------------------------
+  if (req.query.reason) {
+    whereConditions.push(`uq.reason = :reason`);
+    queryParams.reason = req.query.reason;
+  }
 
-  const sortField = req.query.order_by || "created_at";
-
-  const sortDirection =
-    req.query.order_direction?.toUpperCase() === "ASC" ? "ASC" : "DESC";
-
-  const allowedSortFields = {
-    created_at: "uq.created_at",
-    name: "uq.name",
-    email: "uq.email",
-    subject: "uq.subject",
-  };
-
-  const orderByClause = allowedSortFields[sortField]
-    ? `${allowedSortFields[sortField]} ${sortDirection}`
-    : "uq.created_at DESC";
-
-  // -----------------------------
-  // PAGINATION
-  // -----------------------------
-
-  const page = Number(req.query.page) || 1;
-  const limit = Number(req.query.limit) || 10;
+  const page = req.query.page ? Number(req.query.page) : 1;
+  const limit = req.query.limit ? Number(req.query.limit) : null;
   const offset = (page - 1) * limit;
 
-  // -----------------------------
-  // WHERE CLAUSE
-  // -----------------------------
-
-  const whereClause =
-    whereConditions.length > 0 ? `WHERE ${whereConditions.join(" AND ")}` : "";
-
-  // -----------------------------
-  // MAIN QUERY
-  // -----------------------------
+  const whereClause = whereConditions.length
+    ? `WHERE ${whereConditions.join(" AND ")}`
+    : "";
 
   const query = `
-    SELECT
-      uq.id,
-      uq.name,
-      uq.email,
-      uq.phone,
-      uq.subject,
-      uq.message,
-      uq.created_at,
-      uq.updated_at
+    SELECT uq.*
     FROM ${constants.models.QUERY_TABLE} uq
     ${whereClause}
-    ORDER BY ${orderByClause}
+    ORDER BY uq.created_at DESC
     LIMIT :limit OFFSET :offset
   `;
-
-  // -----------------------------
-  // COUNT QUERY
-  // -----------------------------
 
   const countQuery = `
     SELECT COUNT(uq.id)::integer AS total
@@ -150,16 +120,8 @@ const get = async (req) => {
     ${whereClause}
   `;
 
-  // -----------------------------
-  // EXECUTION
-  // -----------------------------
-
   const queries = await UserQueryModel.sequelize.query(query, {
-    replacements: {
-      ...queryParams,
-      limit,
-      offset,
-    },
+    replacements: { ...queryParams, limit, offset },
     type: QueryTypes.SELECT,
     raw: true,
   });
@@ -180,15 +142,28 @@ const get = async (req) => {
 
 const getById = async (req, id) => {
   return await UserQueryModel.findOne({
-    where: {
-      id: req.params.id || id,
-    },
+    where: { id: req?.params?.id || id },
+    raw: true,
   });
+};
+
+const update = async (req, id) => {
+  return await UserQueryModel.update(
+    {
+      name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      subject: req.body.subject,
+      message: req.body.message ?? "",
+      reason: req.body.reason,
+    },
+    { where: { id: req?.params?.id || id } },
+  );
 };
 
 const deleteById = async (req, id) => {
   return await UserQueryModel.destroy({
-    where: { id: req.params.id || id },
+    where: { id: req?.params?.id || id },
   });
 };
 
@@ -197,5 +172,6 @@ export default {
   create: create,
   get: get,
   getById: getById,
+  update: update,
   deleteById: deleteById,
 };

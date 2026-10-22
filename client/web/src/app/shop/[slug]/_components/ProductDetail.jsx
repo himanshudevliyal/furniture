@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
+import Autoplay from "embla-carousel-autoplay";
 import { Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -30,12 +31,21 @@ export default function ProductDetail({ product }) {
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
 
+  const autoplay = useMemo(
+    () =>
+      Autoplay({
+        delay: 3500,
+        stopOnInteraction: false,
+        stopOnMouseEnter: true,
+      }),
+    [],
+  );
+
   if (!product) return null;
 
   const hero = product.hero ?? {};
 
-  const heading =
-    hero.heading ?? product.title ?? "Untitled product";
+  const heading = hero.heading ?? product.title ?? "Untitled product";
 
   const subheading = hero.subheading ?? "";
 
@@ -53,12 +63,30 @@ export default function ProductDetail({ product }) {
     .filter(Boolean)
     .join(" / ");
 
+  const cartProduct = {
+    id: product.id,
+    slug: product.slug,
+    title: product.title,
+    image: images[0] || product.thumbnail,
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((current) => Math.max(1, current - 1));
+  };
+
+  const increaseQuantity = () => {
+    setQuantity((current) => current + 1);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(cartProduct, quantity);
+  };
+
   return (
     <div className="bg-[#FBF1E7]">
-      <Section className="p-0" >
+      <Section className="p-0">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
-
-          {/* Text */}
+          {/* Product Information */}
           <div className="flex flex-col gap-4">
             {breadcrumb && (
               <p className="text-sm font-medium uppercase tracking-wide text-neutral-500">
@@ -82,14 +110,13 @@ export default function ProductDetail({ product }) {
               </p>
             )}
 
+            {/* Cart Actions */}
             <div className="mt-6 flex items-center gap-4">
               {/* Quantity */}
               <div className="flex h-12 shrink-0 items-center gap-2 rounded-full border border-neutral-200 bg-white px-3">
                 <button
                   type="button"
-                  onClick={() =>
-                    setQuantity((q) => Math.max(1, q - 1))
-                  }
+                  onClick={decreaseQuantity}
                   aria-label="Decrease quantity"
                   className="flex h-8 w-8 items-center justify-center text-neutral-700 transition hover:text-neutral-900"
                 >
@@ -102,7 +129,7 @@ export default function ProductDetail({ product }) {
 
                 <button
                   type="button"
-                  onClick={() => setQuantity((q) => q + 1)}
+                  onClick={increaseQuantity}
                   aria-label="Increase quantity"
                   className="flex h-8 w-8 items-center justify-center text-neutral-700 transition hover:text-neutral-900"
                 >
@@ -110,19 +137,10 @@ export default function ProductDetail({ product }) {
                 </button>
               </div>
 
+              {/* Add To Cart */}
               <Button
                 size="lg"
-                onClick={() =>
-                  addToCart(
-                    {
-                      id: product.id,
-                      slug: product.slug,
-                      title: product.title,
-                      image: images?.[0] || product.thumbnail,
-                    },
-                    quantity,
-                  )
-                }
+                onClick={handleAddToCart}
                 className="h-12 flex-1 rounded-full bg-neutral-900 px-10 text-sm font-medium uppercase tracking-[0.15em] text-white hover:bg-neutral-800"
               >
                 Add to cart
@@ -138,6 +156,7 @@ export default function ProductDetail({ product }) {
                   align: "start",
                   loop: images.length > 1,
                 }}
+                plugins={images.length > 1 ? [autoplay] : []}
                 className="w-full"
               >
                 <CarouselContent>
@@ -167,7 +186,6 @@ export default function ProductDetail({ product }) {
               <div className="relative aspect-[4/3] w-full lg:aspect-square" />
             )}
           </div>
-
         </div>
       </Section>
     </div>

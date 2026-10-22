@@ -20,7 +20,7 @@ export default function SideHeader() {
       <div className="flex pl-2">
         {state === "collapsed" ? (
           <Image
-            src={theme === "light" ? "/logo.png" : "/logo.png"}
+            src={theme === "light" ? "/logo-icon.png" : "/logo-icon.png"}
             width={50}
             height={50}
             alt="Radhayu herbals"
@@ -32,7 +32,7 @@ export default function SideHeader() {
             width={130}
             height={130}
             alt="Radhayu herbals"
-            className="shrink-0 mx-auto"
+            className="shrink-0  rounded-sm"
           />
         )}
       </div>

@@ -1,78 +1,123 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
-const FILE_BASE = process.env.NEXT_PUBLIC_FILE_BASE;
+/* ------------------------------------------------------------------ */
+/* Helpers — shared with mobile-menu.jsx                               */
+/* ------------------------------------------------------------------ */
+
+// Sub-categories come from the `sub_categories` table.
+// Fallback keys are here in case the API serialises them differently.
+export function getSubCategories(category) {
+  const list =
+    category?.sub_categories ??
+    category?.subCategories ??
+    category?.subcategories ??
+    category?.children ??
+    [];
+
+  return Array.isArray(list) ? list : [];
+}
+
+export function categoryHref(category) {
+  return `/categories/${category.slug ?? category.id}`;
+}
+
+// ⚠️ Agar tumhara sub-category route alag hai to sirf yahi ek line badlo.
+export function subCategoryHref(category, sub) {
+  return `/categories/${category.slug}#${
+    sub.slug
+  }`;
+}
+
+export function subCategoryLabel(sub) {
+  return sub.title ?? sub.name ?? "";
+}
+
+/* ------------------------------------------------------------------ */
+/* Desktop mega menu                                                   */
+/* ------------------------------------------------------------------ */
 
 export default function CategoryMegaMenu({
-  category,
+  open = false,
+  categories = [],
+  loading = false,
   onMouseEnter,
   onMouseLeave,
+  onNavigate,
 }) {
-  if (!category) return null;
-
-  // Support both API naming styles
-  const subCategories =
-    category?.sub_categories ?? category?.subCategories ?? [];
-
-  const categorySlug = category.slug ?? category.id;
-
   return (
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="absolute inset-x-0 top-full z-40 border-t-2 border-black/50 bg-white text-black shadow-xl"
+      inert={!open}
+      aria-hidden={!open}
+      // Panel unrolls from the navbar edge (clip-path), content follows a beat
+      // later. Closing is quicker than opening so it never feels in the way.
+      className={`absolute inset-x-0 top-full hidden border-b border-t border-neutral-200 bg-white shadow-[0_18px_30px_-12px_rgba(0,0,0,0.12)] transition-[clip-path,opacity,visibility] motion-reduce:transition-none lg:block ${
+        open
+          ? "visible opacity-100 [clip-path:inset(0_0_0_0)] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          : "invisible opacity-0 [clip-path:inset(0_0_100%_0)] duration-300 ease-[cubic-bezier(0.7,0,0.84,0)]"
+      }`}
     >
-      <div className="mx-auto max-w-[1600px] px-5 py-8 md:px-10">
-        {subCategories.length === 0 ? (
-          <p className="text-sm text-neutral-500">
-            No sub-categories found for this category.
+      <div
+        className={`mx-auto max-h-[calc(100vh-130px)] max-w-[1400px] overflow-y-auto px-10 py-10 transition-[opacity,transform] motion-reduce:transition-none ${
+          open
+            ? "translate-y-0 opacity-100 delay-100 duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            : "-translate-y-2 opacity-0 duration-200 ease-in"
+        }`}
+      >
+        {loading ? (
+          <div className="grid grid-cols-5 gap-8">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="space-y-4">
+                <div className="h-5 w-28 animate-pulse rounded bg-neutral-200" />
+                <div className="h-4 w-36 animate-pulse rounded bg-neutral-100" />
+                <div className="h-4 w-24 animate-pulse rounded bg-neutral-100" />
+                <div className="h-4 w-32 animate-pulse rounded bg-neutral-100" />
+              </div>
+            ))}
+          </div>
+        ) : categories.length === 0 ? (
+          <p className="text-[15px] text-neutral-500">
+            No categories available.
           </p>
         ) : (
-          <div className="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-4 lg:grid-cols-6">
-            {subCategories.map((sub) => {
-              const image =
-                sub?.pictures?.[0] || sub?.picture || sub?.image || null;
-
-              const imageSrc = image
-                ? image.startsWith("http")
-                  ? image
-                  : `${FILE_BASE}/${image}`
-                : null;
-
-              const subSlug = sub.slug ?? sub.id;
+          <div
+            className="grid gap-x-8 gap-y-10"
+            style={{
+              gridTemplateColumns: "repeat(auto-fill, minmax(150px, 0.5fr))",
+            }}
+          >
+            {categories.map((category) => {
+              const subs = getSubCategories(category);
 
               return (
-                <Link
-                  key={sub.id}
-                  href={`/categories/${categorySlug}#${subSlug}`}
-                  className="group block "
-                >
-                  {/* Image */}
-                  <div className="relative aspect-square w-full overflow-hidden bg-neutral-100">
-                    {imageSrc ? (
-                      <Image
-                        src={imageSrc}
-                        alt={sub.title || "Category"}
-                        fill
-                        sizes="(max-width: 768px) 45vw, (max-width: 1024px) 25vw, 15vw"
-                        className="object-cover    rounded-md transition-transform duration-300 group-hover:scale-105"
-                      />  
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-neutral-100 px-3 text-center">
-                        <span className="text-xs font-medium text-neutral-500">
-                          {sub.title}
-                        </span>
-                      </div>
-                    )}
-                  </div>
+                <div key={category.id} className="min-w-0">
+                  <Link
+                    href={categoryHref(category)}
+                    onClick={onNavigate}
+                    className="block text-[15px] font-semibold leading-snug text-neutral-900 transition-colors hover:text-neutral-600"
+                  >
+                    {category.title}
+                  </Link>
 
-                  {/* Title */}
-                  <p className="mt-3 text-center text-[13px] font-bold uppercase tracking-wide text-neutral-900 transition-colors group-hover:text-black">
-                    {sub.title}
-                  </p>
-                </Link>
+                  {subs.length > 0 && (
+                    <ul className="mt-5 space-y-4">
+                      {subs.map((sub) => (
+                        <li key={sub.id}>
+                          <Link
+                            href={subCategoryHref(category, sub)}
+                            onClick={onNavigate}
+                            className="block text-[15px] leading-tight text-neutral-500 transition-colors hover:text-neutral-900"
+                          >
+                            {subCategoryLabel(sub)}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               );
             })}
           </div>

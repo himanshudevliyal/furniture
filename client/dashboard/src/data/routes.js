@@ -1,4 +1,12 @@
-import { FileQuestion, LayoutDashboard, User, Users } from "lucide-react";
+import {
+  Briefcase,
+  ClipboardList,
+  FileQuestion,
+  FileText,
+  LayoutDashboard,
+  User,
+  Users,
+} from "lucide-react";
 
 export const ROLES = {
   ADMIN: "admin",
@@ -98,22 +106,66 @@ export const sidebarData = [
       },
     ],
   },
+
+{
+  title: "Blogs",
+  url: "/blogs?page=1&limit=10",
+  icon: Users,
+  roles: [ROLES.ADMIN],
+  isVisible: true,
+  items: [
+    {
+      title: "Create",
+      url: "/blogs/create",
+      roles: [ROLES.ADMIN],
+      isVisible: true,
+    },
+    {
+      title: "Edit",
+      url: "/blogs/:id/edit",
+      roles: [ROLES.ADMIN],
+      isVisible: false,
+    },
+  ],
+},
+
   {
-    title: "Orders",
-    url: "/orders?page=1&limit=10",
+    title: "Product Inquiries",
+    url: "/product-inquiries?page=1&limit=10",
     icon: Users,
     roles: [ROLES.ADMIN],
     isVisible: true,
     items: [
       {
-        title: "Create",
-        url: "/orders/create",
+        title: "View",
+        url: "/product-inquiries/:id",
         roles: [ROLES.ADMIN],
-        isVisible: true,
+        isVisible: false,
       },
       {
         title: "Edit",
-        url: "/orders/:id/edit",
+        url: "/product-inquiries/:id/edit",
+        roles: [ROLES.ADMIN],
+        isVisible: false,
+      },
+    ],
+  },
+  {
+    title: "Project Quotes",
+    url: "/project-quotes?page=1&limit=10",
+    icon: FileText,
+    roles: [ROLES.ADMIN],
+    isVisible: true,
+    items: [
+      {
+        title: "View",
+        url: "/project-quotes/:id",
+        roles: [ROLES.ADMIN],
+        isVisible: false,
+      },
+      {
+        title: "Edit",
+        url: "/project-quotes/:id/edit",
         roles: [ROLES.ADMIN],
         isVisible: false,
       },
@@ -129,6 +181,48 @@ export const sidebarData = [
       {
         title: "View",
         url: "/queries/:id",
+        roles: [ROLES.ADMIN],
+        isVisible: false,
+      },
+      {
+        title: "Edit",
+        url: "/queries/:id/edit",
+        roles: [ROLES.ADMIN],
+        isVisible: false,
+      },
+    ],
+  },
+  {
+    title: "Jobs",
+    url: "/jobs?page=1&limit=10",
+    icon: Briefcase,
+    roles: [ROLES.ADMIN],
+    isVisible: true,
+    items: [
+      {
+        title: "Create",
+        url: "/jobs/create",
+        roles: [ROLES.ADMIN],
+        isVisible: true,
+      },
+      {
+        title: "Edit",
+        url: "/jobs/:id/edit",
+        roles: [ROLES.ADMIN],
+        isVisible: false,
+      },
+    ],
+  },
+  {
+    title: "Job Applications",
+    url: "/job-applications?page=1&limit=10",
+    icon: ClipboardList,
+    roles: [ROLES.ADMIN],
+    isVisible: true,
+    items: [
+      {
+        title: "View",
+        url: "/job-applications/:id",
         roles: [ROLES.ADMIN],
         isVisible: false,
       },

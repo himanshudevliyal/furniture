@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import ProductTableActions from "../../features/products/components/table/product-table-actions";
 import ProductsListing from "@/features/products/components/products-listing";
+import CategoryFilter, { SubCategoryFilter } from "@/features/products/components/category-filter";
 
 export const metadata = {
   title: "Products",
@@ -29,8 +30,15 @@ export default async function Products({ searchParams }) {
         >
           <Plus /> Add
         </Link>
+        
       }
     >
+
+<div   className="flex gap-4 ">
+      <CategoryFilter/>
+    <SubCategoryFilter/>
+</div>
+
       <ProductTableActions />
       <Suspense
         key={key}

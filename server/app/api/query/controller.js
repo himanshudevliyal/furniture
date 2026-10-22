@@ -41,6 +41,25 @@ const get = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const record = await table.QueryModel.getById(req, req.params.id);
+
+    if (!record) {
+      return res
+        .code(NOT_FOUND)
+        .send({ status: false, message: "Query not found!" });
+    }
+
+    req.body = userQuerySchema.omit({ attachment: true }).parse(req.body);
+
+    await table.QueryModel.update(req, req.params.id);
+    res.send({ status: true, message: "Query updated." });
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteById = async (req, res) => {
   try {
     const record = await table.QueryModel.getById(req, req.params.id);
@@ -60,6 +79,7 @@ const deleteById = async (req, res) => {
 export default {
   create: create,
   get: get,
+  update: update,
   deleteById: deleteById,
   getById: getById,
 };

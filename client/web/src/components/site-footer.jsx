@@ -1,22 +1,42 @@
 
 "use client";
 
-import { useState } from "react";
 
 import {
-  Asterisk,
-  Building2,
   Mail,
   Phone,
-  ArrowUpRight,
+  MapPin,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
+
+import { useCategories } from "@/hooks/use-categories";
+import { sortCategoriesByPriority } from "@/lib/category-order";
+
+import {
+  categoryHref,
+  getSubCategories,
+  subCategoryHref,
+  subCategoryLabel,
+} from "@/components/category-mega-menu";
 
 // ---------------------------------------------------------------------------
 // Data
 // ---------------------------------------------------------------------------
+
+const phoneNumbers = ["+91 9810438876", "+91 9810418877"];
+
+const addresses = [
+  {
+    label: "Display",
+    text: "Plot No. C 40, DDA Sheds, Okhla Industrial Area, Phase 1, New Delhi 110020",
+  },
+  {
+    label: "Works",
+    text: "Plot No. A7, 12/6 Street 3, Gurukul Industrial Estate, Faridabad, Haryana 121003",
+  },
+];
 
 const socialLinks = [
   { key: "facebook", label: "Facebook", href: "#", icon: FacebookIcon },
@@ -29,26 +49,8 @@ const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Our Projects", href: "/projects" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact Us", href: "/contact" },
-];
-
-const services = [
-  {
-    label: "Office Workstations",
-    href: "/services/3d-visualization",
-  },
-  {
-    label: "Executive Desks",
-    href: "/services/architectural-planning",
-  },
-  {
-    label: "Office Seating",
-    href: "/services/residential-interior",
-  },
-  {
-    label: "Storage Solutions",
-    href: "/services/commercial-interior",
-  },
 ];
 
 const legalLinks = [
@@ -121,33 +123,77 @@ function DribbbleIcon(props) {
 // Small Pieces
 // ---------------------------------------------------------------------------
 
-function FooterHeading({ children }) {
+function FooterInlineLinks({ links, label, className = "" }) {
   return (
-    <h3 className="text-xl font-semibold text-white">
-      {children}
-    </h3>
+    <nav
+      aria-label={label}
+      className={`flex flex-wrap items-center gap-x-3 gap-y-1 ${className}`}
+    >
+      {links.map((link, index) => (
+        <span key={link.label} className="flex items-center gap-3">
+          <a href={link.href} className="transition-colors hover:text-white">
+            {link.label}
+          </a>
+
+          {index < links.length - 1 && (
+            <span className="h-1 w-1 rounded-full bg-white/30" aria-hidden />
+          )}
+        </span>
+      ))}
+    </nav>
   );
 }
 
-function FooterLinkList({ links }) {
+function ContactIcon({ children }) {
   return (
-    <ul className="mt-5 space-y-3.5">
-      {links.map((link) => (
-        <li key={link.label}>
-          <a
-            href={link.href}
-            className="group flex items-center gap-2.5 text-base text-white/70 transition-colors hover:text-white"
-          >
-            <Asterisk
-              className="h-4 w-4 shrink-0 text-[#C9A165]"
-              aria-hidden
-            />
+    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-black [&_svg]:h-3.5 [&_svg]:w-3.5">
+      {children}
+    </span>
+  );
+}
 
-            {link.label}
-          </a>
-        </li>
-      ))}
-    </ul>
+// ---------------------------------------------------------------------------
+// All categories with their sub-categories
+// ---------------------------------------------------------------------------
+
+function FooterCategories() {
+  const { data } = useCategories();
+  const categories = sortCategoriesByPriority(data?.categories ?? []);
+
+  if (!categories.length) return null;
+
+  return (
+    <div className="grid grid-cols-2 gap-x-5 gap-y-6 border-b border-white/10 py-6 sm:grid-cols-4 xl:grid-flow-col xl:auto-cols-fr">
+      {categories.map((category) => {
+        const subs = getSubCategories(category);
+
+        return (
+          <div key={category.id}>
+            <Link
+              href={categoryHref(category)}
+              className="block text-sm font-semibold leading-snug text-white transition-colors hover:text-white"
+            >
+              {category.title}
+            </Link>
+
+            {subs.length > 0 && (
+              <ul className="mt-2.5 space-y-1">
+                {subs.map((sub) => (
+                  <li key={sub.id}>
+                    <Link
+                      href={subCategoryHref(category, sub)}
+                      className="text-[13px] leading-snug text-white/65 transition-colors hover:text-white"
+                    >
+                      {subCategoryLabel(sub)}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
@@ -156,23 +202,12 @@ function FooterLinkList({ links }) {
 // ---------------------------------------------------------------------------
 
 export default function SiteFooter() {
-  const [email, setEmail] = useState("");
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-
-    // Wire up to your newsletter provider / API route
-    console.log("subscribe:", email);
-
-    setEmail("");
-  };
-
   return (
-    <footer className="relative overflow-hidden bg-[#0B0A08] text-white">
+    <footer className="relative overflow-hidden bg-gradient-to-r from-black via-[#1c1c1c] to-[#4d4d4d] text-white">
       {/* Decorative diamond pattern, bottom-left */}
       <svg
         aria-hidden
-        className="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 text-white/[0.05]"
+        className="pointer-events-none absolute -bottom-16 -left-16 h-72 w-72 text-white/[0.04]"
         viewBox="0 0 200 200"
         fill="none"
       >
@@ -191,38 +226,97 @@ export default function SiteFooter() {
       </svg>
 
       <div className="relative mx-auto max-w-[1600px] px-6 sm:px-10">
+
         {/* ---------------------------------------------------------------- */}
-        {/* Top Bar */}
+        {/* Top Bar — logo, contact details, social */}
         {/* ---------------------------------------------------------------- */}
 
-        <div className="flex flex-col gap-6 border-b border-white/10 py-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
-     <div className="flex items-center gap-3">
-  <Image
-    src="/logo-5.png"
-    alt="Natraj Furniture"
-    width={180}
-    height={60}
-    className="h-14 w-auto object-contain"
-    priority
-  />
-</div>
+        <div className="flex flex-col gap-6 border-b border-white/10 py-5 lg:flex-row lg:items-center lg:gap-10">
 
-          <div className="hidden h-10 w-px bg-white/15 lg:block" />
+          <div className="flex shrink-0 items-center gap-3">
+            <Image
+              src="/logo-5.png"
+              alt="Natraj Furniture"
+              width={180}
+              height={60}
+              className="h-10 w-auto object-contain"
+            />
+          </div>
 
-          <p className="max-w-2xl text-base leading-relaxed text-white/70">
-            Creating modern and functional workspaces with thoughtfully
-            designed office furniture, workstations, seating, storage,
-            and customized solutions for businesses and professional
-            environments.
-          </p>
+          <div className="hidden h-12 w-px shrink-0 bg-white/15 lg:block" />
 
-          <div className="flex items-center gap-3">
+          <div className="grid flex-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+
+            {/* Email */}
+            <div className="flex items-start gap-3">
+              <ContactIcon>
+                <Mail className="h-4 w-4" aria-hidden />
+              </ContactIcon>
+
+              <div>
+                <p className="text-sm font-semibold text-white">
+                  E-mail Us
+                </p>
+
+                <a
+                  href="mailto:sales@natrajfurniture.com"
+                  className="break-all text-[13px] text-white/70 transition-colors hover:text-white"
+                >
+                  sales@natrajfurniture.com
+                </a>
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div className="flex items-start gap-3">
+              <ContactIcon>
+                <Phone className="h-4 w-4" aria-hidden />
+              </ContactIcon>
+
+              <div>
+                <p className="text-sm font-semibold text-white">
+                  Contact Us
+                </p>
+
+                {phoneNumbers.map((phone) => (
+                  <a
+                    key={phone}
+                    href={`tel:${phone.replace(/\s/g, "")}`}
+                    className="flex min-h-6 items-center text-[13px] text-white/70 transition-colors hover:text-white"
+                  >
+                    {phone}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Addresses */}
+            {addresses.map((address) => (
+              <div key={address.label} className="flex items-start gap-3">
+                <ContactIcon>
+                  <MapPin className="h-4 w-4" aria-hidden />
+                </ContactIcon>
+
+                <div>
+                  <p className="text-sm font-semibold text-white">
+                    {address.label}
+                  </p>
+
+                  <p className="text-[13px] leading-snug text-white/70">
+                    {address.text}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex shrink-0 items-center gap-3">
             {socialLinks.map(({ key, label, href, icon: Icon }) => (
               <a
                 key={key}
                 href={href}
                 aria-label={label}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition-colors hover:bg-white hover:text-[#0B0A08]"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white transition-all hover:border-[#e30613] hover:bg-[#e30613] hover:text-white"
               >
                 <Icon className="h-4 w-4" aria-hidden />
               </a>
@@ -231,154 +325,33 @@ export default function SiteFooter() {
         </div>
 
         {/* ---------------------------------------------------------------- */}
-        {/* Main Columns */}
+        {/* Categories */}
         {/* ---------------------------------------------------------------- */}
 
-        <div className="grid grid-cols-1 gap-12 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {/* Newsletter */}
-
-          <div>
-            <h3 className="text-[28px] font-semibold leading-snug text-white sm:text-3xl">
-              Stay Updated with Modern Workspace Solutions
-            </h3>
-
-            <p className="mt-4 text-base leading-relaxed text-white/65">
-              Get the latest updates on office furniture, workplace
-              trends, new products, and customized workspace solutions
-              from Natraj Furniture.
-            </p>
-
-            <form
-              onSubmit={handleSubscribe}
-              className="mt-6 flex items-center justify-between gap-3 border-b border-white/25 pb-3"
-            >
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter Email Address*"
-                className="w-full bg-transparent text-base text-white placeholder:text-white/40 focus:outline-none"
-              />
-
-              <button
-                type="submit"
-                aria-label="Subscribe"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF7A] to-[#8A6B3F] text-[#0B0A08] transition-transform hover:scale-105"
-              >
-                <ArrowUpRight
-                  className="h-4 w-4"
-                  aria-hidden
-                />
-              </button>
-            </form>
-          </div>
-
-          {/* Quick Links */}
-
-          <div>
-            <FooterHeading>Quick Links</FooterHeading>
-
-            <FooterLinkList links={quickLinks} />
-          </div>
-
-          {/* Our Services */}
-
-          <div>
-            <FooterHeading>Our Products</FooterHeading>
-
-            <FooterLinkList links={services} />
-          </div>
-
-          {/* Get In Touch */}
-
-          <div>
-            <FooterHeading>Get In Touch</FooterHeading>
-
-            <div className="mt-5 space-y-5">
-              {/* Email */}
-
-              <div className="flex items-start gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF7A] to-[#8A6B3F]">
-                  <Mail
-                    className="h-4 w-4 text-[#0B0A08]"
-                    aria-hidden
-                  />
-                </span>
-
-                <div>
-                  <p className="text-base font-semibold text-white">
-                    E-mail Us
-                  </p>
-
-                  <a
-                    href="mailto:info@natrajfurniture.com"
-                    className="text-base text-white/70 transition-colors hover:text-white"
-                  >
-                    info@natrajfurniture.com
-                  </a>
-                </div>
-              </div>
-
-              {/* Phone */}
-
-              <div className="flex items-start gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF7A] to-[#8A6B3F]">
-                  <Phone
-                    className="h-4 w-4 text-[#0B0A08]"
-                    aria-hidden
-                  />
-                </span>
-
-                <div>
-                  <p className="text-base font-semibold text-white">
-                    Contact Us
-                  </p>
-
-                  <a
-                    href="tel:+911141858585"
-                    className="text-base text-white/70 transition-colors hover:text-white"
-                  >
-                    +91 11 4185 8585
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FooterCategories />
 
         {/* ---------------------------------------------------------------- */}
-        {/* Bottom Bar */}
+        {/* Bottom Bar — copyright | quick links | legal links */}
         {/* ---------------------------------------------------------------- */}
 
-        <div className="flex flex-col items-center gap-4 border-t border-white/10 py-6 text-base text-white/60 sm:flex-row sm:justify-between">
-          <p>
+        <div className="grid grid-cols-1 items-center gap-3 py-4 text-[13px] text-white/60 lg:grid-cols-[1fr_auto_1fr] lg:gap-6 md:pr-20">
+
+          <p className="text-center lg:text-left">
             Copyright © {new Date().getFullYear()} Natraj Furniture.
             All Rights Reserved.
           </p>
 
-          <div className="flex items-center gap-3">
-            {legalLinks.map((link, index) => (
-              <span
-                key={link.label}
-                className="flex items-center gap-3"
-              >
-                <a
-                  href={link.href}
-                  className="transition-colors hover:text-white"
-                >
-                  {link.label}
-                </a>
+          <FooterInlineLinks
+            links={quickLinks}
+            label="Quick links"
+            className="justify-center"
+          />
 
-                {index < legalLinks.length - 1 && (
-                  <span
-                    className="h-1 w-1 rounded-full bg-[#C9A165]"
-                    aria-hidden
-                  />
-                )}
-              </span>
-            ))}
-          </div>
+          <FooterInlineLinks
+            links={legalLinks}
+            label="Legal"
+            className="justify-center lg:justify-end"
+          />
         </div>
       </div>
     </footer>

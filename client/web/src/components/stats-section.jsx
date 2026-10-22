@@ -15,7 +15,7 @@ export default function StatsSection() {
     Natraj by the numbers
   </h2>
 
-  <p className="mt-4  leading-relaxed text-neutral-400 text-xl">
+  <p className="mt-4  leading-relaxed text-neutral-600 text-xl">
     Built around quality, customization and complete furniture solutions for
     modern professional workspaces.
   </p>

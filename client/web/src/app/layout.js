@@ -9,42 +9,49 @@ import { NuqsProvider } from "@/providers/nuqs-provider";
 import ProductProvider from "@/providers/product-povider";
 import CartSidebar from "@/components/ui/cart-sidebar";
 import { Toaster } from "sonner";
+import FloatingCta from "@/components/cta";
+import FooterCta from "@/components/footer-cta";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 
+// Latin-only WOFF2 subsets (~18 KB each) of the original OPPOSans TTFs
+// (~10 MB each, mostly CJK glyphs the site never shows). Only the weights the
+// site uses are loaded: 400, 500 and 700 (600 resolves to 700).
 const oppoSans = localFont({
   src: [
     {
-      path: "../../public/font/opposans/OPPOSansLight.ttf",
-      weight: "300",
-      style: "normal",
-    },
-    {
-      path: "../../public/font/opposans/OPPOSansRegular.ttf",
+      path: "../../public/font/opposans-latin/OPPOSansRegular-latin.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../public/font/opposans/OPPOSansMedium.ttf",
+      path: "../../public/font/opposans-latin/OPPOSansMedium-latin.woff2",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../../public/font/opposans/OPPOSansBold.ttf",
+      path: "../../public/font/opposans-latin/OPPOSansBold-latin.woff2",
       weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../../public/font/opposans/OPPOSansHeavy.ttf",
-      weight: "900",
       style: "normal",
     },
   ],
   variable: "--font-oppo",
+  display: "swap",
 });
 
 export const metadata = {
-  title: "Natraj Furniture",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Natraj Furniture",
+    template: `%s | ${SITE_NAME}`,
+  },
   description:
     "Modern office furniture, workstations, seating, storage, and customized workspace solutions by Natraj Furniture.",
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    locale: "en_IN",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export default function RootLayout({ children }) {
@@ -60,7 +67,9 @@ export default function RootLayout({ children }) {
           <NuqsProvider>
             <Navbar />
             {children}
+            <FooterCta />
             <SiteFooter />
+            <FloatingCta />
             <CartSidebar />
             <Toaster position="top-center" />
           </NuqsProvider>

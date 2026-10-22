@@ -10,6 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Section } from "./layout/section";
+import Heading from "./layout/heading";
 
 const testimonials = [
   {
@@ -52,18 +53,22 @@ export default function Testimonials() {
      
         {/* Heading */}
         
- <div className="mx-auto max-w-5xl px-5 text-center sm:px-8  mb-8">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-3 py-1 text-[11px] font-medium tracking-wide text-neutral-500">
-          <span className="h-1.5 w-1.5 rounded-full bg-neutral-400" />
-          TESTIMONIAL
-        </span>
-        <h2
-          id="testimonials-heading"
-          className="mt-4 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl"
-        >
-          What They&rsquo;re Saying
-        </h2>
-      </div>
+
+
+
+
+
+   <Heading
+       
+          heading="Trusted by Our Clients"
+          subheading=" What They&rsquo;re Saying"
+          eyebrow ="TESTIMONIAL"
+          eyebrowClassName="justify-center"
+          headingClassName="text-3xl sm:text-4xl lg:text-5xl "
+          className="max-w-5xl mx-auto text-center"
+        />
+
+
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((testimonial, index) => (

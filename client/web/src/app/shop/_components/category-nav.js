@@ -18,7 +18,6 @@ export default function CategoryNav({ categories = [] }) {
   if (!categories.length) return null;
 
   return (
-    <Section className="border-b border-neutral-200">
         <Carousel
           opts={{
             align: "start",
@@ -33,8 +32,7 @@ export default function CategoryNav({ categories = [] }) {
     return (
       <CarouselItem
         key={cat.id}
-        className=" pl-4"
-      >
+className="pl-3 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-[14.2857%]"      >
         <Link
           href={`/categories/${cat.slug}`}
           className="group w-h-30 flex  flex-col items-center gap-3 sm:w-[160px]"
@@ -78,6 +76,5 @@ export default function CategoryNav({ categories = [] }) {
           <CarouselPrevious className="hidden -left-4 lg:flex" />
           <CarouselNext className="hidden -right-4 lg:flex" />
         </Carousel>
-      </Section>
   );
 }

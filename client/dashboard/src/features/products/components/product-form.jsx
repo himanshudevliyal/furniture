@@ -33,12 +33,17 @@ import ProductMaterialsForm from "./product-materials-form";
 import ProductSpecificationsForm from "./product-specifications-form";
 import ProductFileListForm from "./product-file-list-form";
 import ProductGalleryForm from "./product-gallery-form";
+import TextEditor from "@/components/editor";
+import StringArrayField from "@/components/string-array-field";
+import FileUrlUploader from "@/components/file-url-uploader";
 
 const defaultValues = {
   category_id: "",
   sub_category_id: "",
   title: "",
+  thumbnail: "",
   short_description: "",
+  colors: [],
   content: "",
   is_active: true,
   sort_order: 0,
@@ -46,6 +51,7 @@ const defaultValues = {
   overview: {
     heading: "",
     descriptions: [],
+    image: "",
     features: { heading: "", list: [] },
   },
   details: { sections: [], banner: { image: "" } },
@@ -222,6 +228,26 @@ export default function ProductForm({ id, type, callback }) {
             {errors?.title && <FieldError message={errors?.title?.message} />}
           </div>
 
+          {/* main image - used on product cards/listings */}
+          <div>
+            <Label>Main image</Label>
+            <Controller
+              control={control}
+              name="thumbnail"
+              render={({ field }) => (
+                <FileUrlUploader
+                  value={field.value}
+                  onUploaded={field.onChange}
+                  accept="image/*"
+                  label="Upload main image"
+                />
+              )}
+            />
+            <p className="text-muted-foreground mt-1 text-xs">
+              Shown on product cards/listings.
+            </p>
+          </div>
+
           {/* sort order */}
           <div>
             <Label htmlFor="sort_order">Sort order</Label>
@@ -308,6 +334,32 @@ export default function ProductForm({ id, type, callback }) {
         <div className="space-y-4">
           <h3 className="text-2xl font-semibold">Gallery</h3>
           <ProductGalleryForm />
+        </div>
+
+        <Separator className="col-span-full" />
+
+        {/* colors - separate from specifications, multiple values */}
+        <div className="space-y-4">
+          <h3 className="text-2xl font-semibold">Colors</h3>
+          <StringArrayField
+            control={control}
+            name="colors"
+            placeholder="e.g. Matte Black"
+            addLabel="Add color"
+          />
+        </div>
+
+        <Separator className="col-span-full" />
+
+        <div className="space-y-4">
+          <h3 className="text-2xl font-semibold">Content</h3>
+          <Controller
+            control={control}
+            name="content"
+            render={({ field }) => (
+              <TextEditor value={field.value} onChange={field.onChange} />
+            )}
+          />
         </div>
 
         <Separator className="col-span-full" />

@@ -23,7 +23,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -95,32 +95,31 @@ export default function ProductTabs({ product }) {
   const otherDetailsContent = product?.content ?? null;
 
   const fallbackImage = resolveImage(hero.images?.[0]) ?? "/img/products.png";
+  const overviewImage = resolveImage(overview.image);
+  console.log(overviewImage)
 
   const overviewDescriptions = (overview.descriptions ?? []).filter(Boolean);
   const overviewFeatures = overview.features?.list?.filter(Boolean) ?? [];
   const detailsBanner = resolveImage(details.banner?.image) ?? fallbackImage;
 
   return (
-    <Tabs defaultValue="overview" className="w-full">
+    <Tabs defaultValue="overview" className="    mx-auto  w-full">
       {/* ---------------- Tab bar ---------------- */}
-      <div className="sticky top-[95px] z-10 border-b bg-gray-100 py-3">
+      <div className="  z-10 border-b bg-gray-100">
+      <div className="max-w-7xl w-full mx-auto">
         <TabsList
           className="
-            scrollbar-none
-            h-auto
             w-full
-            justify-start
-            gap-2
+            justify-start!
+            gap-4
             overflow-x-auto
             rounded-none
-            border-b
-            border-neutral-200
-            bg-gray-50
             px-4
             py-2
-            sm:justify-center
-            lg:gap-3
-            lg:px-8
+            lg:gap-0
+            lg:px-3!
+            
+            h-auto!
           "
         >
           {tabs.map(({ value, label, icon: Icon }) => (
@@ -129,26 +128,27 @@ export default function ProductTabs({ product }) {
               value={value}
               className={cn(
                 `
-                h-20
+    
+                       scrollbar-none
+
                 flex
                 min-w-[150px]
                 shrink-0
                 items-center
                 justify-center
                 gap-2.5
-                rounded-sm
-                border-0
-                bg-gray-50
-                px-5
-                py-4
-                text-lg
-                font-normal
+               rounded-none
+                border-0!
+            shadow-none!
+               font-medium
+                px-2
+                py-3
+                text-lg 
+              
                 text-neutral-600
-                shadow-none
+           bg-transparent         
                 transition-all
                 duration-200
-                hover:bg-gray-100
-                hover:text-neutral-900
                 `,
                 `
                 data-[state=active]:bg-black
@@ -167,6 +167,7 @@ export default function ProductTabs({ product }) {
             </TabsTrigger>
           ))}
         </TabsList>
+        </div>
       </div>
 
       <Section className="py-0">
@@ -221,16 +222,18 @@ export default function ProductTabs({ product }) {
                 </Collapsible>
               )}
             </div>
-
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-muted lg:aspect-auto">
+{overviewImage&&
+            <div className="relative w-full rounded-lg  lg:aspect-auto ">
               <Image
-                src={fallbackImage}
+                src={overviewImage}
                 alt={overview.heading || product?.title || "Product overview"}
-                fill
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
+                width={500}
+                height={500}
+              
+                className="  md:sticky md:top-30  w-full  object-contain"
               />
             </div>
+}
           </div>
         </TabsContent>
 
@@ -362,11 +365,12 @@ export default function ProductTabs({ product }) {
         {/* ---------------- Specifications ---------------- */}
         <TabsContent value="specifications" className="mt-0">
           <div className="px-4 py-10 lg:px-8">
-            <h2 className="mb-8 text-4xl font-semibold tracking-tight">
-              Specifications
-            </h2>
+        
 
             {specifications.length ? (
+                 <> <h2 className="mb-8 text-4xl font-semibold tracking-tight">
+              Specifications
+            </h2>
               <Table className="max-w-2xl overflow-hidden rounded-lg border">
                 <TableBody>
                   {specifications.map(({ label, value }, i) => (
@@ -384,6 +388,7 @@ export default function ProductTabs({ product }) {
                   ))}
                 </TableBody>
               </Table>
+              </>
             ) : (
               <EmptyState label="No specifications listed for this product yet." />
             )}
@@ -393,124 +398,112 @@ export default function ProductTabs({ product }) {
         {/* ---------------- Other Details ---------------- */}
         <TabsContent value="other-details" className="mt-0">
           <div className="px-4 py-10 lg:px-8">
-            <h2 className="mb-8 text-4xl font-semibold tracking-tight">
+         
+
+            {otherDetailsContent ? (
+ <>  <h2 className="mb-8 text-4xl font-semibold tracking-tight">
               Other Details
             </h2>
 
-            {otherDetailsContent ? (
               <div
                 className="product-content"
 
                 dangerouslySetInnerHTML={{ __html: otherDetailsContent }}
-              />
+              /> </>
             ) : (
               <EmptyState label="No other details available for this product yet." />
             )}
+           
           </div>
         </TabsContent>
 
         {/* ---------------- 3D Models ---------------- */}
-        <TabsContent value="3d-models" className="mt-0">
-          {models3d.length ? (
-            <div className="flex flex-col divide-y px-4 lg:px-8">
-              {models3d.map((model, i) => (
-                <div
-                  key={model.title || i}
-                  className="flex flex-col items-center gap-4 py-12 text-center"
-                >
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-                    <FileArchive className="h-9 w-9 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl font-semibold">
-                      {model.title || "3D Model"}
-                    </h2>
-                    {model.fileType && (
-                      <p className="text-lg uppercase text-muted-foreground">
-                        {model.fileType} file
-                      </p>
-                    )}
-                  </div>
-                  <Button
-                    asChild
-                    size="lg"
-                    className="
-                      h-11
-                      rounded-md
-                      bg-black
-                      px-6
-                      text-sm
-                      font-medium
-                      text-white
-                      shadow-none
-                      hover:bg-neutral-800
-                    "
-                  >
-                    <a className="flex" href={resolveImage(model.file)} download>
-                      <Download className="mr-2 h-4 w-4" />
-                      Download
-                    </a>
-                  </Button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState label="No 3D models available for this product yet." />
-          )}
-        </TabsContent>
+      <TabsContent value="3d-models" className="mt-0">
+  {models3d.length ? (
+    <div className="grid grid-cols-1 gap-6 px-4 py-6 sm:grid-cols-2 lg:grid-cols-3 lg:px-8">
+      {models3d.map((model, i) => (
+        <div
+          key={model.title || i}
+          className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-background p-8 text-center"
+        >
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
+            <FileArchive className="h-9 w-9 text-muted-foreground" />
+          </div>
 
-        {/* ---------------- Downloads ---------------- */}
-        <TabsContent value="downloads" className="mt-0">
-          {downloads.length ? (
-            <div className="flex flex-col divide-y px-4 lg:px-8">
-              {downloads.map((file, i) => (
-                <div
-                  key={file.title || i}
-                  className="flex flex-col items-center gap-4 py-12 text-center"
-                >
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-                    <FileText className="h-9 w-9 text-muted-foreground" />
-                  </div>
-                  <div>
-                    <h2 className="text-3xl font-semibold">
-                      {file.title || "Download"}
-                    </h2>
-                    {file.fileType && (
-                      <p className="text-lg uppercase text-muted-foreground">
-                        {file.fileType} file
-                      </p>
-                    )}
-                  </div>
+          <div>
+            <h2 className="text-2xl font-semibold">
+              {model.title || "3D Model"}
+            </h2>
 
-                  <Button
-                    asChild
-                    className="
-                      h-11
-                      w-auto
-                      shrink-0
-                      rounded-md
-                      bg-black
-                      px-6
-                      flex
-                      text-sm
-                      font-medium
-                      text-white
-                      shadow-none
-                      hover:bg-neutral-800
-                    "
-                  >
-                    <a href={resolveImage(file.file)} className="flex" download>
-                      <Download className="mr-2 h-4 w-4" />
-                      Download
-                    </a>
-                  </Button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState label="No downloads available for this product yet." />
-          )}
-        </TabsContent>
+            {model.fileType && (
+              <p className="text-sm uppercase text-muted-foreground">
+                {model.fileType} file
+              </p>
+            )}
+          </div>
+
+          <a
+            href={resolveImage(model.file)}
+            download
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "h-11 rounded-md bg-black px-6 text-sm font-medium text-white shadow-none hover:bg-neutral-800"
+            )}
+          >
+            <Download className="mr-2 h-4 w-4" />
+            Download
+          </a>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <EmptyState label="No 3D models available for this product yet." />
+  )}
+</TabsContent>
+
+{/* ---------------- Downloads ---------------- */}
+<TabsContent value="downloads" className="mt-0">
+  {downloads.length ? (
+    <div className="grid grid-cols-1 gap-6 px-4 py-6 sm:grid-cols-2 lg:grid-cols-3 lg:px-8">
+      {downloads.map((file, i) => (
+        <div
+          key={file.title || i}
+          className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-background p-8 text-center"
+        >
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
+            <FileText className="h-9 w-9 text-muted-foreground" />
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-semibold">
+              {file.title || "Download"}
+            </h2>
+
+            {file.fileType && (
+              <p className="text-sm uppercase text-muted-foreground">
+                {file.fileType} file
+              </p>
+            )}
+          </div>
+
+          <a
+            href={resolveImage(file.file)}
+            download
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "h-11 rounded-md bg-black px-6 text-sm font-medium text-white shadow-none hover:bg-neutral-800"
+            )}
+          >
+            <Download className="mr-2 h-4 w-4" />
+            Download
+          </a>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <EmptyState label="No downloads available for this product yet." />
+  )}
+</TabsContent>
       </Section>
     </Tabs>
   );
