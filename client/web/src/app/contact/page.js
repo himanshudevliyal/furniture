@@ -91,7 +91,7 @@ export default function ContactPage() {
   return (
     <>
       <BreadcrumbBanner
-        backgroundImage ="/img/projects/imgi_5_Desks_Banner_2020.jpg"
+        backgroundImage ="/img/projects/meeting/meeting-10.jpg"
         title="Contact Us"
         breadcrumbs={[
           { label: "Home", href: "/" },

@@ -66,6 +66,11 @@ const slides = [
 
 const AUTOPLAY_MS = 3000;
 
+// Only the first slide title is the page <h1>; the rest are <h2>.
+function SlideTitle({ as: Tag, ...props }) {
+  return <Tag {...props} />;
+}
+
 export default function HeroSlider() {
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
@@ -155,7 +160,8 @@ export default function HeroSlider() {
                 <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-transparent to-transparent" />
 
                 <div className="absolute inset-0 mx-auto flex max-w-[1600px] flex-col justify-end px-5 pb-28 md:px-10 md:pb-24">
-                 <h1
+                 <SlideTitle
+  as={index === 0 ? "h1" : "h2"}
   className="
     max-w-[16ch]
     text-2xl
@@ -170,7 +176,7 @@ export default function HeroSlider() {
   "
 >
   {slide.title}
-</h1>
+</SlideTitle>
 
 <p
   className="

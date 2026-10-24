@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { useCategories } from "@/hooks/use-categories";
 import { useProducts } from "@/hooks/use-products";
+import { useHydrated } from "@/hooks/use-hydrated";
 import ProductCard from "@/components/ProductCard";
 import CategoryNav from "./category-nav";
 import { FilterSidebar } from "./filter-sidebar";
@@ -47,16 +48,22 @@ export default function ProductFilter() {
   const isAnyFilterActive =
     categoryFilters.length > 0 || subCategoryFilters.length > 0;
 
+  // Until hydration finishes, render the same "loading" state the server
+  // sent, even if the navbar already filled the categories cache.
+  const hydrated = useHydrated();
+
   const {
     data: categoriesData,
-    isLoading: categoriesLoading,
+    isLoading: categoriesQueryLoading,
   } = useCategories();
+  const categoriesLoading = !hydrated || categoriesQueryLoading;
 
   const {
     data: productsData,
-    isLoading: productsLoading,
+    isLoading: productsQueryLoading,
     isError: productsIsError,
   } = useProducts(searchParamsStr);
+  const productsLoading = !hydrated || productsQueryLoading;
 
   const categories = categoriesData?.categories ?? [];
 
@@ -98,9 +105,9 @@ export default function ProductFilter() {
           Shop
         </p>
 
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl mb-8">
+        <h2 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl mb-8">
           All Categories
-        </h1>
+        </h2>
 
 
             {!categoriesLoading && (

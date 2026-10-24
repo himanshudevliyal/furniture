@@ -1,4 +1,5 @@
 import { BreadcrumbBanner } from "@/components/breadcrumb";
+import { getProjectCategories } from "@/lib/projects";
 import ProjectsGrid from "./_componets/products";
 
 export const metadata = {
@@ -8,20 +9,19 @@ export const metadata = {
   alternates: { canonical: "/projects" },
 };
 
-export default function OurProjects(params) {
-    return(
-        <>
-
-   <BreadcrumbBanner
-        title="Projects"
+export default function OurProjects() {
+  return (
+    <>
+      <BreadcrumbBanner
+        backgroundImage="/img/projects/workstation/workstation-013.jpg"
+        title="Our Projects"
         breadcrumbs={[
-          { label: "Projects", href: "/" },
-          { label: "project", href: "/project" },
+          { label: "Home", href: "/" },
+          { label: "Projects", href: "/projects" },
         ]}
       />
 
-
-            <ProjectsGrid></ProjectsGrid>
-        </>
-    )
+      <ProjectsGrid categories={getProjectCategories()} />
+    </>
+  );
 }

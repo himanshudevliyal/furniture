@@ -55,10 +55,11 @@ export default async function BlogDetailPage({ params }) {
     <>
       <BreadcrumbBanner
         title="Blog"
+        headingAs="p"
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "Blogs", href: "/blogs" },
-          { label: blog.title, href: `/blogs/${blog.slug}` },
+          { label: "Blogs", href: "/blog" },
+          { label: blog.title, href: `/blog/${blog.slug}` },
         ]}
       />
 

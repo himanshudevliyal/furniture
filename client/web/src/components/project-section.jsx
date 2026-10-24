@@ -15,13 +15,14 @@ import { cn } from "@/lib/utils";
 import { Section } from "./layout/section";
 import Card from "./card";
 import Heading from "./layout/heading";
-import { projectImages } from "@/app/projects/_componets/data";
 
-export default function FurnitureProductsShowcase() {
+
+// `projects` comes from the server (lib/projects.js), read from /img/projects.
+export default function FurnitureProductsShowcase({ projects = [] }) {
   const [api, setApi] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const products = projectImages.slice(0, 10);
+  const products = projects;
 
   useEffect(() => {
     if (!api) return;
@@ -86,7 +87,7 @@ export default function FurnitureProductsShowcase() {
           <button
             key={product.image}
             type="button"
-            aria-label={`Go to ${product.title}`}
+            aria-label={`Go to project ${index + 1}`}
             aria-current={index === activeIndex}
             onClick={() => api?.scrollTo(index)}
             className="group flex h-6 min-w-6 items-center justify-center"

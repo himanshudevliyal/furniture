@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
@@ -22,10 +23,15 @@ function getHoverImage(product) {
 }
 
 export default function ProductCard({ product }) {
+  // If the hover photo is missing on the server, drop the layer instead of
+  // showing a broken image on hover.
+  const [failedHover, setFailedHover] = useState(null);
+
   if (!product) return null;
 
   const imageSrc = resolveFileUrl(product.thumbnail);
-  const hoverSrc = imageSrc ? resolveFileUrl(getHoverImage(product)) : null;
+  const hoverCandidate = imageSrc ? resolveFileUrl(getHoverImage(product)) : null;
+  const hoverSrc = hoverCandidate !== failedHover ? hoverCandidate : null;
 
   return (
     <Link
@@ -66,6 +72,7 @@ export default function ProductCard({ product }) {
               >
                 <Image
                   src={hoverSrc}
+                  onError={() => setFailedHover(hoverSrc)}
                   alt=""
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 22vw"

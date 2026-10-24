@@ -102,6 +102,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="section bg-gray-50 min-h-screen py-8">
+      <h1 className="sr-only">Send a product inquiry</h1>
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* FORM SECTION */}

@@ -26,7 +26,7 @@ export default function AboutPage() {
         title="About Us"
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "About Us", href: "/about-us" },
+          { label: "About Us", href: "/about" },
         ]}
       />
 

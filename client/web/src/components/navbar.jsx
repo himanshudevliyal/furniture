@@ -42,7 +42,7 @@ const navLinks = [
   { label: "About Us", href: "/about" },
   { label: "Projects", href: "/projects" },
   { label: "Our Blogs", href: "/blog" },
-  { label: "Careers", href: "/careers" },
+  { label: "Our Clients", href: "/clients" },
   { label: "Contact Us", href: "/contact" },
 
 ];

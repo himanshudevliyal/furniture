@@ -8,6 +8,9 @@ export function BreadcrumbBanner({
   breadcrumbs = [],
   backgroundImage = "/hero-bg.png",
   height = "h-[400px] ",
+  // Pages whose own content has the main <h1> (e.g. a blog article) pass
+  // headingAs="p" so the page keeps a single <h1>.
+  headingAs: Heading = "h1",
 }) {
   return (
     <section className={`relative ${height} overflow-hidden`}>
@@ -54,9 +57,9 @@ export function BreadcrumbBanner({
         </nav>
 
         {/* Title */}
-        <h1 className="text-3xl font-bold md:text-5xl lg:text-4xl">
+        <Heading className="text-3xl font-bold md:text-5xl lg:text-4xl">
           {title}
-        </h1>
+        </Heading>
       </div>
     </section>
   );

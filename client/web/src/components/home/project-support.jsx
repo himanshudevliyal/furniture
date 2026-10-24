@@ -34,7 +34,7 @@ export default function ProjectSupport() {
       <div className="overflow-hidden rounded-sm">
         <div className="relative aspect-[16/7] w-full sm:aspect-[16/5]">
           <Image
-            src="/img/projects/project-support.png"
+            src="/img/project-support.png"
             alt="Open-plan office with workstations, storage, lounge seating and meeting rooms"
             fill
             sizes="(max-width: 1280px) 100vw, 1280px"
