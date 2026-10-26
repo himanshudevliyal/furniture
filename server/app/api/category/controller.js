@@ -3,7 +3,10 @@ import table from "../../db/models.js";
 import slugify from "slugify";
 import { StatusCodes } from "http-status-codes";
 import { sequelize } from "../../db/postgres.js";
-import { categorySchema } from "../../validation-schema/category.schema.js";
+import {
+  categorySchema,
+  reorderSchema,
+} from "../../validation-schema/category.schema.js";
 import { cleanupFiles } from "../../helpers/cleanup-files.js";
 import { getItemsToDelete } from "../../helpers/filter.js";
 
@@ -91,6 +94,24 @@ const get = async (req, res) => {
   }
 };
 
+const reorder = async (req, res) => {
+  const transaction = await sequelize.transaction();
+
+  try {
+    const { ids } = reorderSchema.parse(req.body);
+
+    await table.CategoryModel.reorder(ids, transaction);
+    await transaction.commit();
+
+    res
+      .code(StatusCodes.OK)
+      .send({ status: true, message: "Category sequence updated." });
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
+};
+
 const deleteById = async (req, res) => {
   const transaction = await sequelize.transaction();
 
@@ -121,5 +142,6 @@ export default {
   updateById: updateById,
   getById: getById,
   get: get,
+  reorder: reorder,
   deleteById: deleteById,
 };

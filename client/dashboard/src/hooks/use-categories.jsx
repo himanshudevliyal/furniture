@@ -4,6 +4,7 @@ import {
   deleteCategory,
   fetchCategories,
   fetchCategory,
+  reorderCategories,
   updateCategory,
 } from "@/services/category-service";
 
@@ -65,6 +66,18 @@ export const useDeleteCategory = (id, callback) => {
     mutationFn: () => deleteCategory(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
+      callback?.();
+    },
+  });
+};
+
+export const useReorderCategories = (callback) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: reorderCategories,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
       callback?.();
     },
   });

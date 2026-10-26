@@ -7,3 +7,7 @@ export const categorySchema = z.object({
   meta_description: z.string().optional(),
   meta_keywords: z.string().optional(),
 });
+
+export const reorderSchema = z.object({
+  ids: z.array(z.uuid()).min(1, "At least one id is required"),
+});

@@ -4,54 +4,37 @@ import Heading from "./layout/heading";
 // Shared by the static (first paint) and animated (motion) versions of the
 // "Industries We Serve" section. No motion code in this file.
 
-const industries = [
-  "Pharmaceutical",
-  "Information Technology",
-  "Marketing & Advertising",
-  "Textile",
-  "Banking & Finance",
-  "Gems and Jewellery",
-  "Insurance",
-  "Architecture & Interior",
-  "Real Estate",
-  "Construction",
-  "Automobile",
-  "Auto Components",
-  "FMCG",
-  "Retail & E-Commerce",
-  "Healthcare",
-  "Education",
-  "Manufacturing",
-  "Agriculture",
-  "Food & Beverages",
-  "Roads & Highways",
-  "Telecom",
-  "Tourism & Hospitality",
-  "MSME",
-  "Media and Entertainment",
-];
+// One photo per industry in /public/img/industries (CC0 / public domain,
+// sources listed in /public/img/industries/SOURCES.md).
+const img = (slug) => `/img/industries/${slug}.webp`;
 
-// Existing images already in /public — reused cyclically, no new assets needed
-const images = [
-  "/img/corporate.jpg",
-  "/img/hero.png",
-  "/img/hospitality.jpg",
-  "/img/residential.jpg",
-  "/img/retail.jpg",
-  "/demo/imgi_16_h2-cate06.jpg",
-  "/demo/imgi_32_h2-brand03.jpg",
-  "/demo/imgi_33_h2-brand04.jpg",
-  "/demo/imgi_34_h2-brand05.jpg",
-  "/demo/imgi_35_h2-brand06.jpg",
-  "/demo/imgi_36_h2-brand01.jpg",
-  "/demo/imgi_37_h2-brand02.jpg",
-  "/demo/imgi_228_slider-2-banner-2.jpg",
+const industryCards = [
+  { title: "Pharmaceutical", image: img("pharmaceutical") },
+  { title: "Information Technology", image: img("information-technology") },
+  { title: "Marketing & Advertising", image: img("marketing-advertising") },
+  { title: "Textile", image: img("textile") },
+  { title: "Banking & Finance", image: img("banking-finance") },
+  // No suitable free photo found yet — keeps the earlier image.
+  { title: "Gems and Jewellery", image: "/demo/imgi_16_h2-cate06.jpg" },
+  { title: "Insurance", image: img("insurance") },
+  { title: "Architecture & Interior", image: img("architecture-interior") },
+  { title: "Real Estate", image: img("real-estate") },
+  { title: "Construction", image: img("construction") },
+  { title: "Automobile", image: img("automobile") },
+  { title: "Auto Components", image: img("auto-components") },
+  { title: "FMCG", image: img("fmcg") },
+  { title: "Retail & E-Commerce", image: img("retail-e-commerce") },
+  { title: "Healthcare", image: img("healthcare") },
+  { title: "Education", image: img("education") },
+  { title: "Manufacturing", image: img("manufacturing") },
+  { title: "Agriculture", image: img("agriculture") },
+  { title: "Food & Beverages", image: img("food-beverages") },
+  { title: "Roads & Highways", image: img("roads-highways") },
+  { title: "Telecom", image: img("telecom") },
+  { title: "Tourism & Hospitality", image: img("tourism-hospitality") },
+  { title: "MSME", image: img("msme") },
+  { title: "Media and Entertainment", image: img("media-entertainment") },
 ];
-
-const industryCards = industries.map((title, index) => ({
-  title,
-  image: images[index % images.length],
-}));
 
 export const rowOne = industryCards.filter((_, i) => i % 2 === 0);
 export const rowTwo = industryCards.filter((_, i) => i % 2 === 1);

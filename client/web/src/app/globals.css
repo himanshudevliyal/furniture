@@ -9,9 +9,9 @@
   --color-foreground: var(--foreground);
 
   /* OPPO Sans */
-  --font-sans: var(--font-oppo);
-  --font-heading: var(--font-oppo);
-  --font-mono: var(--font-oppo);
+  --font-sans: var(--font-oppo-en), var(--font-oppo);
+  --font-heading: var(--font-oppo-en), var(--font-oppo);
+  --font-mono: var(--font-oppo-en), var(--font-oppo);
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -196,7 +196,7 @@
 
   body {
     @apply bg-background text-foreground font-sans;
-    font-family: var(--font-oppo), sans-serif;
+    font-family: var(--font-oppo-en), var(--font-oppo), sans-serif;
   }
 
   button,

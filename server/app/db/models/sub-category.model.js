@@ -39,6 +39,11 @@ const init = async (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      sort_order: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
       pictures: {
         type: DataTypes.JSONB,
         defaultValue: [],
@@ -61,12 +66,19 @@ const create = async (req, transaction) => {
   const options = {};
   if (transaction) options.transaction = transaction;
 
+  // New sub categories go to the end of their category's sequence
+  const maxSortOrder = await SubCategoryModel.max("sort_order", {
+    ...options,
+    where: { category_id: req.body.category_id },
+  });
+
   const data = await SubCategoryModel.create(
     {
       title: req.body.title,
       slug: req.body.slug,
       category_id: req.body.category_id,
       featured: req.body.featured,
+      sort_order: (maxSortOrder ?? 0) + 1,
       pictures: req.body.pictures,
       meta_title: req.body.meta_title,
       meta_description: req.body.meta_description,
@@ -131,7 +143,7 @@ const get = async (req) => {
     FROM ${constants.models.SUB_CATEGORY_TABLE} sc
     LEFT JOIN ${constants.models.CATEGORY_TABLE} cat ON cat.id = sc.category_id
     ${whereClause}
-    ORDER BY sc.created_at DESC
+    ORDER BY cat.sort_order ASC, sc.sort_order ASC, sc.created_at ASC
     LIMIT :limit OFFSET :offset
   `;
 
@@ -158,6 +170,18 @@ const get = async (req) => {
   return { sub_categories: subCategories, total: count?.total ?? 0 };
 };
 
+// ids: sub category ids (of one category) in the desired display order
+const reorder = async (ids, transaction) => {
+  await Promise.all(
+    ids.map((id, index) =>
+      SubCategoryModel.update(
+        { sort_order: index + 1 },
+        { where: { id }, transaction },
+      ),
+    ),
+  );
+};
+
 const getById = async (req, id) => {
   return await SubCategoryModel.findOne({
     where: { id: req?.params?.id || id },
@@ -179,4 +203,5 @@ export default {
   get: get,
   getById: getById,
   deleteById: deleteById,
+  reorder: reorder,
 };

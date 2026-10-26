@@ -8,6 +8,7 @@ export default async function routes(fastify, options) {
     { preHandler: multipartPreHandler(["packages"]) },
     controller.create,
   );
+  fastify.put("/reorder", {}, controller.reorder);
   fastify.put(
     "/:id",
     { preHandler: multipartPreHandler(["packages", "picture_urls"]) },

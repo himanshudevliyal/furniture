@@ -25,3 +25,7 @@ export const updateCategory = async (id, data) => {
 export const deleteCategory = async (id) => {
   return await http().delete(`${endpoints.categories.getAll}/${id}`);
 };
+
+export const reorderCategories = async (ids) => {
+  return await http().put(`${endpoints.categories.getAll}/reorder`, { ids });
+};

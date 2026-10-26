@@ -16,6 +16,13 @@ import Link from "next/link";
 
 export const columns = (openModal, setId, updateMutation) => [
   {
+    accessorKey: "sort_order",
+    header: "Sequence",
+    cell: ({ row }) => (
+      <div className="tabular-nums">{row.getValue("sort_order")}</div>
+    ),
+  },
+  {
     accessorKey: "title",
     header: "Title",
     cell: ({ row }) => {

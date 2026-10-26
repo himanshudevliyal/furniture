@@ -4,6 +4,7 @@ import {
   deleteSubCategory,
   fetchSubCategories,
   fetchSubCategory,
+  reorderSubCategories,
   updateSubCategory,
 } from "@/services/sub-category-service";
 
@@ -66,6 +67,18 @@ export const useDeleteSubCategory = (id, callback) => {
     mutationFn: () => deleteSubCategory(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
+      callback?.();
+    },
+  });
+};
+
+export const useReorderSubCategories = (callback) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: reorderSubCategories,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["sub-categories"] });
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
       callback?.();
     },
   });

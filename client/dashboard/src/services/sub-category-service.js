@@ -35,3 +35,9 @@ export const updateSubCategory = async (id, data) => {
 export const deleteSubCategory = async (id) => {
   return await http().delete(`${endpoints.subCategories.getAll}/${id}`);
 };
+
+export const reorderSubCategories = async (ids) => {
+  return await http().put(`${endpoints.subCategories.getAll}/reorder`, {
+    ids,
+  });
+};

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import SubCategoriesTableActions from "../../features/sub-categories/components/table/sub-categories-table-actions";
 import SubCategoriesListing from "../../features/sub-categories/components/sub-categories-listing";
+import SubCategoriesReorderDialog from "../../features/sub-categories/components/sub-categories-reorder-dialog";
 
 export const metadata = {
   title: "Sub Categories",
@@ -23,12 +24,15 @@ export default async function SubCategories({ searchParams }) {
       pageDescription={"Manage sub categories (Create, Update, Delete)."}
       scrollable={false}
       pageHeaderAction={
-        <Link
-          href={"/sub-categories/create"}
-          className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
-        >
-          <Plus /> Add
-        </Link>
+        <div className="flex items-center gap-2">
+          <SubCategoriesReorderDialog />
+          <Link
+            href={"/sub-categories/create"}
+            className={cn(buttonVariants({ variant: "outline", size: "sm" }))}
+          >
+            <Plus /> Add
+          </Link>
+        </div>
       }
     >
       <SubCategoriesTableActions />

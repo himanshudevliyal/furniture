@@ -445,6 +445,8 @@ export default function ProductTabs({ product }) {
           <a
             href={resolveImage(model.file)}
             download
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
               buttonVariants({ size: "lg" }),
               "h-11 rounded-md bg-black px-6 text-sm font-medium text-white shadow-none hover:bg-neutral-800"
@@ -489,6 +491,8 @@ export default function ProductTabs({ product }) {
           <a
             href={resolveImage(file.file)}
             download
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
               buttonVariants({ size: "lg" }),
               "h-11 rounded-md bg-black px-6 text-sm font-medium text-white shadow-none hover:bg-neutral-800"

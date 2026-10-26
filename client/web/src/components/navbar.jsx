@@ -10,7 +10,6 @@ import CategoryMegaMenu from "@/components/category-mega-menu";
 import { useCategories } from "@/hooks/use-categories";
 import { useCart } from "@/hooks/use-cart";
 import { buttonVariants } from "./ui/button";
-import { sortCategoriesByPriority } from "@/lib/category-order";
 import SearchBar from "./search-bar";
 function IconBadge({ count }) {
   if (count === undefined || count === null) return null;
@@ -60,7 +59,7 @@ export default function Navbar() {
 
   // fetchCategories() already unwraps `{ status, data }`
 // fetchCategories() already unwraps `{ status, data }`
-const categories = sortCategoriesByPriority(categoriesData?.categories ?? []);
+  const categories = categoriesData?.categories ?? [];
   const [productsOpen, setProductsOpen] = useState(false);
   const closeTimeoutRef = useRef(null);
 

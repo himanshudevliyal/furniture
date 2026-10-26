@@ -12,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { useCategories } from "@/hooks/use-categories";
-import { sortCategoriesByPriority } from "@/lib/category-order";
 
 import {
   categoryHref,
@@ -159,7 +158,7 @@ function ContactIcon({ children }) {
 
 function FooterCategories() {
   const { data } = useCategories();
-  const categories = sortCategoriesByPriority(data?.categories ?? []);
+  const categories = data?.categories ?? [];
 
   if (!categories.length) return null;
 

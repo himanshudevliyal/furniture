@@ -133,7 +133,7 @@ function SpaceCard({
 
       {/* Content */}
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 transition-transform duration-500 ease-out group-hover:-translate-y-1 sm:p-8">
-        <h3 className="font-serif text-xl tracking-wide text-white md:text-2xl">
+        <h3 className="text-xl tracking-wide text-white md:text-2xl">
           {space.title}
         </h3>
 

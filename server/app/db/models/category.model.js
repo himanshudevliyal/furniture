@@ -29,6 +29,11 @@ const init = async (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      sort_order: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
       pictures: {
         type: DataTypes.JSONB,
         defaultValue: [],
@@ -51,11 +56,15 @@ const create = async (req, transaction) => {
   const options = {};
   if (transaction) options.transaction = transaction;
 
+  // New categories go to the end of the sequence
+  const maxSortOrder = await CategoryModel.max("sort_order", options);
+
   const data = await CategoryModel.create(
     {
       title: req.body.title,
       slug: req.body.slug,
       featured: req.body.featured,
+      sort_order: (maxSortOrder ?? 0) + 1,
       pictures: req.body.pictures,
       meta_title: req.body.meta_title,
       meta_description: req.body.meta_description,
@@ -109,13 +118,13 @@ const get = async (req) => {
   SELECT
       cat.*,
       (
-        SELECT COALESCE(JSON_AGG(JSON_BUILD_OBJECT('id', sc.id, 'title', sc.title, 'slug', sc.slug, 'pictures', sc.pictures)), '[]')
+        SELECT COALESCE(JSON_AGG(JSON_BUILD_OBJECT('id', sc.id, 'title', sc.title, 'slug', sc.slug, 'pictures', sc.pictures, 'sort_order', sc.sort_order) ORDER BY sc.sort_order ASC, sc.created_at ASC), '[]')
         FROM ${constants.models.SUB_CATEGORY_TABLE} sc
         WHERE sc.category_id = cat.id
       ) AS sub_categories
     FROM ${constants.models.CATEGORY_TABLE} cat
     ${whereClause}
-    ORDER BY cat.created_at DESC
+    ORDER BY cat.sort_order ASC, cat.created_at ASC
     LIMIT :limit OFFSET :offset
   `;
 
@@ -154,6 +163,18 @@ const getById = async (req, id) => {
   });
 };
 
+// ids: category ids in the desired display order
+const reorder = async (ids, transaction) => {
+  await Promise.all(
+    ids.map((id, index) =>
+      CategoryModel.update(
+        { sort_order: index + 1 },
+        { where: { id }, transaction },
+      ),
+    ),
+  );
+};
+
 const deleteById = async (req, id, transaction) => {
   return await CategoryModel.destroy({
     where: { id: req?.params?.id || id },
@@ -168,4 +189,5 @@ export default {
   getById: getById,
   deleteById: deleteById,
   get: get,
+  reorder: reorder,
 };
