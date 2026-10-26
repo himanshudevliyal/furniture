@@ -5,14 +5,8 @@ import Image from "next/image";
 import {
   LayoutGrid,
   ListChecks,
-  Boxes,
-  Box,
-  DownloadCloud,
   ClipboardList,
   ChevronDown,
-  FileArchive,
-  FileText,
-  Download,
   Check,
   Info,
 } from "lucide-react";
@@ -23,7 +17,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
@@ -54,11 +47,8 @@ function resolveImage(path) {
 const tabs = [
   { value: "overview", label: "Overview", icon: LayoutGrid },
   { value: "details", label: "Details", icon: ListChecks },
-  { value: "materials", label: "Materials", icon: Boxes },
   { value: "specifications", label: "Specifications", icon: ClipboardList },
   { value: "other-details", label: "Other Details", icon: Info },
-  { value: "3d-models", label: "3D Models", icon: Box },
-  { value: "downloads", label: "Downloads", icon: DownloadCloud },
 ];
 
 function EmptyState({ label }) {
@@ -86,10 +76,7 @@ export default function ProductTabs({ product }) {
   const hero = product?.hero ?? {};
   const overview = product?.overview ?? {};
   const details = product?.details ?? {};
-  const materials = product?.materials ?? {};
   const specifications = product?.specifications ?? [];
-  const models3d = product?.models_3d ?? [];
-  const downloads = product?.downloads ?? [];
   // Rich-text HTML from the dashboard's TinyMCE editor — the product's
   // main long-form write-up. Rendered in the "Other Details" tab.
   const otherDetailsContent = product?.content ?? null;
@@ -109,16 +96,19 @@ export default function ProductTabs({ product }) {
       <div className="max-w-7xl w-full mx-auto">
         <TabsList
           className="
+            grid!
             w-full
-            justify-start!
-            gap-4
-            overflow-x-auto
+            grid-cols-2
+            gap-2
             rounded-none
             px-4
-            py-2
+            py-3
+            sm:grid-cols-4
+            lg:flex!
+            lg:justify-start!
             lg:gap-0
             lg:px-3!
-            
+            lg:py-2
             h-auto!
           "
         >
@@ -128,23 +118,27 @@ export default function ProductTabs({ product }) {
               value={value}
               className={cn(
                 `
-    
-                       scrollbar-none
-
                 flex
-                min-w-[150px]
-                shrink-0
+                h-auto!
+                flex-col
                 items-center
                 justify-center
-                gap-2.5
-               rounded-none
+                gap-1.5
+                rounded-none
                 border-0!
-            shadow-none!
-               font-medium
-                px-2
-                py-3
-                text-lg 
-              
+                shadow-none!
+                font-medium
+                px-1
+                py-2.5
+                text-xs
+                lg:flex-none
+                lg:shrink-0
+                lg:flex-row
+                lg:gap-2.5
+                lg:px-6
+                lg:py-3
+                lg:text-lg
+
                 text-neutral-600
            bg-transparent         
                 transition-all
@@ -316,52 +310,6 @@ export default function ProductTabs({ product }) {
           )}
         </TabsContent>
 
-        {/* ---------------- Materials ---------------- */}
-        <TabsContent value="materials" className="mt-0">
-          {materials.sections?.length ? (
-            <div className="flex flex-col gap-12 px-4 py-10 lg:px-8">
-              {materials.sections.map((section, i) => (
-                <div key={section.heading || i}>
-                  {section.heading && (
-                    <h2 className="mb-8 text-4xl font-semibold tracking-tight">
-                      {section.heading}
-                    </h2>
-                  )}
-                  <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
-                    {(section.items ?? []).map((item, j) => {
-                      const itemImage = resolveImage(item.image);
-                      return (
-                        <button
-                          key={item.title || j}
-                          type="button"
-                          className="group flex flex-col gap-2 text-left"
-                        >
-                          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md border bg-muted transition group-hover:border-foreground">
-                            {itemImage && (
-                              <Image
-                                src={itemImage}
-                                alt={item.title || "Material"}
-                                fill
-                                sizes="200px"
-                                className="object-cover"
-                              />
-                            )}
-                          </div>
-                          <span className="text-lg text-muted-foreground group-hover:text-foreground">
-                            {item.title}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState label="No materials listed for this product yet." />
-          )}
-        </TabsContent>
-
         {/* ---------------- Specifications ---------------- */}
         <TabsContent value="specifications" className="mt-0">
           <div className="px-4 py-10 lg:px-8">
@@ -417,97 +365,6 @@ export default function ProductTabs({ product }) {
           </div>
         </TabsContent>
 
-        {/* ---------------- 3D Models ---------------- */}
-      <TabsContent value="3d-models" className="mt-0">
-  {models3d.length ? (
-    <div className="grid grid-cols-1 gap-6 px-4 py-6 sm:grid-cols-2 lg:grid-cols-3 lg:px-8">
-      {models3d.map((model, i) => (
-        <div
-          key={model.title || i}
-          className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-background p-8 text-center"
-        >
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-            <FileArchive className="h-9 w-9 text-muted-foreground" />
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold">
-              {model.title || "3D Model"}
-            </h2>
-
-            {model.fileType && (
-              <p className="text-sm uppercase text-muted-foreground">
-                {model.fileType} file
-              </p>
-            )}
-          </div>
-
-          <a
-            href={resolveImage(model.file)}
-            download
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "h-11 rounded-md bg-black px-6 text-sm font-medium text-white shadow-none hover:bg-neutral-800"
-            )}
-          >
-            <Download className="mr-2 h-4 w-4" />
-            Download
-          </a>
-        </div>
-      ))}
-    </div>
-  ) : (
-    <EmptyState label="No 3D models available for this product yet." />
-  )}
-</TabsContent>
-
-{/* ---------------- Downloads ---------------- */}
-<TabsContent value="downloads" className="mt-0">
-  {downloads.length ? (
-    <div className="grid grid-cols-1 gap-6 px-4 py-6 sm:grid-cols-2 lg:grid-cols-3 lg:px-8">
-      {downloads.map((file, i) => (
-        <div
-          key={file.title || i}
-          className="flex flex-col items-center justify-center gap-4 rounded-lg border bg-background p-8 text-center"
-        >
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-            <FileText className="h-9 w-9 text-muted-foreground" />
-          </div>
-
-          <div>
-            <h2 className="text-2xl font-semibold">
-              {file.title || "Download"}
-            </h2>
-
-            {file.fileType && (
-              <p className="text-sm uppercase text-muted-foreground">
-                {file.fileType} file
-              </p>
-            )}
-          </div>
-
-          <a
-            href={resolveImage(file.file)}
-            download
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "h-11 rounded-md bg-black px-6 text-sm font-medium text-white shadow-none hover:bg-neutral-800"
-            )}
-          >
-            <Download className="mr-2 h-4 w-4" />
-            Download
-          </a>
-        </div>
-      ))}
-    </div>
-  ) : (
-    <EmptyState label="No downloads available for this product yet." />
-  )}
-</TabsContent>
       </Section>
     </Tabs>
   );

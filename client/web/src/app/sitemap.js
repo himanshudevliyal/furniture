@@ -13,6 +13,8 @@ const STATIC_ROUTES = [
   { path: "/clients", priority: 0.6 },
   { path: "/careers", priority: 0.5 },
   { path: "/contact", priority: 0.7 },
+  { path: "/privacy-policy", priority: 0.3 },
+  { path: "/terms", priority: 0.3 },
 ];
 
 async function fetchList(path, key) {

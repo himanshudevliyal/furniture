@@ -30,6 +30,8 @@ import ProductHeroForm from "./product-hero-form";
 import ProductOverviewForm from "./product-overview-form";
 import ProductDetailsForm from "./product-details-form";
 import ProductMaterialsForm from "./product-materials-form";
+import ProductFeaturesForm from "./product-features-form";
+import ProductFaqsForm from "./product-faqs-form";
 import ProductSpecificationsForm from "./product-specifications-form";
 import ProductFileListForm from "./product-file-list-form";
 import ProductGalleryForm from "./product-gallery-form";
@@ -56,6 +58,8 @@ const defaultValues = {
   },
   details: { sections: [], banner: { image: "" } },
   materials: { sections: [] },
+  features: { heading: "", items: [] },
+  faqs: [],
   specifications: [],
   models_3d: [],
   downloads: [],
@@ -149,10 +153,12 @@ export default function ProductForm({ id, type, callback }) {
           banner: { ...defaultValues.details.banner, ...data.details?.banner },
         },
         materials: { ...defaultValues.materials, ...data.materials },
+        features: { ...defaultValues.features, ...data.features },
         gallery: { ...defaultValues.gallery, ...data.gallery },
         specifications: data.specifications || [],
         models_3d: data.models_3d || [],
         downloads: data.downloads || [],
+        faqs: data.faqs || [],
       });
     }
   }, [data]);
@@ -304,6 +310,13 @@ export default function ProductForm({ id, type, callback }) {
         <Separator className="col-span-full" />
 
         <div className="space-y-4">
+          <h3 className="text-2xl font-semibold">Features & Options</h3>
+          <ProductFeaturesForm />
+        </div>
+
+        <Separator className="col-span-full" />
+
+        <div className="space-y-4">
           <h3 className="text-2xl font-semibold">Materials</h3>
           <ProductMaterialsForm />
         </div>
@@ -334,6 +347,13 @@ export default function ProductForm({ id, type, callback }) {
         <div className="space-y-4">
           <h3 className="text-2xl font-semibold">Gallery</h3>
           <ProductGalleryForm />
+        </div>
+
+        <Separator className="col-span-full" />
+
+        <div className="space-y-4">
+          <h3 className="text-2xl font-semibold">FAQs</h3>
+          <ProductFaqsForm />
         </div>
 
         <Separator className="col-span-full" />

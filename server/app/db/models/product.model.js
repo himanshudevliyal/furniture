@@ -95,6 +95,14 @@ const init = async (sequelize) => {
         type: DataTypes.JSONB,
         defaultValue: {},
       },
+      faqs: {
+        type: DataTypes.JSONB,
+        defaultValue: [],
+      },
+      features: {
+        type: DataTypes.JSONB,
+        defaultValue: {},
+      },
       materials: {
         type: DataTypes.JSONB,
         defaultValue: {},
@@ -154,6 +162,8 @@ const create = async (req, transaction) => {
       overview: req.body.overview,
       details: req.body.details,
       materials: req.body.materials,
+      features: req.body.features,
+      faqs: req.body.faqs,
       specifications: req.body.specifications,
       models_3d: req.body.models_3d,
       downloads: req.body.downloads,
@@ -193,6 +203,8 @@ const update = async (req, id, transaction) => {
       overview: req.body.overview,
       details: req.body.details,
       materials: req.body.materials,
+      features: req.body.features,
+      faqs: req.body.faqs,
       specifications: req.body.specifications,
       models_3d: req.body.models_3d,
       downloads: req.body.downloads,

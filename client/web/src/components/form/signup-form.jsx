@@ -231,7 +231,7 @@ export default function SignupForm({ callback, isLoginDetails = true }) {
             Terms
           </Link>{" "}
           &{" "}
-          <Link href="/privacy" className="text-primary/80">
+          <Link href="/privacy-policy" className="text-primary/80">
             Privacy
           </Link>
         </Label>

@@ -3,6 +3,9 @@ import { absoluteFileUrl, toDescription } from "@/lib/site";
 import ProductDetail from "./_components/ProductDetail";
 import FurnitureProductsShowcase from "./_components/productsimgs";
 import ProductTabs from "./_components/ProductTabs";
+import ProductFeatures from "./_components/ProductFeatures";
+import ProductFaqs from "./_components/ProductFaqs";
+import CustomizationOptions from "./_components/CustomizationOptions";
 import RelatedProducts from "./_components/related-products";
 async function getProduct(slug) {
   const base = (process.env.NEXT_PUBLIC_API_URL ?? "")
@@ -58,7 +61,10 @@ export default async function ProductPage({ params }) {
     <>
       <ProductDetail product={product} />
       <ProductTabs product={product} />
+      <ProductFeatures product={product} />
       <FurnitureProductsShowcase product={product}></FurnitureProductsShowcase>
+      <CustomizationOptions product={product} />
+      <ProductFaqs product={product} />
 
       <RelatedProducts product={product} />
       <FurnitureProductsShowcase />

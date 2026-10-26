@@ -68,6 +68,22 @@ export const materialsSchema = z.object({
   sections: z.array(materialSectionSchema).optional().default([]),
 });
 
+export const featureItemSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional().default(""),
+  image: z.string().optional().default(""),
+});
+
+export const productFeaturesSchema = z.object({
+  heading: z.string().optional().default(""),
+  items: z.array(featureItemSchema).optional().default([]),
+});
+
+export const faqSchema = z.object({
+  question: z.string().min(1, "Question is required"),
+  answer: z.string().min(1, "Answer is required"),
+});
+
 export const specificationSchema = z.object({
   label: z.string().min(1, "Label is required"),
   value: z.string().min(1, "Value is required"),
@@ -106,6 +122,8 @@ export const productBaseSchema = z.object({
   overview: overviewSchema.optional().default({}),
   details: detailsSchema.optional().default({}),
   materials: materialsSchema.optional().default({}),
+  features: productFeaturesSchema.optional().default({}),
+  faqs: z.array(faqSchema).optional().default([]),
   specifications: z.array(specificationSchema).optional().default([]),
   models_3d: z.array(fileEntrySchema).optional().default([]),
   downloads: z.array(fileEntrySchema).optional().default([]),

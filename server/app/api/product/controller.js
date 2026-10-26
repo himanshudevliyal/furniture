@@ -8,7 +8,8 @@ import { getItemsToDelete } from "../../helpers/filter.js";
 import { productSchema } from "../../validation-schema/product-schema.js";
 
 // Flattens every file/image path referenced anywhere in a product record
-// (hero images, gallery images, material images, 3D model / download files)
+// (hero images, gallery images, material and feature images, 3D model /
+// download files)
 // so we can diff old vs new on update and clean up orphaned uploads.
 const extractFilePaths = (product = {}) => {
   const paths = [];
@@ -28,6 +29,10 @@ const extractFilePaths = (product = {}) => {
     (section.items || []).forEach((item) => {
       if (item.image) paths.push(item.image);
     });
+  });
+
+  (product.features?.items || []).forEach((item) => {
+    if (item.image) paths.push(item.image);
   });
 
   (product.models_3d || []).forEach((entry) => {

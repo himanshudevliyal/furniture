@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 import { Section } from "@/components/layout/section";
+import { cn } from "@/lib/utils";
 
 import ProductCard from "@/components/ProductCard";
 
@@ -31,35 +32,36 @@ export default function SubCategorySection({
 
   return (
 <Section
-  className="bg-gray-50"
-  id={subCategory.slug}
->      {/* Sub-category header */}
-      <div className="mb-8">
+      className={cn("bg-gray-50", isOpen ? "py-8" : "py-3")}
+      id={subCategory.slug}
+    >
+      {/* Sub-category header */}
+      <div className={cn(isOpen && "mb-6")}>
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
-          className="flex w-full items-center justify-between gap-4 text-left"
+          aria-expanded={isOpen}
+          className="group inline-flex items-center gap-4 text-left"
         >
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
-              {subCategory.title}
-            </h2>
-
-            {subCategory.meta_description && (
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-500">
-                {subCategory.meta_description}
-              </p>
-            )}
-          </div>
+          <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
+            {subCategory.title}
+          </h2>
 
           <span
-            className={`flex h-10 w-10 shrink-0 items-center justify-center border border-neutral-200 bg-white transition-transform duration-300 ${
-              isOpen ? "rotate-180" : ""
-            }`}
+            className={cn(
+              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-800 text-neutral-800 transition-all duration-300 group-hover:border-[#e30613] group-hover:text-[#e30613]",
+              isOpen && "rotate-180",
+            )}
           >
-            <ChevronDown className="h-5 w-5 text-neutral-700" />
+            <ChevronDown className="h-4 w-4" />
           </span>
         </button>
+
+        {isOpen && subCategory.meta_description && (
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-500">
+            {subCategory.meta_description}
+          </p>
+        )}
       </div>
 
       {/* Products Dropdown */}

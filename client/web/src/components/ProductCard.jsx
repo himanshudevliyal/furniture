@@ -94,12 +94,6 @@ export default function ProductCard({ product }) {
           {product.title}
         </h3>
 
-        {product.short_description && (
-          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-500">
-            {product.short_description}
-          </p>
-        )}
-
         <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-900">
           View product
           <ArrowUpRight
