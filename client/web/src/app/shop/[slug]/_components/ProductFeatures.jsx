@@ -125,12 +125,12 @@ export default function ProductFeatures({ product }) {
                   </span>
                 </div>
 
-                <h3 className="mt-3 text-xl font-medium text-neutral-900">
+                <h3 className="mt-3 text-xl font-medium leading-snug text-neutral-900">
                   {item.title}
                 </h3>
 
                 {item.description && (
-                  <p className="mt-3 text-sm leading-relaxed text-neutral-600 sm:text-base">
+                  <p className="mt-3 max-h-24 overflow-y-auto pr-2 text-sm leading-6 text-neutral-600 [scrollbar-color:#d4d4d4_transparent] [scrollbar-width:thin]">
                     {item.description}
                   </p>
                 )}

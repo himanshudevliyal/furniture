@@ -237,6 +237,12 @@ const get = async (req) => {
     queryParams.categories = toPgArray(categories);
   }
 
+  // The website only sees active products; the dashboard passes
+  // include_inactive=true to list everything.
+  if (req.query?.include_inactive !== "true") {
+    whereConditions.push("prd.is_active = true");
+  }
+
   const subCategories = req.query?.sub_category
     ? req.query.sub_category?.split(".")
     : null;
@@ -327,7 +333,7 @@ const getBySlug = async (req, slug) => {
     FROM ${constants.models.PRODUCT_TABLE} prd
     LEFT JOIN ${constants.models.CATEGORY_TABLE} cat ON cat.id = prd.category_id
     LEFT JOIN ${constants.models.SUB_CATEGORY_TABLE} sc ON sc.id = prd.sub_category_id
-    WHERE prd.slug = :slug;
+    WHERE prd.slug = :slug AND prd.is_active = true;
   `;
 
   return await ProductModel.sequelize.query(query, {

@@ -3,7 +3,7 @@ import http from "@/utils/http";
 
 export const fetchProducts = async (searchParams) => {
   const { data } = await http().get(
-    `${endpoints.products.getAll}?${searchParams}`,
+    `${endpoints.products.getAll}?include_inactive=true&${searchParams}`,
   );
   return data;
 };

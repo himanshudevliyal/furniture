@@ -64,9 +64,9 @@ export default async function ProductPage({ params }) {
       <ProductFeatures product={product} />
       <FurnitureProductsShowcase product={product}></FurnitureProductsShowcase>
       <CustomizationOptions product={product} />
-      <ProductFaqs product={product} />
 
       <RelatedProducts product={product} />
+      <ProductFaqs product={product} />
       <FurnitureProductsShowcase />
     </>
   );

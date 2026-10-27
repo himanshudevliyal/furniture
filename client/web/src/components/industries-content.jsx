@@ -14,8 +14,7 @@ const industryCards = [
   { title: "Marketing & Advertising", image: img("marketing-advertising") },
   { title: "Textile", image: img("textile") },
   { title: "Banking & Finance", image: img("banking-finance") },
-  // No suitable free photo found yet — keeps the earlier image.
-  { title: "Gems and Jewellery", image: "/demo/imgi_16_h2-cate06.jpg" },
+  { title: "Gems and Jewellery", image: img("gems-jewellery") },
   { title: "Insurance", image: img("insurance") },
   { title: "Architecture & Interior", image: img("architecture-interior") },
   { title: "Real Estate", image: img("real-estate") },
