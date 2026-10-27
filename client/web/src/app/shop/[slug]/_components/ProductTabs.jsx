@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   LayoutGrid,
@@ -9,6 +9,11 @@ import {
   ChevronDown,
   Check,
   Info,
+  Sparkles,
+  HelpCircle,
+  Images,
+  LayoutList,
+  FolderOpen,
 } from "lucide-react";
 
 import {
@@ -22,12 +27,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { Section } from "@/components/layout/section";
 
@@ -51,6 +50,13 @@ const tabs = [
   { value: "other-details", label: "Other Details", icon: Info },
 ];
 
+// Same look for the real tabs and the Features / FAQs jump links.
+const tabItemClass = cn(
+  "flex h-auto! shrink-0 flex-col items-center justify-center gap-1.5 rounded-none border-0! px-3 py-2.5 text-xs font-medium shadow-none!",
+  "bg-transparent text-neutral-600 transition-colors duration-200 hover:text-black",
+  "lg:flex-row lg:gap-2 lg:px-3 lg:py-2.5 lg:text-[15px] xl:px-4"
+);
+
 function EmptyState({ label }) {
   return (
     <p className="px-4 py-16 text-center text-lg text-muted-foreground lg:px-8">
@@ -70,8 +76,67 @@ const richTextClass = cn(
   "prose-ul:text-lg prose-li:text-muted-foreground"
 );
 
-export default function ProductTabs({ product }) {
+export default function ProductTabs({ product, children }) {
   const [featuresOpen, setFeaturesOpen] = useState(true);
+  const [activeTab, setActiveTab] = useState("overview");
+  const panelTopRef = useRef(null);
+  const barRef = useRef(null);
+
+  // Tab bar is sticky, so it can be clicked from far down the page (e.g. while
+  // reading FAQs). In that case bring the newly opened tab into view.
+  const changeTab = (value) => {
+    setActiveTab(value);
+    const el = panelTopRef.current;
+    const barBottom = barRef.current?.getBoundingClientRect().bottom ?? 0;
+    if (el && el.getBoundingClientRect().top < barBottom) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // Only link to sections that actually render for this product.
+  const hasFeatures = (product?.features?.items ?? []).some((item) => item?.title);
+  const hasGallery = (product?.gallery?.images ?? []).some(Boolean);
+  // Related products load on the client, so link whenever the product has a category.
+  const hasRelated = Boolean(product?.sub_category_id || product?.category_id);
+  const hasFaqs = (product?.faqs ?? []).some((f) => f?.question && f?.answer);
+  const jumpLinks = [
+    hasFeatures && { href: "#product-features", label: "Features", icon: Sparkles },
+    hasGallery && { href: "#product-applications", label: "Applications", icon: Images },
+    // Customization section always renders (it has its own empty states).
+    { href: "#product-resources", label: "Resources", icon: FolderOpen },
+    hasRelated && { href: "#product-related", label: "Related Products", icon: LayoutList },
+    hasFaqs && { href: "#product-faqs", label: "FAQs", icon: HelpCircle },
+  ].filter(Boolean);
+  const jumpHrefs = jumpLinks.map((l) => l.href).join(",");
+
+  // Scroll-spy: while Features / FAQs sits under the sticky bar, highlight its
+  // link instead of the tab. Anywhere else, the open tab stays highlighted.
+  const [activeJump, setActiveJump] = useState(null);
+  useEffect(() => {
+    if (!jumpHrefs) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const barBottom = barRef.current?.getBoundingClientRect().bottom ?? 0;
+      const current = jumpHrefs.split(",").find((href) => {
+        const rect = document.querySelector(href)?.getBoundingClientRect();
+        // +8 px so a section that just scrolled into place counts as active.
+        return rect && rect.top <= barBottom + 8 && rect.bottom > barBottom + 8;
+      });
+      setActiveJump(current ?? null);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [jumpHrefs]);
 
   const hero = product?.hero ?? {};
   const overview = product?.overview ?? {};
@@ -90,80 +155,58 @@ export default function ProductTabs({ product }) {
   const detailsBanner = resolveImage(details.banner?.image) ?? fallbackImage;
 
   return (
-    <Tabs defaultValue="overview" className="    mx-auto  w-full">
-      {/* ---------------- Tab bar ---------------- */}
-      <div className="  z-10 border-b bg-gray-100">
-      <div className="max-w-7xl w-full mx-auto">
-        <TabsList
-          className="
-            grid!
-            w-full
-            grid-cols-2
-            gap-2
-            rounded-none
-            px-4
-            py-3
-            sm:grid-cols-4
-            lg:flex!
-            lg:justify-start!
-            lg:gap-0
-            lg:px-3!
-            lg:py-2
-            h-auto!
-          "
-        >
-          {tabs.map(({ value, label, icon: Icon }) => (
-            <TabsTrigger
-              key={value}
-              value={value}
-              className={cn(
-                `
-                flex
-                h-auto!
-                flex-col
-                items-center
-                justify-center
-                gap-1.5
-                rounded-none
-                border-0!
-                shadow-none!
-                font-medium
-                px-1
-                py-2.5
-                text-xs
-                lg:flex-none
-                lg:shrink-0
-                lg:flex-row
-                lg:gap-2.5
-                lg:px-6
-                lg:py-3
-                lg:text-lg
+    <Tabs
+      value={activeTab}
+      onValueChange={changeTab}
+      className="mx-auto w-full gap-0"
+    >
+      {/* ---------------- Tab bar (sticky, just below the site header) ---------------- */}
+      <div ref={barRef} className="sticky top-[68px] z-40 border-b bg-gray-100 md:top-[80px]">
+        <div className="mx-auto flex w-full max-w-7xl overflow-x-auto px-2 py-2 [scrollbar-width:none] lg:px-3">
+          <TabsList className="h-auto! w-auto! shrink-0 justify-start! gap-0 rounded-none bg-transparent p-0">
+            {tabs.map(({ value, label, icon: Icon }) => (
+              <TabsTrigger
+                key={value}
+                value={value}
+                className={cn(
+                  tabItemClass,
+                  // Base TabsTrigger also whitens the open tab, so override it
+                  // explicitly while a Features / FAQs link is the active one.
+                  activeJump
+                    ? "data-active:bg-transparent data-active:text-neutral-600"
+                    : "data-active:bg-white data-active:text-black"
+                )}
+              >
+                <Icon className="h-5 w-5 shrink-0 text-current lg:h-4 lg:w-4" strokeWidth={1.7} />
+                <span className="whitespace-nowrap">{label}</span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-                text-neutral-600
-           bg-transparent         
-                transition-all
-                duration-200
-                `,
-                `
-                data-[state=active]:bg-black
-                data-[state=active]:text-white
-                data-[state=active]:font-medium
-                data-[state=active]:shadow-sm
-                data-[state=active]:ring-0
-                `
-              )}
+          {/* Features / FAQs stay in their own place on the page — these
+              just scroll down to them. */}
+          {jumpLinks.map(({ href, label, icon: Icon }) => (
+            <a
+              key={href}
+              href={href}
+              aria-current={activeJump === href ? "location" : undefined}
+              className={cn(tabItemClass, activeJump === href && "bg-white text-black")}
+              onClick={(e) => {
+                const target = document.querySelector(href);
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+                history.replaceState(null, "", href);
+              }}
             >
-              <Icon
-                className="h-5 w-5 shrink-0 text-current"
-                strokeWidth={1.7}
-              />
+              <Icon className="h-5 w-5 shrink-0 text-current lg:h-4 lg:w-4" strokeWidth={1.7} />
               <span className="whitespace-nowrap">{label}</span>
-            </TabsTrigger>
+            </a>
           ))}
-        </TabsList>
         </div>
       </div>
 
+      <div ref={panelTopRef} className="scroll-mt-[140px] md:scroll-mt-[150px]" />
       <Section className="py-0">
         {/* ---------------- Overview ---------------- */}
         <TabsContent value="overview" className="mt-0">
@@ -316,26 +359,30 @@ export default function ProductTabs({ product }) {
         
 
             {specifications.length ? (
-                 <> <h2 className="mb-8 text-4xl font-semibold tracking-tight">
-              Specifications
-            </h2>
-              <Table className="max-w-2xl overflow-hidden rounded-lg border">
-                <TableBody>
+              <>
+                <div className="mb-8 flex flex-wrap items-end justify-between gap-2">
+                  <h2 className="text-4xl font-semibold tracking-tight">
+                    Specifications
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    {specifications.length} technical details
+                  </p>
+                </div>
+
+                {/* Spec sheet: two columns on desktop, label left / value right. */}
+                <dl className="grid grid-cols-1 border-t border-neutral-200 md:grid-cols-2 md:gap-x-12">
                   {specifications.map(({ label, value }, i) => (
-                    <TableRow
+                    <div
                       key={label || i}
-                      className={i % 2 === 1 ? "bg-muted/30" : undefined}
+                      className="flex items-baseline justify-between gap-6 border-b border-neutral-200 py-4"
                     >
-                      <TableCell className="w-1/3 bg-muted/50 text-lg font-medium">
-                        {label}
-                      </TableCell>
-                      <TableCell className="text-lg text-muted-foreground">
+                      <dt className="text-base text-muted-foreground">{label}</dt>
+                      <dd className="text-right text-base font-medium text-neutral-900">
                         {value}
-                      </TableCell>
-                    </TableRow>
+                      </dd>
+                    </div>
                   ))}
-                </TableBody>
-              </Table>
+                </dl>
               </>
             ) : (
               <EmptyState label="No specifications listed for this product yet." />
@@ -366,6 +413,10 @@ export default function ProductTabs({ product }) {
         </TabsContent>
 
       </Section>
+
+      {/* Rest of the product page (Features … FAQs) — rendered inside the
+          Tabs wrapper so the tab bar stays sticky while scrolling through it. */}
+      <div>{children}</div>
     </Tabs>
   );
 }

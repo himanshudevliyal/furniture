@@ -20,7 +20,6 @@ export default function FurnitureProductsShowcase({ product }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const galleryImages = product?.gallery?.images ?? [];
-  const galleryHeading = product?.gallery?.heading?.trim() || "";
 
   const imageBaseUrl =
     process.env.NEXT_PUBLIC_FILE_BASE || "";
@@ -45,14 +44,7 @@ const items = useMemo( () => galleryImages .map((file, index) => { if (!file) re
   if (items.length === 0) return null;
 
   return (
-    <Section className="w-full bg-white py-14 sm:py-16">
-      {/* Heading sirf tab show hoga jab heading available ho */}
-      {galleryHeading && (
-        <h2 className="mb-6 text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
-          {galleryHeading}
-        </h2>
-      )}
-
+    <Section id="product-applications" className="w-full scroll-mt-[140px] bg-white py-14 sm:py-16 md:scroll-mt-[150px]">
       <Carousel
         setApi={handleSetApi}
         opts={{

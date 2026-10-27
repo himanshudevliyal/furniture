@@ -76,7 +76,7 @@ export default function ProductCard({ product }) {
                   alt=""
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 45vw, 22vw"
-                  className="object-cover"
+                  className="object-contain p-4 mix-blend-multiply"
                 />
               </div>
             )}

@@ -12,7 +12,6 @@ export const metadata = {
 export default function SearchPage(params) {
   return (
     <>
-
      <BreadcrumbBanner
             title="Shop"
             breadcrumbs={[

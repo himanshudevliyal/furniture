@@ -55,13 +55,15 @@ export const columns = (openModal, setId, updateMutation) => [
       const title = row.getValue("title");
       const slug = row.original.slug;
       return (
-        <Link
-          href={`/shop/${slug}`}
-          target="_black"
+        // Opens the product on the live website (not the dashboard) in a new tab.
+        <a
+          href={`https://natrajfurniture.com/shop/${slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="hover:underline capitalize"
         >
           {title}
-        </Link>
+        </a>
       );
     },
   },

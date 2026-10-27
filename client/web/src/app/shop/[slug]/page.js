@@ -60,13 +60,16 @@ export default async function ProductPage({ params }) {
   return (
     <>
       <ProductDetail product={product} />
-      <ProductTabs product={product} />
-      <ProductFeatures product={product} />
-      <FurnitureProductsShowcase product={product}></FurnitureProductsShowcase>
-      <CustomizationOptions product={product} />
+      {/* Sections up to the FAQs go inside ProductTabs so its tab bar stays
+          sticky through them (Features / FAQs are jump links in that bar). */}
+      <ProductTabs product={product}>
+        <ProductFeatures product={product} />
+        <FurnitureProductsShowcase product={product}></FurnitureProductsShowcase>
+        <CustomizationOptions product={product} />
 
-      <RelatedProducts product={product} />
-      <ProductFaqs product={product} />
+        <RelatedProducts product={product} />
+        <ProductFaqs product={product} />
+      </ProductTabs>
       <FurnitureProductsShowcase />
     </>
   );
