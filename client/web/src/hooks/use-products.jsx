@@ -1,5 +1,10 @@
 // hooks/useProducts.ts
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import {
   fetchProducts,
   fetchProduct,
@@ -12,6 +17,31 @@ export const useProducts = (searchParams = "") => {
   return useQuery({
     queryKey: ["products", searchParams],
     queryFn: () => fetchProducts(searchParams),
+  });
+};
+
+// Page-by-page loading for the shop grid (infinite scroll).
+// `searchParams` must not contain page/limit — they are added per page.
+export const useInfiniteProducts = (searchParams = "", pageSize = 12) => {
+  return useInfiniteQuery({
+    queryKey: ["products", "infinite", searchParams, pageSize],
+    initialPageParam: 1,
+    queryFn: ({ pageParam }) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", String(pageParam));
+      params.set("limit", String(pageSize));
+      return fetchProducts(params.toString());
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const loaded = allPages.reduce(
+        (sum, page) => sum + (page?.products?.length ?? 0),
+        0,
+      );
+      const total = lastPage?.total ?? 0;
+      return lastPage?.products?.length && loaded < total
+        ? allPages.length + 1
+        : undefined;
+    },
   });
 };
 

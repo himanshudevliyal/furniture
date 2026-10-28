@@ -238,11 +238,6 @@ const get = async (req) => {
     ? req.query.category?.split(".")
     : null;
 
-  if (categories && categories?.length) {
-    whereConditions.push("prd.category_id = ANY(:categories)");
-    queryParams.categories = toPgArray(categories);
-  }
-
   // The website only sees active products; the dashboard passes
   // include_inactive=true to list everything.
   if (req.query?.include_inactive !== "true") {
@@ -253,9 +248,27 @@ const get = async (req) => {
     ? req.query.sub_category?.split(".")
     : null;
 
-  if (subCategories && subCategories?.length) {
-    whereConditions.push("prd.sub_category_id = ANY(:subCategories)");
-    queryParams.subCategories = toPgArray(subCategories);
+  const categoryCondition = categories?.length
+    ? "prd.category_id = ANY(:categories)"
+    : null;
+  const subCategoryCondition = subCategories?.length
+    ? "prd.sub_category_id = ANY(:subCategories)"
+    : null;
+  if (categoryCondition) queryParams.categories = toPgArray(categories);
+  if (subCategoryCondition) queryParams.subCategories = toPgArray(subCategories);
+
+  // Default: category AND sub-category (dashboard filters). The shop's
+  // multi-select sends filter_mode=any, so "whole category A" OR "only
+  // sub-category X of B" can be combined in one request.
+  if (
+    req.query?.filter_mode === "any" &&
+    categoryCondition &&
+    subCategoryCondition
+  ) {
+    whereConditions.push(`(${categoryCondition} OR ${subCategoryCondition})`);
+  } else {
+    if (categoryCondition) whereConditions.push(categoryCondition);
+    if (subCategoryCondition) whereConditions.push(subCategoryCondition);
   }
 
   const page = req.query.page ? Number(req.query.page) : 1;
@@ -277,7 +290,7 @@ const get = async (req) => {
     LEFT JOIN ${constants.models.CATEGORY_TABLE} cat ON cat.id = prd.category_id
     LEFT JOIN ${constants.models.SUB_CATEGORY_TABLE} sc ON sc.id = prd.sub_category_id
     ${whereClause}
-    ORDER BY prd.sort_order ASC, prd.created_at DESC
+    ORDER BY prd.sort_order ASC, prd.created_at DESC, prd.id ASC
     LIMIT :limit OFFSET :offset
   `;
 
