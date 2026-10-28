@@ -1,3 +1,4 @@
+
 import BlogSection from "@/components/blog-section";
 import ExclusiveProducts from "@/components/categories";
 import HeroSection from "@/components/hero-section";
@@ -8,8 +9,6 @@ import {
 import Certifications from "@/components/our-certificate";
 import OurClient from "@/components/our-client";
 import FurnitureProductsShowcase from "@/components/project-section";
-import { getFeaturedProjects } from "@/lib/projects";
-import VideoTours from "@/components/home/video-tours";
 import ProjectSupport from "@/components/home/project-support";
 import StatsSection from "@/components/stats-section";
 import TestimonialsMasonryMarquee from "@/components/testimonials-marquee";
@@ -44,8 +43,7 @@ export default function Home() {
 
       {/* 5. How we deliver + proof of work */}
       <ProjectSupport />
-      <FurnitureProductsShowcase projects={getFeaturedProjects(10)} />
-      <VideoTours />
+      <FurnitureProductsShowcase />
 
       {/* 6. Trust */}
       <OurClient />
