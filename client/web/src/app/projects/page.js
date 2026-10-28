@@ -1,5 +1,7 @@
 import { BreadcrumbBanner } from "@/components/breadcrumb";
-import { getProjectCategories } from "@/lib/projects";
+import { getFeaturedProjects, getProjectCategories } from "@/lib/projects";
+import FurnitureProductsShowcase from "@/components/project-section";
+import VideoTours from "@/components/home/video-tours";
 import ProjectsGrid from "./_componets/products";
 
 export const metadata = {
@@ -21,7 +23,11 @@ export default function OurProjects() {
         ]}
       />
 
+      {/* Featured projects carousel + video walkthroughs (moved here from
+          the homepage). */}
+      <FurnitureProductsShowcase projects={getFeaturedProjects(10)} />
       <ProjectsGrid categories={getProjectCategories()} />
+      <VideoTours />
     </>
   );
 }

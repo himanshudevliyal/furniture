@@ -9,6 +9,8 @@ import {
 import Certifications from "@/components/our-certificate";
 import OurClient from "@/components/our-client";
 import FurnitureProductsShowcase from "@/components/project-section";
+import VideoTours from "@/components/home/video-tours";
+import { getFeaturedProjects } from "@/lib/projects";
 import ProjectSupport from "@/components/home/project-support";
 import StatsSection from "@/components/stats-section";
 import TestimonialsMasonryMarquee from "@/components/testimonials-marquee";
@@ -43,7 +45,8 @@ export default function Home() {
 
       {/* 5. How we deliver + proof of work */}
       <ProjectSupport />
-      <FurnitureProductsShowcase />
+      <FurnitureProductsShowcase projects={getFeaturedProjects(10)} />
+      <VideoTours />
 
       {/* 6. Trust */}
       <OurClient />
