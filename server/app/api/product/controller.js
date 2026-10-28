@@ -46,6 +46,26 @@ const extractFilePaths = (product = {}) => {
   return paths;
 };
 
+// The same file can be used by several products (or a category / blog).
+// Removing it from one product must not delete it for the others, so drop
+// every path that is still referenced anywhere else.
+const withoutFilesStillInUse = async (paths, productId) => {
+  const toDelete = [];
+  for (const filePath of new Set(paths)) {
+    const like = `%${filePath.replace(/[\\%_]/g, "\\$&")}%`;
+    const [inUse] = await sequelize.query(
+      `SELECT 1 FROM products p WHERE p.id <> :productId AND p::text LIKE :like
+       UNION ALL SELECT 1 FROM categories c WHERE c::text LIKE :like
+       UNION ALL SELECT 1 FROM sub_categories s WHERE s::text LIKE :like
+       UNION ALL SELECT 1 FROM blogs b WHERE b::text LIKE :like
+       LIMIT 1`,
+      { replacements: { productId, like } },
+    );
+    if (!inUse.length) toDelete.push(filePath);
+  }
+  return toDelete;
+};
+
 const create = async (req, res) => {
   const transaction = await sequelize.transaction();
 
@@ -108,7 +128,9 @@ const updateById = async (req, res) => {
 
     await table.ProductModel.update(req, 0, transaction);
 
-    await cleanupFiles(documentsToDelete);
+    await cleanupFiles(
+      await withoutFilesStillInUse(documentsToDelete, product.id),
+    );
 
     await transaction.commit();
 
@@ -173,7 +195,9 @@ const deleteById = async (req, res) => {
     await table.ProductModel.deleteById(req, 0, transaction);
 
     const documentsToDelete = extractFilePaths(record);
-    await cleanupFiles(documentsToDelete);
+    await cleanupFiles(
+      await withoutFilesStillInUse(documentsToDelete, record.id),
+    );
 
     await transaction.commit();
     res.status(StatusCodes.OK).send(record);
