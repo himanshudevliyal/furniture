@@ -7,20 +7,21 @@ export const projectQuoteSchema = z.object({
     .min(2, "Name is required")
     .max(150, "Name is too long"),
 
-  email: z.email({ message: "Invalid email address" }),
+  // Only name and phone are required — the rest is optional.
+  email: z.email({ message: "Invalid email address" }).optional().or(z.literal("")),
 
   phone: z
     .string()
     .trim()
-    .regex(/^[0-9+\-\s()]{7,15}$/, "Enter a valid phone number")
-    .optional()
-    .or(z.literal("")),
+    .min(1, "Mobile number is required")
+    .regex(/^[0-9+\-\s()]{7,15}$/, "Enter a valid mobile number"),
 
   company: z
     .string()
     .trim()
-    .min(2, "Company name is required")
-    .max(150, "Company name is too long"),
+    .max(150, "Company name is too long")
+    .optional()
+    .or(z.literal("")),
 
   message: z
     .string()

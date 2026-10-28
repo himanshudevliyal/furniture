@@ -21,14 +21,18 @@ const STATUSES = [
 // Server ke projectQuoteUpdateSchema jaisa hi.
 const schema = z.object({
   name: z.string().trim().min(2, "Name is required").max(150),
-  email: z.string().trim().email("Invalid email address"),
+  email: z
+    .string()
+    .trim()
+    .email("Invalid email address")
+    .optional()
+    .or(z.literal("")),
   phone: z
     .string()
     .trim()
-    .regex(/^[0-9+\-\s()]{7,15}$/, "Enter a valid phone number")
-    .optional()
-    .or(z.literal("")),
-  company: z.string().trim().min(2, "Company name is required").max(150),
+    .min(1, "Mobile number is required")
+    .regex(/^[0-9+\-\s()]{7,15}$/, "Enter a valid mobile number"),
+  company: z.string().trim().max(150).optional().or(z.literal("")),
   category: z.string().trim().max(150).optional().or(z.literal("")),
   status: z.enum(
     STATUSES.map((s) => s.value),
@@ -44,9 +48,9 @@ const schema = z.object({
 
 const fields = [
   { name: "name", label: "Name", required: true },
-  { name: "email", label: "Email", type: "email", required: true },
-  { name: "phone", label: "Phone", type: "tel" },
-  { name: "company", label: "Company", required: true },
+  { name: "email", label: "Email", type: "email" },
+  { name: "phone", label: "Mobile Number", type: "tel", required: true },
+  { name: "company", label: "Company" },
   { name: "category", label: "Category" },
   {
     name: "status",

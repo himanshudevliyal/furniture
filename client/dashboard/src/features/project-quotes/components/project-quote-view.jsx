@@ -122,7 +122,7 @@ function Detail({ label, value }) {
   return (
     <div>
       <p className="text-[11px] text-muted-foreground mb-0.5">{label}</p>
-      <p className="text-sm break-all">{value}</p>
+      <p className="text-sm break-all">{value || "-"}</p>
     </div>
   );
 }

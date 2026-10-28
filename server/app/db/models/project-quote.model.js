@@ -19,7 +19,7 @@ const init = async (sequelize) => {
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       phone: {
         type: DataTypes.STRING,
@@ -27,7 +27,7 @@ const init = async (sequelize) => {
       },
       company: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       message: {
         type: DataTypes.TEXT,
@@ -57,9 +57,9 @@ const init = async (sequelize) => {
 const create = async (req) => {
   const data = await ProjectQuoteModel.create({
     name: req.body.name,
-    email: req.body.email,
+    email: req.body.email || null,
     phone: req.body.phone || null,
-    company: req.body.company,
+    company: req.body.company || null,
     message: req.body.message || null,
     category: req.body.category || null,
   });
@@ -154,7 +154,8 @@ const update = async (req, id) => {
   const values = Object.fromEntries(
     EDITABLE_FIELDS.filter((key) => req.body[key] !== undefined).map((key) => [
       key,
-      req.body[key],
+      // Blank optional fields are stored as NULL, not "".
+      req.body[key] === "" ? null : req.body[key],
     ]),
   );
 

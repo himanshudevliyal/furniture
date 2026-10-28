@@ -13,14 +13,22 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 // ---------------------------------------------------------------------------
 const quoteSchema = z.object({
   name: z.string().trim().min(2, "Name is required"),
-  email: z.email({ message: "Enter a valid email address" }),
+  // Only name and phone are required — the rest is optional.
+  email: z
+    .email({ message: "Enter a valid email address" })
+    .optional()
+    .or(z.literal("")),
   phone: z
     .string()
     .trim()
-    .regex(/^[0-9+\-\s()]{7,15}$/, "Enter a valid phone number")
+    .min(1, "Mobile number is required")
+    .regex(/^[0-9+\-\s()]{7,15}$/, "Enter a valid mobile number"),
+  company: z
+    .string()
+    .trim()
+    .max(150, "Company name is too long")
     .optional()
     .or(z.literal("")),
-  company: z.string().trim().min(2, "Company name is required"),
   message: z
     .string()
     .trim()
@@ -144,7 +152,7 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
         />
       </Field>
 
-      <Field id="quote-email" label="Email address" required error={errors.email}>
+      <Field id="quote-email" label="Email address" error={errors.email}>
         <input
           id="quote-email"
           type="email"
@@ -155,7 +163,7 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
         />
       </Field>
 
-      <Field id="quote-phone" label="Telephone number" error={errors.phone}>
+      <Field id="quote-phone" label="Mobile Number" required error={errors.phone}>
         <input
           id="quote-phone"
           type="tel"
@@ -166,7 +174,7 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
         />
       </Field>
 
-      <Field id="quote-company" label="Company name" required error={errors.company}>
+      <Field id="quote-company" label="Company name" error={errors.company}>
         <input
           id="quote-company"
           type="text"

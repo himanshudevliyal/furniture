@@ -36,10 +36,12 @@ export const columns = (openModal, setQuoteId) => [
   {
     accessorKey: "company",
     header: "Company",
+    cell: ({ row }) => row.getValue("company") || "-",
   },
   {
     accessorKey: "email",
     header: "Email",
+    cell: ({ row }) => row.getValue("email") || "-",
   },
   {
     accessorKey: "phone",
