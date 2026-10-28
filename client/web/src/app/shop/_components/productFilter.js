@@ -116,6 +116,20 @@ export default function ProductFilter() {
     productsQueryLoading ||
     (isAnyFilterActive && categoriesLoading);
 
+  // When a filter changes, bring the top of the product list back into view
+  // (otherwise you stay scrolled down past a now-shorter list).
+  const productsTopRef = useRef(null);
+  const lastQueryRef = useRef(productQuery);
+  useEffect(() => {
+    if (lastQueryRef.current === productQuery) return;
+    lastQueryRef.current = productQuery;
+    const el = productsTopRef.current;
+    // 112px ≈ sticky header height + a little space (matches scroll-mt-28).
+    if (el && el.getBoundingClientRect().top < 112) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [productQuery]);
+
   const products = useMemo(
     () => productsData?.pages.flatMap((page) => page?.products ?? []) ?? [],
     [productsData],
@@ -169,7 +183,10 @@ export default function ProductFilter() {
           </aside>
 
           {/* Products */}
-          <div className="lg:col-span-9">
+          <div
+            ref={productsTopRef}
+            className="scroll-mt-28 lg:col-span-9"
+          >
             {/* Toolbar */}
             <div className="mb-8 flex items-center justify-between gap-4 lg:mb-10">
               <p className="text-sm text-neutral-500">
