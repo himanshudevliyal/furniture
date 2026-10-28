@@ -196,7 +196,13 @@ const update = async (req, id, transaction) => {
       colors: req.body.colors,
       content: req.body.content,
       category_id: req.body.category_id,
-      sub_category_id: req.body.sub_category_id || null,
+      // Only touch the sub-category when the request sends it. The Active
+      // toggle sends just `{ is_active }`, and `undefined || null` would
+      // otherwise wipe the product's sub-category.
+      sub_category_id:
+        req.body.sub_category_id === undefined
+          ? undefined
+          : req.body.sub_category_id || null,
       is_active: req.body.is_active,
       sort_order: req.body.sort_order,
       hero: req.body.hero,
