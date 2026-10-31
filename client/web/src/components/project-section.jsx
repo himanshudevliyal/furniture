@@ -71,7 +71,7 @@ export default function FurnitureProductsShowcase({ projects = [] }) {
               key={product.image}
               className="basis-[85%] pl-4 sm:basis-[66.666%] sm:pl-6"
             >
-              <Card product={product} />
+              <Card product={product} fitOnMobile />
             </CarouselItem>
           ))}
         </CarouselContent>

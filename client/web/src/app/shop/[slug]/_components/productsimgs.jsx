@@ -59,7 +59,7 @@ const items = useMemo( () => galleryImages .map((file, index) => { if (!file) re
               key={item.key}
               className="basis-full pl-4 sm:basis-[66.666%] sm:pl-6"
             >
-              <Card product={item} />
+              <Card product={item} fitOnMobile />
             </CarouselItem>
           ))}
         </CarouselContent>
