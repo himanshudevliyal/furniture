@@ -57,6 +57,12 @@ const tabItemClass = cn(
   "lg:flex-row lg:gap-2 lg:px-3 lg:py-2.5 lg:text-[15px] xl:px-4"
 );
 
+// Pause the scroll-spy briefly after a click (until the smooth scroll ends).
+const lockSpy = (ref, ms = 1000) => {
+  ref.current = Date.now() + ms;
+};
+const isSpyLocked = (ref) => Date.now() < ref.current;
+
 function EmptyState({ label }) {
   return (
     <p className="px-4 py-16 text-center text-lg text-muted-foreground lg:px-8">
@@ -82,14 +88,24 @@ export default function ProductTabs({ product, children }) {
   const panelTopRef = useRef(null);
   const barRef = useRef(null);
 
+  // Scroll so `el` starts exactly under the sticky tab bar (whatever its
+  // height), which is also where the scroll-spy treats it as active.
+  const scrollBelowBar = (el) => {
+    const barBottom = barRef.current?.getBoundingClientRect().bottom ?? 0;
+    const top = window.scrollY + el.getBoundingClientRect().top - barBottom;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+  };
+
   // Tab bar is sticky, so it can be clicked from far down the page (e.g. while
   // reading FAQs). In that case bring the newly opened tab into view.
   const changeTab = (value) => {
     setActiveTab(value);
+    setActiveJump(null);
     const el = panelTopRef.current;
     const barBottom = barRef.current?.getBoundingClientRect().bottom ?? 0;
     if (el && el.getBoundingClientRect().top < barBottom) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      lockSpy(spyLockUntil);
+      scrollBelowBar(el);
     }
   };
 
@@ -112,16 +128,20 @@ export default function ProductTabs({ product, children }) {
   // Scroll-spy: while Features / FAQs sits under the sticky bar, highlight its
   // link instead of the tab. Anywhere else, the open tab stays highlighted.
   const [activeJump, setActiveJump] = useState(null);
+  // After a click we already know what should be active; ignore the spy
+  // until the smooth scroll has finished so the highlight doesn't flicker.
+  const spyLockUntil = useRef(0);
   useEffect(() => {
     if (!jumpHrefs) return;
     let frame = 0;
     const update = () => {
       frame = 0;
+      if (isSpyLocked(spyLockUntil)) return;
       const barBottom = barRef.current?.getBoundingClientRect().bottom ?? 0;
       const current = jumpHrefs.split(",").find((href) => {
         const rect = document.querySelector(href)?.getBoundingClientRect();
-        // +8 px so a section that just scrolled into place counts as active.
-        return rect && rect.top <= barBottom + 8 && rect.bottom > barBottom + 8;
+        // Generous margin so a section that just scrolled into place counts.
+        return rect && rect.top <= barBottom + 40 && rect.bottom > barBottom + 40;
       });
       setActiveJump(current ?? null);
     };
@@ -195,7 +215,9 @@ export default function ProductTabs({ product, children }) {
                 const target = document.querySelector(href);
                 if (!target) return;
                 e.preventDefault();
-                target.scrollIntoView({ behavior: "smooth", block: "start" });
+                setActiveJump(href);
+                lockSpy(spyLockUntil);
+                scrollBelowBar(target);
                 history.replaceState(null, "", href);
               }}
             >
