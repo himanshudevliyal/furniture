@@ -28,12 +28,16 @@ const phoneNumbers = ["+91 9810438876", "+91 9810418877"];
 
 const addresses = [
   {
-    label: "Display",
-    text: "Plot No. C 40, DDA Sheds, Okhla Industrial Area, Phase 1, New Delhi 110020",
+    label: "Experience Centre",
+    text: "Plot No. C-40, Okhla Industrial Estate Phase I, New Delhi 110020",
   },
   {
     label: "Works",
-    text: "Plot No. A7, 12/6 Street 3, Gurukul Industrial Estate, Faridabad, Haryana 121003",
+    text: "Plot No. 7A, 12/6 Gurukul Industrial Estate, Faridabad, Haryana 121003",
+  },
+  {
+    label: "Works 2",
+    text: "Plot No. 92B, DLF Industrial Estate, Faridabad 121010",
   },
 ];
 
@@ -47,7 +51,7 @@ const socialLinks = [
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
-  { label: "Our Projects", href: "/projects" },
+  { label: "Our Cases", href: "/cases" },
   { label: "Our Clients", href: "/clients" },
   { label: "Careers", href: "/careers" },
   { label: "Contact Us", href: "/contact" },
@@ -228,24 +232,24 @@ export default function SiteFooter() {
       <div className="relative mx-auto max-w-[1600px] px-6 sm:px-10">
 
         {/* ---------------------------------------------------------------- */}
-        {/* Top Bar — logo, contact details, social */}
+        {/* Top Bar — logo, contact details */}
         {/* ---------------------------------------------------------------- */}
 
         <div className="flex flex-col gap-6 border-b border-white/10 py-5 lg:flex-row lg:items-center lg:gap-10">
 
-          <div className="flex shrink-0 items-center gap-3">
+          <div className="flex shrink-0 items-center">
             <Image
-              src="/logo-5.png"
+              src="/logo-natraj-white.png"
               alt="Natraj Furniture"
-              width={180}
-              height={60}
-              className="h-10 w-auto object-contain"
+              width={1200}
+              height={363}
+              className="h-auto w-[180px] object-contain sm:w-[215px]"
             />
           </div>
 
           <div className="hidden h-12 w-px shrink-0 bg-white/15 lg:block" />
 
-          <div className="grid flex-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid flex-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
 
             {/* Email */}
             <div className="flex items-start gap-3">
@@ -260,7 +264,7 @@ export default function SiteFooter() {
 
                 <a
                   href="mailto:sales@natrajfurniture.com"
-                  className="break-all text-[14px] text-white/70 transition-colors hover:text-white"
+                  className="whitespace-nowrap text-[14px] text-white/70 transition-colors hover:text-white"
                 >
                   sales@natrajfurniture.com
                 </a>
@@ -310,18 +314,6 @@ export default function SiteFooter() {
             ))}
           </div>
 
-          <div className="flex shrink-0 items-center gap-3">
-            {socialLinks.map(({ key, label, href, icon: Icon }) => (
-              <a
-                key={key}
-                href={href}
-                aria-label={label}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white transition-all hover:border-[#e30613] hover:bg-[#e30613] hover:text-white"
-              >
-                <Icon className="h-4 w-4" aria-hidden />
-              </a>
-            ))}
-          </div>
         </div>
 
         {/* ---------------------------------------------------------------- */}
@@ -331,7 +323,7 @@ export default function SiteFooter() {
         <FooterCategories />
 
         {/* ---------------------------------------------------------------- */}
-        {/* Bottom Bar — copyright | quick links | legal links */}
+        {/* Bottom Bar — copyright | quick links | legal links + social */}
         {/* ---------------------------------------------------------------- */}
 
         <div className="grid grid-cols-1 items-center gap-3 py-4 text-[14px] text-white/60 lg:grid-cols-[1fr_auto_1fr] lg:gap-6 md:pr-20">
@@ -347,11 +339,26 @@ export default function SiteFooter() {
             className="justify-center"
           />
 
-          <FooterInlineLinks
-            links={legalLinks}
-            label="Legal"
-            className="justify-center lg:justify-end"
-          />
+          <div className="flex flex-col items-center gap-3 lg:items-end">
+            <FooterInlineLinks
+              links={legalLinks}
+              label="Legal"
+              className="justify-center lg:justify-end"
+            />
+
+            <div className="flex items-center gap-3">
+              {socialLinks.map(({ key, label, href, icon: Icon }) => (
+                <a
+                  key={key}
+                  href={href}
+                  aria-label={label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white transition-all hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
+                >
+                  <Icon className="h-4 w-4" aria-hidden />
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </footer>

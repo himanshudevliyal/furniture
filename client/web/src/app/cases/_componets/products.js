@@ -14,8 +14,8 @@ const PAGE_SIZE = 24;
 
 // `categories` comes from the server (lib/projects.js), one per folder in
 // /public/img/projects.
-export default function ProjectsGrid({ categories = [] }) {
-  const [active, setActive] = useState(ALL);
+export default function ProjectsGrid({ categories = [], initialCategory }) {
+  const [active, setActive] = useState(initialCategory ?? ALL);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   // "All" interleaves categories (one photo from each in turn), so the first

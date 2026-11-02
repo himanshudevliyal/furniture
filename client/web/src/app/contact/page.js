@@ -22,7 +22,7 @@ const offices = [
     city: "New Delhi",
     title: "Experience Centre",
     address:
-      "Plot No C 40, DDA Sheds, Okhla Industrial Estate, Phase I, New Delhi 110020",
+      "Plot No. C-40, Okhla Industrial Estate Phase I, New Delhi 110020",
     phones: ["+91 9810418877", "+91 9810438876"],
     email: "sales@natrajfurniture.com",
   },
@@ -30,7 +30,15 @@ const offices = [
     city: "Faridabad",
     title: "Works",
     address:
-      "A-7, 12/6 Street No 3, Gurukul Industrial Estate, Faridabad, Haryana 121003",
+      "Plot No. 7A, 12/6 Gurukul Industrial Estate, Faridabad, Haryana 121003",
+    phones: ["+91 9810438876", "+91 9810418877"],
+    email: "sales@natrajfurniture.com",
+  },
+  {
+    city: "Faridabad",
+    title: "Works 2",
+    address:
+      "Plot No. 92B, DLF Industrial Estate, Faridabad 121010",
     phones: ["+91 9810438876", "+91 9810418877"],
     email: "sales@natrajfurniture.com",
   },
@@ -82,7 +90,7 @@ const ClockIcon = () => (
 );
 
 const IconBadge = ({ children }) => (
-  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e30613]/10 text-[#e30613]">
+  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E87717]/10 text-[#E87717]">
     {children}
   </span>
 );
@@ -103,7 +111,7 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl">
           {/* Intro */}
           <div className="mb-12 max-w-2xl">
-            <p className="mb-3 type-eyebrow text-[#e30613]">
+            <p className="mb-3 type-eyebrow text-[#E87717]">
               Get in touch
             </p>
             <h2 className="type-title text-[#3a352f]">
@@ -118,7 +126,7 @@ export default function ContactPage() {
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.45fr_1fr] lg:gap-10">
             {/* Contact Form */}
-            <div className="rounded-md border-t-4 border-[#e30613] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10">
+            <div className="rounded-md border-t-4 border-[#E87717] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10">
               <ContactForm />
             </div>
 
@@ -126,14 +134,14 @@ export default function ContactPage() {
             <div className="flex flex-col gap-6">
               {offices.map((office) => (
                 <article
-                  key={office.city}
-                  className="rounded-md border-t-4 border-[#e30613] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] transition-all hover:-translate-y-0.5 hover:shadow-lg hover:ring-[#e30613]/40 sm:p-7"
+                  key={office.title}
+                  className="rounded-md border-t-4 border-[#E87717] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] transition-all hover:-translate-y-0.5 hover:shadow-lg hover:ring-[#E87717]/40 sm:p-7"
                 >
                   <div className="mb-5 flex items-baseline justify-between gap-3 border-b border-[#e3ded4] pb-4">
                     <h3 className="type-heading uppercase text-[#3a352f]">
                       {office.city}
                     </h3>
-                    <span className="rounded-full bg-[#e30613] px-3 py-1 text-xs font-medium text-white">
+                    <span className="rounded-full bg-[#E87717] px-3 py-1 text-xs font-medium text-white">
                       {office.title}
                     </span>
                   </div>
@@ -157,7 +165,7 @@ export default function ContactPage() {
                           <a
                             key={phone}
                             href={`tel:${phone.replace(/\s/g, "")}`}
-                            className="text-[#5c564c] transition-colors hover:text-[#e30613]"
+                            className="text-[#5c564c] transition-colors hover:text-[#E87717]"
                           >
                             {phone}
                           </a>
@@ -171,7 +179,7 @@ export default function ContactPage() {
                       </IconBadge>
                       <a
                         href={`mailto:${office.email}`}
-                        className="self-center break-all text-[#5c564c] transition-colors hover:text-[#e30613]"
+                        className="self-center break-all text-[#5c564c] transition-colors hover:text-[#E87717]"
                       >
                         {office.email}
                       </a>
@@ -181,7 +189,7 @@ export default function ContactPage() {
               ))}
 
               {/* Hours */}
-              <div className="flex items-center gap-4 rounded-md bg-gradient-to-r from-[#e30613] to-[#a8040e] p-6 text-white shadow-md">
+              <div className="flex items-center gap-4 rounded-md bg-gradient-to-r from-[#E87717] to-[#B5560A] p-6 text-white shadow-md">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20">
                   <ClockIcon />
                 </span>
@@ -199,7 +207,7 @@ export default function ContactPage() {
           <div className="mt-16">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="mb-2 type-eyebrow text-[#e30613]">
+                <p className="mb-2 type-eyebrow text-[#E87717]">
                   Visit us
                 </p>
                 <h2 className="type-subtitle text-[#3a352f]">
@@ -233,7 +241,7 @@ export default function ContactPage() {
 
               {/* Floating address card */}
               <div className="pointer-events-none absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-sm">
-                <div className="pointer-events-auto rounded-md border-l-4 border-[#e30613] bg-[#f7f5f1]/95 p-4 shadow-lg backdrop-blur">
+                <div className="pointer-events-auto rounded-md border-l-4 border-[#E87717] bg-[#f7f5f1]/95 p-4 shadow-lg backdrop-blur">
                   <p className="type-eyebrow text-[#6b655a]">
                     New Delhi · Experience Centre
                   </p>

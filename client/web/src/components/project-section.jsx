@@ -44,7 +44,7 @@ export default function FurnitureProductsShowcase({ projects = [] }) {
       className="w-full bg-white py-14 sm:py-16"
     >
       <Heading
-        heading="Our Projects"
+        heading="Our Cases"
         subheading="Explore our completed workspace projects, featuring thoughtfully designed office furniture solutions built for modern, functional, and professional environments."
         eyebrowClassName="justify-center"
         className="text-center max-w-5xl mx-auto"

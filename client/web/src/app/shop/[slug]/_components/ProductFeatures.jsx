@@ -34,7 +34,7 @@ export default function ProductFeatures({ product }) {
       <Heading
         eyebrow="FEATURES"
         heading={heading}
-        eyebrowClassName="text-[#e30613]"
+        eyebrowClassName="text-[#E87717]"
         className="mx-auto mb-10 max-w-3xl text-center lg:mb-12"
       />
 
@@ -62,7 +62,7 @@ export default function ProductFeatures({ product }) {
                     type="button"
                     onClick={() => go(-1)}
                     aria-label="Previous feature"
-                    className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:border-[#e30613] hover:bg-[#e30613] hover:text-white"
+                    className="absolute left-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
@@ -70,7 +70,7 @@ export default function ProductFeatures({ product }) {
                     type="button"
                     onClick={() => go(1)}
                     aria-label="Next feature"
-                    className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:border-[#e30613] hover:bg-[#e30613] hover:text-white"
+                    className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white text-neutral-700 shadow-sm transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
@@ -97,7 +97,7 @@ export default function ProductFeatures({ product }) {
                 aria-pressed={isActive}
                 className={cn(
                   "group relative flex flex-col bg-white p-6 text-left transition-all duration-300",
-                  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[#e30613] after:transition-transform after:duration-300 after:origin-left",
+                  "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[#E87717] after:transition-transform after:duration-300 after:origin-left",
                   isActive
                     ? "shadow-md after:scale-x-100"
                     : "after:scale-x-0 hover:shadow-md",
@@ -107,7 +107,7 @@ export default function ProductFeatures({ product }) {
                   <span
                     className={cn(
                       "text-lg font-medium transition-colors",
-                      isActive ? "text-[#e30613]" : "text-neutral-400",
+                      isActive ? "text-[#E87717]" : "text-neutral-400",
                     )}
                   >
                     {String(i + 1).padStart(2, "0")}
@@ -116,7 +116,7 @@ export default function ProductFeatures({ product }) {
                     className={cn(
                       "flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-300",
                       isActive
-                        ? "bg-[#e30613] text-white"
+                        ? "bg-[#E87717] text-white"
                         : "bg-neutral-100 text-neutral-500 group-hover:bg-neutral-200",
                     )}
                   >

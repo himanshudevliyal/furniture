@@ -1,5 +1,5 @@
 import { BreadcrumbBanner } from "@/components/breadcrumb";
-import ClientLogoCard from "@/components/client-logo-card";
+import Image from "next/image";
 import Heading from "@/components/layout/heading";
 import { Section } from "@/components/layout/section";
 import { clients } from "@/lib/clients";
@@ -32,13 +32,20 @@ export default function ClientsPage() {
           className="mx-auto max-w-4xl text-center"
         />
 
-        <ul className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 xl:grid-cols-5">
+        {/* Logo wall: white cells split by hairlines (1px gap over a grey
+            background), black & white logos. */}
+        <ul className="mt-12 grid grid-cols-2 gap-px border border-neutral-200 bg-neutral-200 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
           {clients.map((client) => (
-            <li key={client.logo}>
-              <ClientLogoCard
-                title={client.name}
-                logo={client.logo}
-                className="h-[100px] w-full px-5 py-4 sm:h-[120px] sm:w-full sm:px-6"
+            <li
+              key={client.logo}
+              className="flex h-[120px] items-center justify-center bg-white px-5 transition-colors duration-300 hover:bg-neutral-50 sm:h-[160px] lg:h-[190px] lg:px-6"
+            >
+              <Image
+                src={client.logo}
+                alt={client.name}
+                width={180}
+                height={80}
+                className="h-auto max-h-[60px] w-auto max-w-full object-contain grayscale contrast-125 sm:max-h-[70px]"
               />
             </li>
           ))}

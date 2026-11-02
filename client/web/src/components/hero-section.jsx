@@ -215,7 +215,7 @@ export default function HeroSlider() {
                         setQuoteRequested(true);
                         setQuoteOpen(true);
                       }}
-                      className="inline-flex items-center gap-2 rounded-sm border border-[#e30613] bg-[#e30613] px-5 py-3 type-button text-white transition-colors hover:border-[#b8050f] hover:bg-[#b8050f] md:px-6"
+                      className="inline-flex items-center gap-2 rounded-sm border border-[#E87717] bg-[#E87717] px-5 py-3 type-button text-white transition-colors hover:border-[#C9620E] hover:bg-[#C9620E] md:px-6"
                     >
                       Request Project Quote
                     </button>

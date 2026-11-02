@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // The projects page moved to /cases
+  async redirects() {
+    return [{ source: "/projects", destination: "/cases", permanent: true }];
+  },
   images: {
     remotePatterns: [
       {

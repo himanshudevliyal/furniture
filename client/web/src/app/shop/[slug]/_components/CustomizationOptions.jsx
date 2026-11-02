@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
 import { resolveFileUrl } from "@/utils/resolve-file-url";
 
 // Materials, 3D models and downloads — shown below the gallery as a
-// side menu + content panel instead of tabs. Brand red (#e30613) is kept
+// side menu + content panel instead of tabs. Brand red (#E87717) is kept
 // to accents only: the active marker, icons and button hover.
 
 function MaterialGroup({ section }) {
@@ -36,7 +36,7 @@ function MaterialGroup({ section }) {
       {section.heading && (
         <CollapsibleTrigger className="group/trigger flex w-full items-center justify-between border-b border-neutral-200 py-4 text-left">
           <span className="flex items-center gap-3">
-            <span className="h-4 w-0.5 bg-[#e30613]" aria-hidden />
+            <span className="h-4 w-0.5 bg-[#E87717]" aria-hidden />
             <span className="type-card-title text-neutral-900">
               {section.heading}
             </span>
@@ -88,7 +88,7 @@ function FileList({ files, icon: Icon, fallbackTitle }) {
           className="flex items-center gap-4 border border-neutral-200 p-4 transition-shadow duration-300 hover:shadow-md"
         >
           <div className="flex h-12 w-12 shrink-0 items-center justify-center bg-[#f4f0eb]">
-            <Icon className="h-5 w-5 text-[#e30613]" strokeWidth={1.6} />
+            <Icon className="h-5 w-5 text-[#E87717]" strokeWidth={1.6} />
           </div>
           <div className="min-w-0 flex-1">
             <p className="truncate text-base font-medium text-neutral-900">
@@ -106,7 +106,7 @@ function FileList({ files, icon: Icon, fallbackTitle }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Download ${file.title || fallbackTitle}`}
-            className="inline-flex h-10 shrink-0 items-center gap-2 border border-neutral-900 px-4 text-sm font-medium text-neutral-900 transition-colors hover:border-[#e30613] hover:bg-[#e30613] hover:text-white"
+            className="inline-flex h-10 shrink-0 items-center gap-2 border border-neutral-900 px-4 text-sm font-medium text-neutral-900 transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
           >
             <Download className="h-4 w-4" />
             <span className="hidden sm:inline">Download</span>
@@ -121,7 +121,7 @@ function EmptyPanel({ icon: Icon, title, text }) {
   return (
     <div className="flex flex-col items-center justify-center px-4 py-14 text-center lg:min-h-100">
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f4f0eb]">
-        <Icon className="h-7 w-7 text-[#e30613]" strokeWidth={1.5} />
+        <Icon className="h-7 w-7 text-[#E87717]" strokeWidth={1.5} />
       </div>
       <h3 className="mt-5 type-heading text-neutral-900">{title}</h3>
       <p className="mt-2 max-w-md type-body text-neutral-600">
@@ -129,7 +129,7 @@ function EmptyPanel({ icon: Icon, title, text }) {
       </p>
       <Link
         href="/contact"
-        className="mt-6 inline-flex h-10 items-center gap-2 border border-neutral-900 px-5 text-sm font-medium text-neutral-900 transition-colors hover:border-[#e30613] hover:bg-[#e30613] hover:text-white"
+        className="mt-6 inline-flex h-10 items-center gap-2 border border-neutral-900 px-5 text-sm font-medium text-neutral-900 transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
       >
         Contact Us
         <ChevronRight className="h-4 w-4" />
@@ -211,7 +211,7 @@ export default function CustomizationOptions({ product }) {
         eyebrow="CUSTOMIZATION"
         heading="Customization Options"
         subheading="Choose from our range of finishes and download the resources for your project. Contact us to confirm availability."
-        eyebrowClassName="text-[#e30613]"
+        eyebrowClassName="text-[#E87717]"
         className="mx-auto mb-10 max-w-3xl text-center"
       />
 
@@ -234,7 +234,7 @@ export default function CustomizationOptions({ product }) {
                     "group relative flex flex-col items-center justify-center gap-1.5 px-2 py-4 text-center text-xs font-medium transition-colors duration-300",
                     "sm:text-sm lg:flex-row lg:justify-between lg:gap-3 lg:border-t lg:border-neutral-200 lg:px-8 lg:py-6 lg:text-left lg:text-base",
                     // Red marker: bottom edge on mobile, left edge on desktop.
-                    "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[#e30613] after:transition-opacity",
+                    "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-[#E87717] after:transition-opacity",
                     "lg:after:inset-x-auto lg:after:inset-y-0 lg:after:left-0 lg:after:h-auto lg:after:w-1",
                     isActive
                       ? "bg-white text-neutral-900 after:opacity-100"
@@ -246,7 +246,7 @@ export default function CustomizationOptions({ product }) {
                       className={cn(
                         "h-5 w-5 shrink-0 transition-colors",
                         isActive
-                          ? "text-[#e30613]"
+                          ? "text-[#E87717]"
                           : "text-neutral-400 group-hover:text-neutral-700",
                       )}
                       strokeWidth={1.7}
@@ -257,7 +257,7 @@ export default function CustomizationOptions({ product }) {
                     className={cn(
                       "hidden h-7 w-7 shrink-0 items-center justify-center rounded-full transition-all duration-300 lg:flex",
                       isActive
-                        ? "bg-[#e30613] text-white"
+                        ? "bg-[#E87717] text-white"
                         : "border border-neutral-300 text-neutral-500 group-hover:translate-x-1",
                     )}
                   >

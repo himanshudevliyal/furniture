@@ -49,7 +49,7 @@ export default function SubCategorySection({
 
           <span
             className={cn(
-              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-800 text-neutral-800 transition-all duration-300 group-hover:border-[#e30613] group-hover:text-[#e30613]",
+              "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-800 text-neutral-800 transition-all duration-300 group-hover:border-[#E87717] group-hover:text-[#E87717]",
               isOpen && "rotate-180",
             )}
           >

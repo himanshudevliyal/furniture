@@ -95,7 +95,7 @@ function formatSize(bytes) {
 }
 
 const inputClass =
-  "w-full rounded-md border border-[#e3ded4] bg-white px-4 py-3 text-[#3a352f] shadow-sm transition placeholder:text-[#b0a99c] hover:border-[#cfc8bb] focus:border-[#e30613] focus:outline-none focus:ring-4 focus:ring-[#e30613]/10";
+  "w-full rounded-md border border-[#e3ded4] bg-white px-4 py-3 text-[#3a352f] shadow-sm transition placeholder:text-[#b0a99c] hover:border-[#cfc8bb] focus:border-[#E87717] focus:outline-none focus:ring-4 focus:ring-[#E87717]/10";
 
 const errorInputClass =
   "border-red-400 focus:border-red-500 focus:ring-red-500/10";
@@ -107,7 +107,7 @@ function FieldLabel({ htmlFor, children, optional }) {
       {optional ? (
         <span className="font-normal text-[#6b655a]">(optional)</span>
       ) : (
-        <span className="text-[#e30613]">*</span>
+        <span className="text-[#E87717]">*</span>
       )}
     </label>
   );
@@ -248,7 +248,7 @@ export default function ContactForm() {
           Send us a message
         </h3>
         <p className="mt-1 text-sm text-[#6b655a]">
-          Fields marked with <span className="text-[#e30613]">*</span> are
+          Fields marked with <span className="text-[#E87717]">*</span> are
           required.
         </p>
       </div>
@@ -256,7 +256,7 @@ export default function ContactForm() {
       {/* Reason for Contact */}
       <fieldset className="md:col-span-2">
         <legend className="mb-3 text-sm font-medium text-[#3a352f]">
-          Reason for Contact <span className="text-[#e30613]">*</span>
+          Reason for Contact <span className="text-[#E87717]">*</span>
         </legend>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
@@ -267,8 +267,8 @@ export default function ContactForm() {
                 key={value}
                 className={`relative flex cursor-pointer flex-col items-center justify-center gap-3 rounded-lg border-2 px-3 py-5 text-center transition-all duration-200 ${
                   active
-                    ? "border-[#e30613] bg-[#e30613]/5 shadow-md shadow-[#e30613]/10"
-                    : "border-[#e3ded4] bg-white hover:-translate-y-0.5 hover:border-[#e30613]/40 hover:shadow-sm"
+                    ? "border-[#E87717] bg-[#E87717]/5 shadow-md shadow-[#E87717]/10"
+                    : "border-[#e3ded4] bg-white hover:-translate-y-0.5 hover:border-[#E87717]/40 hover:shadow-sm"
                 }`}
               >
                 <input
@@ -279,17 +279,17 @@ export default function ContactForm() {
                 />
                 <span
                   aria-hidden="true"
-                  className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-colors peer-focus-visible:ring-4 peer-focus-visible:ring-[#e30613]/20 ${
-                    active ? "border-[#e30613]" : "border-[#cfc8bb]"
+                  className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-colors peer-focus-visible:ring-4 peer-focus-visible:ring-[#E87717]/20 ${
+                    active ? "border-[#E87717]" : "border-[#cfc8bb]"
                   }`}
                 >
                   {active && (
-                    <span className="h-3 w-3 rounded-full bg-[#e30613]" />
+                    <span className="h-3 w-3 rounded-full bg-[#E87717]" />
                   )}
                 </span>
                 <span
                   className={`text-sm leading-snug ${
-                    active ? "font-medium text-[#e30613]" : "text-[#5c564c]"
+                    active ? "font-medium text-[#E87717]" : "text-[#5c564c]"
                   }`}
                 >
                   {REASON_LABELS[value]}
@@ -390,13 +390,13 @@ export default function ContactForm() {
         {!file ? (
           <label
             htmlFor="attachment-file"
-            className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-[#e3ded4] bg-white px-4 py-7 text-center transition-colors hover:border-[#e30613]/50 hover:bg-[#e30613]/[0.03]"
+            className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-[#e3ded4] bg-white px-4 py-7 text-center transition-colors hover:border-[#E87717]/50 hover:bg-[#E87717]/[0.03]"
           >
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#e30613]/10 text-[#e30613] transition-transform group-hover:scale-110">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#E87717]/10 text-[#E87717] transition-transform group-hover:scale-110">
               <UploadCloud className="h-5 w-5" aria-hidden />
             </span>
             <span className="text-sm text-[#3a352f]">
-              <span className="font-medium text-[#e30613]">Click to upload</span>{" "}
+              <span className="font-medium text-[#E87717]">Click to upload</span>{" "}
               a reference file
             </span>
             <span className="text-xs text-[#6b655a]">JPG, PNG, WEBP or PDF</span>
@@ -404,7 +404,7 @@ export default function ContactForm() {
         ) : (
           <div className="flex items-center justify-between gap-4 rounded-lg border border-[#e3ded4] bg-white px-4 py-3 shadow-sm">
             <div className="flex min-w-0 items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#e30613]/10 text-[#e30613]">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#E87717]/10 text-[#E87717]">
                 <Paperclip className="h-4 w-4" aria-hidden />
               </span>
               <div className="min-w-0">
@@ -421,7 +421,7 @@ export default function ContactForm() {
               type="button"
               onClick={clearFile}
               aria-label="Remove file"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#6b655a] transition-colors hover:bg-[#e30613]/10 hover:text-[#e30613]"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#6b655a] transition-colors hover:bg-[#E87717]/10 hover:text-[#E87717]"
             >
               <X className="h-4 w-4" aria-hidden />
             </button>

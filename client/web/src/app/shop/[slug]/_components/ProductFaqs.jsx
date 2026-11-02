@@ -40,11 +40,11 @@ export default function ProductFaqs({ product }) {
             eyebrow="FAQS"
             heading="Frequently Asked Questions"
             subheading={`Common questions about ${product?.title || "this product"}. Can't find what you're looking for? Our team is happy to help.`}
-            eyebrowClassName="text-[#e30613]"
+            eyebrowClassName="text-[#E87717]"
           />
           <Link
             href="/contact"
-            className="group mt-2 inline-flex h-11 items-center gap-2 bg-neutral-900 px-6 text-sm font-medium text-white transition-colors hover:bg-[#e30613]"
+            className="group mt-2 inline-flex h-11 items-center gap-2 bg-neutral-900 px-6 text-sm font-medium text-white transition-colors hover:bg-[#E87717]"
           >
             Ask a Question
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -65,7 +65,7 @@ export default function ProductFaqs({ product }) {
                   <span
                     className={cn(
                       "mt-0.5 text-sm font-medium transition-colors",
-                      isOpen ? "text-[#e30613]" : "text-neutral-400",
+                      isOpen ? "text-[#E87717]" : "text-neutral-400",
                     )}
                   >
                     {String(i + 1).padStart(2, "0")}
@@ -77,7 +77,7 @@ export default function ProductFaqs({ product }) {
                     className={cn(
                       "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300",
                       isOpen
-                        ? "rotate-45 border-[#e30613] bg-[#e30613] text-white"
+                        ? "rotate-45 border-[#E87717] bg-[#E87717] text-white"
                         : "border-neutral-300 text-neutral-600 group-hover:border-neutral-900",
                     )}
                   >

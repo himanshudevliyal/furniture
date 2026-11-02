@@ -157,10 +157,10 @@ export default function MobileMenu({ categories = [], links = [] }) {
           <SheetTitle className="sr-only">Menu</SheetTitle>
           <Link href="/" onClick={close} aria-label="Home">
             <Image
-              width={220}
-              height={90}
-              className="h-auto w-[120px] object-contain"
-              src="/logo.png"
+              width={1200}
+              height={363}
+              className="h-auto w-[145px] object-contain"
+              src="/logo-natraj.png"
               alt="Natraj Office Furniture logo"
             />
           </Link>

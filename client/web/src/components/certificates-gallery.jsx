@@ -47,7 +47,7 @@ export default function CertificatesGallery() {
                 <p className="mt-2 text-[11px] text-neutral-500">
                   No. {cert.number} · Valid till {cert.validTill}
                 </p>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#e30613]">
+                <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#E87717]">
                   View PDF
                   <ExternalLink className="h-3.5 w-3.5" aria-hidden />
                 </span>

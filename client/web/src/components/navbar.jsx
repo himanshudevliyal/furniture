@@ -39,7 +39,7 @@ function IconButton({ label, children, badge, className = "", onClick }) {
 // Nav links shown after "Products"
 const navLinks = [
   { label: "About Us", href: "/about" },
-  { label: "Projects", href: "/projects" },
+  { label: "Cases", href: "/cases" },
   { label: "Our Blogs", href: "/blog" },
   { label: "Our Clients", href: "/clients" },
   { label: "Contact Us", href: "/contact" },
@@ -120,10 +120,10 @@ export default function Navbar() {
             className="flex shrink-0 items-center"
           >
             <Image
-              width={220}
-              height={90}
-              className="h-auto w-[150px] object-contain md:w-[200px]"
-              src="/logo.png"
+              width={1200}
+              height={363}
+              className="h-auto w-[150px] object-contain md:w-[185px]"
+              src="/logo-natraj.png"
               alt="Natraj Office Furniture logo"
               priority
             />

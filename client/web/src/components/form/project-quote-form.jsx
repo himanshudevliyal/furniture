@@ -38,7 +38,7 @@ const quoteSchema = z.object({
 });
 
 const inputClass =
-  "w-full rounded-md border border-neutral-200 bg-white px-3.5 py-2.5 text-sm text-neutral-900 shadow-sm transition placeholder:text-neutral-500 hover:border-neutral-300 focus:border-[#e30613] focus:outline-none focus:ring-4 focus:ring-[#e30613]/10";
+  "w-full rounded-md border border-neutral-200 bg-white px-3.5 py-2.5 text-sm text-neutral-900 shadow-sm transition placeholder:text-neutral-500 hover:border-neutral-300 focus:border-[#E87717] focus:outline-none focus:ring-4 focus:ring-[#E87717]/10";
 
 const errorInputClass =
   "border-red-400 focus:border-red-500 focus:ring-red-500/10";
@@ -49,7 +49,7 @@ function Field({ id, label, required, error, children }) {
       <label htmlFor={id} className="text-[13px] font-medium text-neutral-800">
         {label}{" "}
         {required ? (
-          <span className="text-[#e30613]">*</span>
+          <span className="text-[#E87717]">*</span>
         ) : (
           <span className="font-normal text-neutral-500">(optional)</span>
         )}
@@ -127,7 +127,7 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
         <button
           type="button"
           onClick={() => setSubmitted(false)}
-          className="mt-5 text-sm font-medium text-[#e30613] underline-offset-4 hover:underline"
+          className="mt-5 text-sm font-medium text-[#E87717] underline-offset-4 hover:underline"
         >
           Send another request
         </button>
@@ -208,7 +208,7 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
         <button
           type="submit"
           disabled={loading}
-          className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#e30613] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#e30613]/20 transition-all hover:bg-[#b8050f] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+          className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#E87717] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#E87717]/20 transition-all hover:bg-[#C9620E] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading ? (
             <>

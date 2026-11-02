@@ -73,7 +73,7 @@ export default function FloatingCta() {
         <a
           href={`tel:${PHONE_NUMBER}`}
           aria-label="Call us"
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-[#e30613] text-white shadow-lg transition-transform hover:scale-110"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-[#E87717] text-white shadow-lg transition-transform hover:scale-110"
         >
           <Phone className="h-6 w-6" aria-hidden />
         </a>
@@ -92,7 +92,7 @@ export default function FloatingCta() {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#e30613] text-white shadow-lg transition-transform hover:scale-110"
+          className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white bg-[#E87717] text-white shadow-lg transition-transform hover:scale-110"
         >
           <ArrowUp className="h-6 w-6" aria-hidden />
         </button>
@@ -100,7 +100,7 @@ export default function FloatingCta() {
 
       {/* Mobile: bottom bar */}
       <div
-        className={`fixed inset-x-0 bottom-0 z-50 flex bg-[#e30613] text-white shadow-[0_-2px_10px_rgba(0,0,0,0.15)] transition-transform duration-300 ease-out md:hidden ${
+        className={`fixed inset-x-0 bottom-0 z-50 flex bg-[#E87717] text-white shadow-[0_-2px_10px_rgba(0,0,0,0.15)] transition-transform duration-300 ease-out md:hidden ${
           showMobileBar ? "translate-y-0" : "translate-y-full"
         }`}
       >

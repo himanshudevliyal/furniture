@@ -7,6 +7,10 @@ import path from "path";
 
 const PROJECTS_DIR = path.join(process.cwd(), "public", "img", "projects");
 
+// Optional cover photo per category for the homepage case cards:
+// /public/img/case-covers/<slug>.webp. Falls back to the first project photo.
+const COVERS_DIR = path.join(process.cwd(), "public", "img", "case-covers");
+
 // Display order and labels. A new folder not listed here still shows up,
 // after these, with a label made from its folder name.
 const CATEGORY_META = {
@@ -69,7 +73,10 @@ export function getProjectCategories() {
           subtitle: meta.subtitle,
           category: slug,
         }));
-      return { slug, label: meta.label, images };
+      const cover = fs.existsSync(path.join(COVERS_DIR, `${slug}.webp`))
+        ? `/img/case-covers/${slug}.webp`
+        : images[0]?.image;
+      return { slug, label: meta.label, cover, images };
     })
     .filter((c) => c.images.length > 0);
 

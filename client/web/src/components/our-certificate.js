@@ -26,7 +26,7 @@ function CertificateCard({ logo, title, pdf }) {
       </div>
       <span className="text-xs font-medium text-neutral-600">
         {title}
-        {pdf && <span className="ml-1 text-[#e30613]">· View</span>}
+        {pdf && <span className="ml-1 text-[#E87717]">· View</span>}
       </span>
     </>
   );
@@ -42,7 +42,7 @@ function CertificateCard({ logo, title, pdf }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`View ${title} certificate (PDF)`}
-      className={`${className} transition-all duration-300 hover:-translate-y-1 hover:border-[#e30613]/40 hover:shadow-md`}
+      className={`${className} transition-all duration-300 hover:-translate-y-1 hover:border-[#E87717]/40 hover:shadow-md`}
     >
       {content}
     </a>

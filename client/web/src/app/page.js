@@ -1,6 +1,6 @@
 
 import BlogSection from "@/components/blog-section";
-import ExclusiveProducts from "@/components/categories";
+import FurnitureCategories from "@/components/home/furniture-categories";
 import HeroSection from "@/components/hero-section";
 import {
   LazyIndustriesWeServe as IndustriesWeServe,
@@ -8,9 +8,9 @@ import {
 } from "@/components/home/lazy-motion-sections";
 import Certifications from "@/components/our-certificate";
 import OurClient from "@/components/our-client";
-import FurnitureProductsShowcase from "@/components/project-section";
+import CaseCategories from "@/components/home/case-categories";
 import VideoTours from "@/components/home/video-tours";
-import { getFeaturedProjects } from "@/lib/projects";
+import { getProjectCategories } from "@/lib/projects";
 import ProjectSupport from "@/components/home/project-support";
 import StatsSection from "@/components/stats-section";
 import TestimonialsMasonryMarquee from "@/components/testimonials-marquee";
@@ -33,7 +33,7 @@ export default function Home() {
       <StatsSection />
 
       {/* 2. What we make */}
-      <ExclusiveProducts />
+      <FurnitureCategories />
       {/* <FeaturedProducts /> */}
 
       {/* 3. Who it's for */}
@@ -45,7 +45,7 @@ export default function Home() {
 
       {/* 5. How we deliver + proof of work */}
       <ProjectSupport />
-      <FurnitureProductsShowcase projects={getFeaturedProjects(10)} />
+      <CaseCategories categories={getProjectCategories()} />
       <VideoTours />
 
       {/* 6. Trust */}

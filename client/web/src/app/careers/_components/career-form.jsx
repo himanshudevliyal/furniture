@@ -106,7 +106,7 @@ function Field({ id, label, optional, error, className = "", children }) {
         {optional ? (
           <span className="font-normal text-neutral-500">(optional)</span>
         ) : (
-          <span className="text-[#e30613]">*</span>
+          <span className="text-[#E87717]">*</span>
         )}
       </label>
       {children}
@@ -282,7 +282,7 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
       </div>
 
       {/* Right: form card (same treatment as the Contact page card) */}
-      <div className="rounded-md border-t-4 border-[#e30613] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10">
+      <div className="rounded-md border-t-4 border-[#E87717] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10">
         {submitted ? (
           <div className="flex flex-col items-center py-12 text-center" role="status">
             <span className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600">
@@ -314,7 +314,7 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
                 Submit your application
               </h3>
               <p className="mt-1 text-sm text-neutral-600">
-                Fields marked with <span className="text-[#e30613]">*</span> are
+                Fields marked with <span className="text-[#E87717]">*</span> are
                 required.
               </p>
             </div>
@@ -450,7 +450,7 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
             {/* CV upload — same drop zone as the Contact form attachment */}
             <div className="flex flex-col gap-2 md:col-span-2">
               <span id="career-cv-label" className="text-sm font-medium text-neutral-900">
-                Upload CV <span className="text-[#e30613]">*</span>{" "}
+                Upload CV <span className="text-[#E87717]">*</span>{" "}
                 <span className="font-normal text-neutral-500">
                   (PDF, DOC or DOCX, max 5 MB)
                 </span>

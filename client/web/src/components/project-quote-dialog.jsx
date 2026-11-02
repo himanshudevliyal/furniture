@@ -15,8 +15,8 @@ export default function ProjectQuoteDialog({ open, onOpenChange, category }) {
 
         <Dialog.Popup className="fixed left-1/2 top-1/2 z-[10000] max-h-[calc(100svh-2rem)] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white shadow-2xl outline-none transition-all duration-200 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
           {/* Header */}
-          <div className="relative border-t-4 border-[#e30613] px-6 pb-4 pt-6 sm:px-8">
-            <p className="type-eyebrow text-[#e30613]">
+          <div className="relative border-t-4 border-[#E87717] px-6 pb-4 pt-6 sm:px-8">
+            <p className="type-eyebrow text-[#E87717]">
               Get a quote
             </p>
             <Dialog.Title className="mt-1 type-subtitle text-neutral-900">
@@ -28,14 +28,14 @@ export default function ProjectQuoteDialog({ open, onOpenChange, category }) {
             </Dialog.Description>
 
             {category && (
-              <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#e30613]/10 px-3 py-1 text-xs font-medium text-[#e30613]">
+              <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#E87717]/10 px-3 py-1 text-xs font-medium text-[#E87717]">
                 Enquiry for: {category}
               </span>
             )}
 
             <Dialog.Close
               aria-label="Close"
-              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e30613]/40"
+              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E87717]/40"
             >
               <X className="h-5 w-5" aria-hidden />
             </Dialog.Close>
