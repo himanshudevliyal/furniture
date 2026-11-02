@@ -38,9 +38,26 @@ function IconButton({ label, children, badge, className = "", onClick }) {
 
 // Nav links shown after "Products"
 const navLinks = [
-  { label: "About Us", href: "/about" },
+  {
+    label: "About",
+    href: "/about",
+    children: [
+      { label: "About Us", href: "/about" },
+      { label: "Workshop", href: "/workshop" },
+      { label: "Showroom", href: "/showroom" },
+      { label: "Quality", href: "/quality" },
+    ],
+  },
   { label: "Cases", href: "/cases" },
-  { label: "Our Blogs", href: "/blog" },
+  {
+    label: "Inspiration",
+    href: "/materials-colors",
+    children: [
+      { label: "Materials & Colors", href: "/materials-colors" },
+      { label: "Blogs", href: "/blog" },
+      { label: "Resources", href: "/resources" },
+    ],
+  },
   { label: "Our Clients", href: "/clients" },
   { label: "Contact Us", href: "/contact" },
 
@@ -155,23 +172,48 @@ export default function Navbar() {
               />
             </Link>
 
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onMouseEnter={closeNow}
-                className={linkClass}
-              >
-                {link.label}
-                {link.hasDropdown && (
-                  <ChevronDown
-                    aria-hidden="true"
-                    className="h-3.5 w-3.5 shrink-0"
-                    strokeWidth={2.25}
-                  />
-                )}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.children ? (
+                // Small hover dropdown (CSS only)
+                <div
+                  key={link.label}
+                  onMouseEnter={closeNow}
+                  className="group/dd relative flex h-full items-center"
+                >
+                  <Link href={link.href} aria-haspopup="true" className={linkClass}>
+                    {link.label}
+                    <ChevronDown
+                      aria-hidden="true"
+                      className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover/dd:rotate-180"
+                      strokeWidth={2.25}
+                    />
+                  </Link>
+                  <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover/dd:visible group-hover/dd:opacity-100 group-focus-within/dd:visible group-focus-within/dd:opacity-100">
+                    <ul className="min-w-[200px] border border-neutral-200 bg-white py-2 shadow-lg">
+                      {link.children.map((child) => (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            className="block whitespace-nowrap px-5 py-2.5 text-[14px] text-neutral-700 transition-colors hover:bg-neutral-50 hover:text-[#E87717]"
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onMouseEnter={closeNow}
+                  className={linkClass}
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
           </nav>
 
    <Link
@@ -216,7 +258,10 @@ export default function Navbar() {
             </IconButton>
           </div>
 
-                    <MobileMenu categories={categories} links={navLinks} />
+                    <MobileMenu
+                      categories={categories}
+                      links={navLinks.flatMap((link) => link.children ?? [link])}
+                    />
 
         </div>
       </div>
