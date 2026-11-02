@@ -44,12 +44,12 @@ export default function SubCategorySection({
         )}
 
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
+          <h2 className="type-subtitle text-neutral-900">
             {subCategory.title}
           </h2>
 
           {subCategory.meta_description && (
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-500">
+            <p className="mt-2 max-w-2xl type-body text-neutral-500">
               {subCategory.meta_description}
             </p>
           )}

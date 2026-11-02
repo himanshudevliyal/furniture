@@ -79,7 +79,7 @@ export default function CategoryMegaMenu({
             ))}
           </div>
         ) : categories.length === 0 ? (
-          <p className="text-[15px] text-neutral-500">
+          <p className="text-[14px] text-neutral-500">
             No categories available.
           </p>
         ) : (
@@ -97,7 +97,7 @@ export default function CategoryMegaMenu({
                   <Link
                     href={categoryHref(category)}
                     onClick={onNavigate}
-                    className="block text-[15px] font-semibold leading-snug text-neutral-900 transition-colors hover:text-neutral-600"
+                    className="block text-[14px] font-bold leading-snug text-neutral-900 transition-colors hover:text-neutral-600"
                   >
                     {category.title}
                   </Link>
@@ -109,7 +109,7 @@ export default function CategoryMegaMenu({
                           <Link
                             href={subCategoryHref(category, sub)}
                             onClick={onNavigate}
-                            className="block text-[15px] leading-tight text-neutral-500 transition-colors hover:text-neutral-900"
+                            className="block text-[14px] leading-normal text-neutral-500 transition-colors hover:text-neutral-900"
                           >
                             {subCategoryLabel(sub)}
                           </Link>

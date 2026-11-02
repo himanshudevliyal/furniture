@@ -24,7 +24,7 @@ function CertificateCard({ logo, title, pdf }) {
           className="object-contain"
         />
       </div>
-      <span className="text-xs font-medium tracking-wide text-neutral-600">
+      <span className="text-xs font-medium text-neutral-600">
         {title}
         {pdf && <span className="ml-1 text-[#e30613]">· View</span>}
       </span>
@@ -64,7 +64,6 @@ export default function Certifications() {
         eyebrow="Our Certifications"
         subheading="Built to meet recognised quality, safety and performance standards."
         eyebrowClassName="justify-center"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="mx-auto max-w-5xl text-center"
       />
 

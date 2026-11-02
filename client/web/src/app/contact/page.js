@@ -103,10 +103,10 @@ export default function ContactPage() {
         <div className="mx-auto max-w-7xl">
           {/* Intro */}
           <div className="mb-12 max-w-2xl">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-[#e30613]">
+            <p className="mb-3 type-eyebrow text-[#e30613]">
               Get in touch
             </p>
-            <h2 className="text-3xl leading-tight text-[#3a352f] lg:text-4xl">
+            <h2 className="type-title text-[#3a352f]">
               Let&apos;s talk about your space
             </h2>
             <p className="mt-4 text-[#5c564c]">
@@ -130,7 +130,7 @@ export default function ContactPage() {
                   className="rounded-md border-t-4 border-[#e30613] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] transition-all hover:-translate-y-0.5 hover:shadow-lg hover:ring-[#e30613]/40 sm:p-7"
                 >
                   <div className="mb-5 flex items-baseline justify-between gap-3 border-b border-[#e3ded4] pb-4">
-                    <h3 className="text-lg uppercase tracking-wider text-[#3a352f]">
+                    <h3 className="type-heading uppercase text-[#3a352f]">
                       {office.city}
                     </h3>
                     <span className="rounded-full bg-[#e30613] px-3 py-1 text-xs font-medium text-white">
@@ -143,7 +143,7 @@ export default function ContactPage() {
                       <IconBadge>
                         <PinIcon />
                       </IconBadge>
-                      <p className="leading-relaxed text-[#5c564c]">
+                      <p className="type-body text-[#5c564c]">
                         {office.address}
                       </p>
                     </li>
@@ -199,10 +199,10 @@ export default function ContactPage() {
           <div className="mt-16">
             <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.25em] text-[#e30613]">
+                <p className="mb-2 type-eyebrow text-[#e30613]">
                   Visit us
                 </p>
-                <h2 className="text-2xl text-[#3a352f] lg:text-3xl">
+                <h2 className="type-subtitle text-[#3a352f]">
                   Our Experience Centre
                 </h2>
               </div>
@@ -234,7 +234,7 @@ export default function ContactPage() {
               {/* Floating address card */}
               <div className="pointer-events-none absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-sm">
                 <div className="pointer-events-auto rounded-md border-l-4 border-[#e30613] bg-[#f7f5f1]/95 p-4 shadow-lg backdrop-blur">
-                  <p className="text-xs uppercase tracking-widest text-[#6b655a]">
+                  <p className="type-eyebrow text-[#6b655a]">
                     New Delhi · Experience Centre
                   </p>
                   <p className="mt-1 text-sm leading-relaxed text-[#3a352f]">

@@ -22,10 +22,10 @@ export function ParallaxStatic() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
 
       <div className="relative flex h-full flex-col items-center justify-center px-6 text-center text-white">
-        <h2 className="mx-auto max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+        <h2 className="mx-auto max-w-4xl type-statement">
           Sustainable Spaces for a Thriving Planet
         </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-white/85 sm:text-lg lg:text-xl">
+        <p className="mx-auto mt-4 max-w-2xl type-statement-text text-white/85">
           Bringing nature to work, leaving the wild untouched.
         </p>
       </div>

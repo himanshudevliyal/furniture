@@ -54,19 +54,17 @@ export default function AboutPage() {
                 heading="CREATING BETTER WORKSPACES SINCE 1989"
                 subheading="Natraj Office Furniture is a leading designer and manufacturer of office furniture, offering thoughtfully designed workstations, desks, seating and storage solutions for modern workplaces."
                 eyebrowClassName="!justify-start"
-                headingClassName="text-xl sm:text-2xl lg:text-4xl !font-normal !leading-[1]"
-                subheadingClassName="text-base sm:text-lg leading-[1.7]"
                 className="!text-left !max-w-none"
               />
 
               <div className="mt-6 space-y-5">
-                <p className="text-base sm:text-lg leading-[1.7] ">
+                <p className="type-lead ">
                   With decades of experience, we combine quality materials,
                   practical design and customization to create furniture
                   tailored to the unique needs of every organization.
                 </p>
 
-                <p className="text-base sm:text-lg leading-[1.7] ">
+                <p className="type-lead ">
                   From concept and manufacturing to delivery and after-sales
                   support, our focus remains on delivering exceptional quality,
                   personalized solutions and dependable service.
@@ -87,7 +85,6 @@ export default function AboutPage() {
     heading="DESIGNED FOR THE WAY YOU WORK"
     subheading="We believe great office furniture should balance aesthetics, comfort, functionality and durability."
     eyebrowClassName="justify-center"
-    headingClassName="text-3xl sm:text-4xl lg:text-5xl"
     className="max-w-5xl mx-auto text-center"
   />
 
@@ -103,11 +100,11 @@ export default function AboutPage() {
         />
       </div>
 
-      <h3 className="text-2xl lg:text-3xl font-medium  mb-5">
+      <h3 className="type-subtitle mb-5">
         Quality
       </h3>
 
-      <p className="text-lg lg:text-xl leading-8 ">
+      <p className="type-lead ">
         Carefully selected materials and thoughtful manufacturing
         processes ensure furniture that is built for everyday use,
         comfort and lasting performance.
@@ -123,11 +120,11 @@ export default function AboutPage() {
         />
       </div>
 
-      <h3 className="text-2xl lg:text-3xl font-medium  mb-5">
+      <h3 className="type-subtitle mb-5">
         Customisation
       </h3>
 
-      <p className="text-lg lg:text-xl leading-8 ">
+      <p className="type-lead ">
         Flexible furniture solutions designed around your workplace,
         allowing you to create spaces that match your requirements,
         layout and working style.
@@ -144,11 +141,11 @@ export default function AboutPage() {
         />
       </div>
 
-      <h3 className="text-2xl lg:text-3xl font-medium  mb-5">
+      <h3 className="type-subtitle mb-5">
         Service
       </h3>
 
-      <p className="text-lg lg:text-xl leading-8 ">
+      <p className="type-lead ">
         From planning and delivery to after-sales support, we remain
         committed to providing a smooth, reliable and dependable
         experience at every stage.

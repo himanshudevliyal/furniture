@@ -27,7 +27,6 @@ export default function ProjectSupport() {
         heading="Project Support from Brief to Production"
         subheading="Our skilled project team provides various services from bidding stage to launch"
         className="mx-auto mb-10 max-w-3xl text-center"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         subheadingClassName="text-neutral-500"
       />
 

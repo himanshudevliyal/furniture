@@ -36,11 +36,11 @@ export default function BlogDetail({ blog }) {
         {/* Header */}
         <header className="mb-8">
           {blog.category_title && (
-            <span className="mb-4 inline-block rounded-full bg-[#3a352f] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-[#f7f5f1]">
+            <span className="mb-4 inline-block rounded-full bg-[#3a352f] px-3 py-1 text-[11px] font-medium uppercase tracking-[0.04em] text-[#f7f5f1]">
               {blog.category_title}
             </span>
           )}
-          <h1 className="text-3xl leading-tight text-[#3a352f] sm:text-4xl lg:text-5xl">
+          <h1 className="type-display text-[#3a352f]">
             {blog.title}
           </h1>
           <p className="mt-4 text-sm text-[#6b655a]">
@@ -94,7 +94,7 @@ export default function BlogDetail({ blog }) {
         {/* Body */}
         <div className="mx-auto mt-10 max-w-3xl">
           {blog.description && (
-            <p className="border-l-2 border-[#3a352f] pl-5 text-lg leading-relaxed text-[#3a352f] first-letter:float-left first-letter:mr-2 first-letter:text-5xl first-letter:leading-none">
+            <p className="border-l-2 border-[#3a352f] pl-5 type-statement-text text-[#3a352f] first-letter:float-left first-letter:mr-2 first-letter:text-5xl first-letter:leading-none">
               {blog.description}
             </p>
           )}

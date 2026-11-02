@@ -235,7 +235,7 @@ export default function ProductTabs({ product, children }) {
           <div className="grid grid-cols-1 gap-10 px-4 py-10 lg:grid-cols-2 lg:px-8 lg:py-14">
             <div className="flex flex-col gap-6">
               {overview.heading && (
-                <h2 className="text-4xl font-semibold tracking-tight">
+                <h2 className="type-title">
                   {overview.heading}
                 </h2>
               )}
@@ -243,7 +243,7 @@ export default function ProductTabs({ product, children }) {
               {overviewDescriptions.map((paragraph, i) => (
                 <p
                   key={i}
-                  className="max-w-prose text-lg text-muted-foreground"
+                  className="max-w-prose type-lead text-muted-foreground"
                 >
                   {paragraph}
                 </p>
@@ -255,7 +255,7 @@ export default function ProductTabs({ product, children }) {
                   onOpenChange={setFeaturesOpen}
                 >
                   <CollapsibleTrigger className="flex w-full items-center justify-between border-t py-4 text-left">
-                    <span className="text-2xl font-semibold">
+                    <span className="type-subtitle">
                       {overview.features?.heading || "Features & Options"}
                     </span>
                     <ChevronDown
@@ -270,7 +270,7 @@ export default function ProductTabs({ product, children }) {
                       {overviewFeatures.map((f) => (
                         <li
                           key={f}
-                          className="flex items-start gap-2 mb-2 text-lg text-muted-foreground"
+                          className="flex items-start gap-2 mb-2 type-lead text-muted-foreground"
                         >
                           <Check className="mt-1 h-5 w-5 shrink-0 text-foreground" />
                           <span>{f}</span>
@@ -329,14 +329,14 @@ export default function ProductTabs({ product, children }) {
                   >
                     <div className="flex flex-col gap-4">
                       {section.heading && (
-                        <h3 className="text-4xl font-semibold tracking-tight">
+                        <h3 className="type-title">
                           {section.heading}
                         </h3>
                       )}
                       {descriptions.map((paragraph, j) => (
                         <p
                           key={j}
-                          className="max-w-prose text-lg text-muted-foreground leading-relaxed"
+                          className="max-w-prose type-lead text-muted-foreground"
                         >
                           {paragraph}
                         </p>
@@ -346,7 +346,7 @@ export default function ProductTabs({ product, children }) {
                           {bullets.map((b) => (
                             <li
                               key={b}
-                              className="flex items-start gap-2 text-lg"
+                              className="flex items-start gap-2 type-lead"
                             >
                               <Check className="mt-1 h-5 w-5 shrink-0 text-foreground" />
                               <span className="text-foreground/80">{b}</span>
@@ -383,7 +383,7 @@ export default function ProductTabs({ product, children }) {
             {specifications.length ? (
               <>
                 <div className="mb-8 flex flex-wrap items-end justify-between gap-2">
-                  <h2 className="text-4xl font-semibold tracking-tight">
+                  <h2 className="type-title">
                     Specifications
                   </h2>
                   <p className="text-sm text-muted-foreground">
@@ -418,7 +418,7 @@ export default function ProductTabs({ product, children }) {
          
 
             {otherDetailsContent ? (
- <>  <h2 className="mb-8 text-4xl font-semibold tracking-tight">
+ <>  <h2 className="mb-8 type-title">
               Other Details
             </h2>
 

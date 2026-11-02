@@ -35,7 +35,6 @@ export default function ProductFeatures({ product }) {
         eyebrow="FEATURES"
         heading={heading}
         eyebrowClassName="text-[#e30613]"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="mx-auto mb-10 max-w-3xl text-center lg:mb-12"
       />
 
@@ -53,7 +52,7 @@ export default function ProductFeatures({ product }) {
                 className="animate-in fade-in object-contain p-4 duration-500"
               />
 
-              <span className="absolute left-4 top-4 bg-white/90 px-3 py-1 text-xs font-medium tracking-wide text-neutral-700">
+              <span className="absolute left-4 top-4 bg-white/90 px-3 py-1 text-xs font-medium tracking-[0.04em] text-neutral-700">
                 {String(active + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
               </span>
 
@@ -125,12 +124,12 @@ export default function ProductFeatures({ product }) {
                   </span>
                 </div>
 
-                <h3 className="mt-3 text-xl font-medium leading-snug text-neutral-900">
+                <h3 className="mt-3 type-heading text-neutral-900">
                   {item.title}
                 </h3>
 
                 {item.description && (
-                  <p className="mt-3 max-h-24 overflow-y-auto pr-2 text-sm leading-6 text-neutral-600 [scrollbar-color:#d4d4d4_transparent] [scrollbar-width:thin]">
+                  <p className="mt-3 max-h-24 overflow-y-auto pr-2 type-body text-neutral-600 [scrollbar-color:#d4d4d4_transparent] [scrollbar-width:thin]">
                     {item.description}
                   </p>
                 )}

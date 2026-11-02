@@ -51,7 +51,7 @@ export function FilterSidebar({
     <div className="rounded-xl border bg-card p-4 md:p-5 space-y-5 sticky top-20">
       {/* Title */}
       <div>
-        <h2 className="text-2xl font-semibold">{title}</h2>
+        <h2 className="type-subtitle">{title}</h2>
         <div className="mt-2 h-0.5 w-16 bg-primary" />
       </div>
 
@@ -78,7 +78,7 @@ export function FilterSidebar({
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Filter className="h-4 w-4 text-primary" />
-              <span className="text-lg font-semibold">Categories</span>
+              <span className="type-card-title font-bold">Categories</span>
             </div>
 
             <div className="space-y-2">
@@ -112,7 +112,7 @@ export function FilterSidebar({
       <div>
         <div className="flex items-center gap-2 mb-3">
           <IndianRupee className="h-4 w-4 text-primary" />
-          <span className="text-lg font-semibold">Price</span>
+          <span className="type-card-title font-bold">Price</span>
         </div>
 
         {/* Price Display */}

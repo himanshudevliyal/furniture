@@ -37,7 +37,7 @@ function MaterialGroup({ section }) {
         <CollapsibleTrigger className="group/trigger flex w-full items-center justify-between border-b border-neutral-200 py-4 text-left">
           <span className="flex items-center gap-3">
             <span className="h-4 w-0.5 bg-[#e30613]" aria-hidden />
-            <span className="text-lg font-medium text-neutral-900">
+            <span className="type-card-title text-neutral-900">
               {section.heading}
             </span>
             <span className="text-sm text-neutral-400">({items.length})</span>
@@ -95,7 +95,7 @@ function FileList({ files, icon: Icon, fallbackTitle }) {
               {file.title || fallbackTitle}
             </p>
             {file.fileType && (
-              <p className="mt-0.5 text-xs uppercase tracking-wide text-neutral-500">
+              <p className="mt-0.5 text-xs uppercase tracking-[0.04em] text-neutral-500">
                 {file.fileType} file
               </p>
             )}
@@ -123,8 +123,8 @@ function EmptyPanel({ icon: Icon, title, text }) {
       <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#f4f0eb]">
         <Icon className="h-7 w-7 text-[#e30613]" strokeWidth={1.5} />
       </div>
-      <h3 className="mt-5 text-xl font-medium text-neutral-900">{title}</h3>
-      <p className="mt-2 max-w-md text-sm leading-relaxed text-neutral-600 sm:text-base">
+      <h3 className="mt-5 type-heading text-neutral-900">{title}</h3>
+      <p className="mt-2 max-w-md type-body text-neutral-600">
         {text}
       </p>
       <Link
@@ -212,14 +212,13 @@ export default function CustomizationOptions({ product }) {
         heading="Customization Options"
         subheading="Choose from our range of finishes and download the resources for your project. Contact us to confirm availability."
         eyebrowClassName="text-[#e30613]"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="mx-auto mb-10 max-w-3xl text-center"
       />
 
       <div className="grid grid-cols-1 border border-neutral-200 bg-white lg:grid-cols-[320px_1fr]">
         {/* Menu */}
         <nav className="border-b border-neutral-200 bg-[#f4f0eb] lg:border-b-0 lg:border-r">
-          <p className="hidden px-8 pb-5 pt-8 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500 lg:block">
+          <p className="hidden px-8 pb-5 pt-8 type-eyebrow text-neutral-500 lg:block">
             Product Information
           </p>
           <div className="grid auto-cols-fr grid-flow-col lg:grid-flow-row">

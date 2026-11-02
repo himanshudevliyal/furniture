@@ -37,12 +37,12 @@ export default function CategoryHero({ category }) {
 
       {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-[1600px] px-5 pb-12 sm:pb-16 md:px-10">
-        <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-white drop-shadow-lg sm:text-5xl lg:text-6xl">
+        <h1 className="max-w-2xl type-display text-white drop-shadow-lg">
           {category.title}
         </h1>
 
         {description && (
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/90 drop-shadow-md sm:text-base">
+          <p className="mt-4 max-w-xl type-lead text-white/90 drop-shadow-md">
             {description}
           </p>
         )}

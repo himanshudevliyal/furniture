@@ -244,12 +244,11 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
             eyebrow="APPLY NOW"
             heading="INTERESTED IN JOINING US?"
             subheading="Submit your CV, we will contact you as soon as we have relevant openings."
-            headingClassName="text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05]"
-            subheadingClassName="text-base sm:text-lg leading-[1.7] text-neutral-700"
+            subheadingClassName="text-neutral-700"
             className="text-left"
           />
 
-          <p className="text-base leading-[1.7] text-neutral-700">
+          <p className="type-lead text-neutral-700">
             Not sure which role fits you? Choose{" "}
             <span className="font-medium text-neutral-900">General Application</span>{" "}
             and tell us what you are good at.
@@ -289,10 +288,10 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
             <span className="flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-green-600">
               <CheckCircle2 className="h-8 w-8" aria-hidden />
             </span>
-            <h3 className="mt-6 text-2xl font-semibold text-neutral-900">
+            <h3 className="mt-6 type-subtitle text-neutral-900">
               Application received!
             </h3>
-            <p className="mt-2 max-w-sm text-base leading-7 text-neutral-700">
+            <p className="mt-2 max-w-sm type-lead text-neutral-700">
               Thank you for your interest. Our team will review your CV and get
               in touch if your profile matches an opening.
             </p>
@@ -311,7 +310,7 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
             noValidate
           >
             <div className="md:col-span-2">
-              <h3 className="text-2xl font-semibold text-neutral-900">
+              <h3 className="type-subtitle text-neutral-900">
                 Submit your application
               </h3>
               <p className="mt-1 text-sm text-neutral-600">

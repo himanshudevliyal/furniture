@@ -17,7 +17,6 @@ export default function OurClient() {
           heading="Trusted by Our Clients"
           subheading="Behind every project is a partnership built on trust, quality, reliability, and commitment."
           eyebrowClassName="justify-center"
-          headingClassName="text-3xl sm:text-4xl lg:text-5xl "
           className="max-w-5xl mx-auto text-center"
         />
 

@@ -37,10 +37,10 @@ export default function BlogList({ blogs = [] }) {
       {/* Heading + search */}
       <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
-          <p className="mb-2 text-xs uppercase tracking-[0.25em] text-[#6b655a]">
+          <p className="mb-2 type-eyebrow text-[#6b655a]">
             Insights
           </p>
-          <h2 className="text-3xl leading-tight text-[#3a352f] lg:text-4xl">
+          <h2 className="type-title text-[#3a352f]">
             Ideas for better workspaces
           </h2>
         </div>

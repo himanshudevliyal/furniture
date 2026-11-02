@@ -61,7 +61,7 @@ export default function CategoryPage() {
   if (categoriesIsError) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center gap-3 px-4 text-center">
-        <h1 className="text-2xl font-semibold text-neutral-900">
+        <h1 className="type-subtitle text-neutral-900">
           Something went wrong
         </h1>
         <p className="max-w-md text-neutral-500">
@@ -75,7 +75,7 @@ export default function CategoryPage() {
   if (!category) {
     return (
       <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4 px-4 text-center">
-        <h1 className="text-2xl font-semibold text-neutral-900">
+        <h1 className="type-subtitle text-neutral-900">
           Category not found
         </h1>
         <p className="max-w-md text-neutral-500">

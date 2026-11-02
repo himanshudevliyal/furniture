@@ -205,6 +205,162 @@
   select {
     font-family: inherit;
   }
+
+  /* Headings use the OPPOSans Bold file (like the reference site's h1-h5) */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 700;
+  }
+}
+
+/* =========================================
+   TYPOGRAPHY SCALE
+   Values taken from cloverfurniture.com's CSS (OPPOSans R/M/B). Font
+   sizes scale with the viewport through clamp(), with the same mobile
+   (<768px) overrides the reference uses.
+========================================= */
+
+/* Page / hero headline (.banner-title) */
+@utility type-display {
+  font-weight: 700;
+  font-size: clamp(28px, 5vw, 36px);
+  line-height: 1.22;
+  letter-spacing: -0.015em;
+  @media (width >= 768px) {
+    font-size: 40px;
+    line-height: 1.2;
+  }
+  @media (width >= 1024px) {
+    font-size: clamp(44px, 2.92vw, 56px);
+  }
+}
+
+/* Section title (.idx-section-title) */
+@utility type-title {
+  font-weight: 700;
+  font-size: clamp(28px, 2.1vw, 40px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Large statement over an image banner (.idx-sustainability__title) */
+@utility type-statement {
+  font-weight: 700;
+  font-size: clamp(28px, 5.5vw, 36px);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  @media (width >= 768px) {
+    font-size: clamp(36px, 2.75vw, 52px);
+    line-height: 1.2;
+  }
+}
+
+/* Text under a banner statement (.idx-sustainability__text) */
+@utility type-statement-text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.65;
+  @media (width >= 768px) {
+    font-size: clamp(18px, 1.15vw, 22px);
+    line-height: 1.7;
+  }
+}
+
+/* Smaller section / block title (.idx-inquiry__title) */
+@utility type-subtitle {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  @media (width >= 768px) {
+    font-size: clamp(26px, 1.8vw, 35px);
+  }
+}
+
+/* Bold card / feature title (.idx-advantages__item-title) */
+@utility type-heading {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.3;
+  @media (width >= 768px) {
+    font-size: clamp(19px, 1.25vw, 24px);
+  }
+}
+
+/* Product / category card title (.idx-products__item-title) */
+@utility type-card-title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.25;
+  @media (width >= 768px) {
+    font-size: clamp(16px, 1.05vw, 20px);
+  }
+}
+
+/* Blog / article card title (.idx-blog__content .tit) */
+@utility type-post-title {
+  font-weight: 500;
+  font-size: clamp(18px, 1.25vw, 23px);
+  line-height: 1.35;
+}
+
+/* Small uppercase label above a title (.idx-section-tag) */
+@utility type-eyebrow {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Intro / section paragraph (.idx-section-text) */
+@utility type-lead {
+  font-weight: 400;
+  font-size: clamp(15px, 0.94vw, 18px);
+  line-height: 1.65;
+}
+
+/* Regular body copy (.idx-advantages__item-text) */
+@utility type-body {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  @media (width >= 768px) {
+    font-size: clamp(14px, 0.84vw, 16px);
+  }
+}
+
+/* Small supporting text (.idx-products__item-text, dates, meta) */
+@utility type-small {
+  font-weight: 400;
+  font-size: clamp(12px, 0.73vw, 14px);
+  line-height: 1.4;
+}
+
+/* Main navigation link (header menu: body 16px Regular) */
+@utility type-nav {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  @media (width >= 1280px) {
+    font-size: 16px;
+  }
+}
+
+/* Buttons (.banner-actions .btn / .idx-inquiry__button) */
+@utility type-button {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  @media (width >= 768px) {
+    font-size: 16px;
+  }
 }
 
 
@@ -221,32 +377,32 @@
 
   /* Headings */
   .product-content h1 {
-    @apply mb-5 text-4xl font-semibold leading-tight text-foreground;
+    @apply mb-5 type-title text-foreground;
   }
 
   .product-content h2 {
-    @apply mb-4 text-3xl font-semibold leading-tight text-foreground;
+    @apply mb-4 type-subtitle text-foreground;
   }
 
   .product-content h3 {
-    @apply mb-4 text-2xl font-semibold leading-tight text-foreground;
+    @apply mb-4 type-heading text-foreground;
   }
 
   .product-content h4 {
-    @apply mb-2 mt-6 text-xl font-semibold leading-snug text-foreground;
+    @apply mb-2 mt-6 type-card-title font-bold text-foreground;
   }
 
   .product-content h5 {
-    @apply mb-2 mt-5 text-lg font-semibold leading-snug text-foreground;
+    @apply mb-2 mt-5 type-body font-bold text-foreground;
   }
 
   .product-content h6 {
-    @apply mb-2 mt-4 text-base font-semibold leading-snug text-foreground;
+    @apply mb-2 mt-4 type-small font-bold text-foreground;
   }
 
   /* Paragraph */
   .product-content p {
-    @apply my-3 text-base leading-7 text-muted-foreground;
+    @apply my-3 type-lead text-muted-foreground;
   }
 
   /* Text */
@@ -255,7 +411,7 @@
   }
 
   .product-content span {
-    @apply leading-7;
+    @apply leading-[1.65];
   }
 
   /* Lists */
@@ -268,7 +424,7 @@
   }
 
   .product-content li {
-    @apply my-1 pl-1 leading-7 text-muted-foreground;
+    @apply my-1 pl-1 type-lead text-muted-foreground;
   }
 
   /* Links */

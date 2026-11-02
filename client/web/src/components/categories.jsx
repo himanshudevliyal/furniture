@@ -75,7 +75,7 @@ function SubCategoryCard({ category, sub }) {
         )}
       </div>
 
-      <h3 className="mt-4 text-lg font-medium tracking-wide text-neutral-800 transition-colors group-hover:text-black md:text-xl">
+      <h3 className="mt-4 type-card-title text-neutral-800 transition-colors group-hover:text-black">
         {label}
       </h3>
     </Link>
@@ -132,7 +132,6 @@ export default function ExclusiveProducts() {
       <Heading
         heading="Office Furniture"
         subheading="Products that fit every workspace"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="max-w-5xl "
       />
 
@@ -214,7 +213,7 @@ export default function ExclusiveProducts() {
         <div className="mt-8">
           <Link
             href={categoryHref(activeCategory)}
-            className="text-[15px] font-semibold text-neutral-900 underline underline-offset-4 transition-colors hover:text-neutral-600"
+            className="text-[16px] font-normal text-neutral-900 underline underline-offset-4 transition-colors hover:text-neutral-600"
           >
             View all {activeCategory.title}
           </Link>

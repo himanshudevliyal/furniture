@@ -33,18 +33,18 @@ export default function BlogCard({ blog }) {
         )}
       </div>
 
-      <p className="mt-4 text-xs text-[#6b655a]">
+      <p className="mt-4 text-[14px] leading-[1.45] text-[#6b655a]">
         {date}
         {date && " • "}
         {readTime(blog)}
       </p>
 
-      <h3 className="mt-2 line-clamp-2 text-lg font-medium leading-snug text-[#3a352f] transition-colors group-hover:text-[#6b6356]">
+      <h3 className="mt-2 line-clamp-2 type-post-title text-[#3a352f] transition-colors group-hover:text-[#6b6356]">
         {blog.title}
       </h3>
 
       {blog.description && (
-        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[#5c564c]">
+        <p className="mt-2 line-clamp-2 type-body text-[#5c564c]">
           {stripHtml(blog.description)}
         </p>
       )}

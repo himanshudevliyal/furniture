@@ -57,7 +57,7 @@ export function IndustryCard({ title, image }) {
         className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent"
       />
       <div className="absolute inset-x-0 bottom-0 p-5">
-        <h3 className="text-lg font-semibold leading-snug text-white">
+        <h3 className="type-heading text-white">
           {title}
         </h3>
       </div>
@@ -76,7 +76,6 @@ export function IndustriesShell({ children }) {
         eyebrow="Industries"
         subheading="Trusted across sectors — built for the way each industry actually works."
         eyebrowClassName="justify-center"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="mx-auto max-w-5xl text-center"
       />
       {children}

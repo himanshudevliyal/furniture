@@ -88,12 +88,10 @@ export default async function CareersPage() {
                 eyebrow="CAREERS"
                 heading="BUILD YOUR CAREER WITH NATRAJ"
                 subheading="Behind every workstation, chair and office we deliver is a team of people who care about doing the job well. We are always looking for talented people to join them."
-                headingClassName="text-2xl sm:text-3xl lg:text-4xl font-normal! leading-[1.05]!"
-                subheadingClassName="text-base sm:text-lg leading-[1.7]"
                 className="text-left!"
               />
 
-              <p className="text-base leading-[1.7] sm:text-lg">
+              <p className="type-lead">
                 Whether you are in sales, design, production, installation or
                 accounts, you will find work here that you can be proud of.
               </p>
@@ -102,7 +100,7 @@ export default async function CareersPage() {
                 {facts.map((f) => (
                   <div key={f.label}>
                     <dt className="sr-only">{f.label}</dt>
-                    <dd className="text-3xl font-medium leading-none tracking-tight text-neutral-900 sm:text-4xl">
+                    <dd className="type-title text-neutral-900">
                       {f.value}
                     </dd>
                     <dd className="mt-2 text-xs leading-snug text-neutral-600 sm:text-sm">
@@ -138,7 +136,6 @@ export default async function CareersPage() {
           heading="A PLACE TO DO YOUR BEST WORK"
           subheading="We believe good furniture is made by people who are trusted, supported and given room to grow."
           eyebrowClassName="justify-center"
-          headingClassName="text-3xl sm:text-4xl lg:text-5xl"
           className="mx-auto max-w-4xl text-center"
         />
 
@@ -151,8 +148,8 @@ export default async function CareersPage() {
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#f4f0eb] transition-colors duration-300 group-hover:bg-[#ebe4d8]">
                 <Icon size={30} strokeWidth={1.5} aria-hidden />
               </div>
-              <h3 className="mb-4 text-2xl font-medium">{title}</h3>
-              <p className="text-base leading-7 text-neutral-700">{text}</p>
+              <h3 className="mb-4 type-subtitle">{title}</h3>
+              <p className="type-lead text-neutral-700">{text}</p>
             </div>
           ))}
         </div>

@@ -103,14 +103,14 @@ function TestimonialCard({ name, role, quote }) {
           {initialsOf(name)}
         </div>
         <div className="min-w-0">
-          <p className="truncate text-md font-semibold leading-tight text-neutral-900">
+          <p className="truncate type-card-title text-neutral-900">
             {name}
           </p>
           <p className="truncate text-neutral-600">{role}</p>
         </div>
       </div>
 
-      <p className="mt-4  leading-relaxed text-neutral-600">{quote}</p>
+      <p className="mt-4 type-body text-neutral-600">{quote}</p>
     </div>
   );
 }
@@ -129,7 +129,6 @@ export default function TestimonialsMasonryMarquee() {
   heading="What Our Clients Say"
   subheading="Hear from businesses and professionals who have transformed their workspaces with Natraj Furniture's quality, functionality, and customized furniture solutions."
   eyebrowClassName="justify-center"
-  headingClassName="text-3xl sm:text-4xl lg:text-5xl"
   className="max-5-xl mx-auto text-center"
 />
 

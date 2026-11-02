@@ -11,11 +11,11 @@ export default function StatsSection() {
     <section className="w-full bg-gray-100 px-6 py-20 md:px-14 lg:py-28">
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-14 md:grid-cols-4 md:gap-x-10 lg:gap-y-20">
         <div className="col-span-2">
-  <h2 className="text-3xl font-medium tracking-tight text-neutral-900 md:text-4xl">
+  <h2 className="type-title text-neutral-900">
     Natraj by the numbers
   </h2>
 
-  <p className="mt-4  leading-relaxed text-neutral-600 text-xl">
+  <p className="mt-4 type-lead text-neutral-600">
     Built around quality, customization and complete furniture solutions for
     modern professional workspaces.
   </p>

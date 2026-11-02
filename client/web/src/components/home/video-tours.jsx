@@ -28,7 +28,6 @@ export default function VideoTours() {
         heading="SEE OUR WORK IN MOTION"
         subheading="Walk through a few of the offices we have furnished — workstations, cabins, meeting rooms and breakout spaces."
         eyebrowClassName="justify-center"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="mx-auto max-w-4xl text-center"
       />
 

@@ -73,7 +73,7 @@ function ProductsAccordion({ categories, onNavigate }) {
                   <Link
                     href={categoryHref(category)}
                     onClick={onNavigate}
-                    className="flex-1 py-3 pl-4 text-[15px] font-medium text-neutral-800 transition-colors hover:text-black"
+                    className="flex-1 py-3 pl-4 text-[16px] font-normal text-neutral-800 transition-colors hover:text-black"
                   >
                     {category.title}
                   </Link>
@@ -196,7 +196,7 @@ export default function MobileMenu({ categories = [], links = [] }) {
           <Link
             href="/contact"
             onClick={close}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 text-[14px] font-semibold text-white transition-colors hover:bg-neutral-800"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 type-button text-white transition-colors hover:bg-neutral-800"
           >
             Get Inquiry
             <ArrowRight aria-hidden="true" className="h-4 w-4" />

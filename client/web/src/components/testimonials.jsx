@@ -64,7 +64,6 @@ export default function Testimonials() {
           subheading=" What They&rsquo;re Saying"
           eyebrow ="TESTIMONIAL"
           eyebrowClassName="justify-center"
-          headingClassName="text-3xl sm:text-4xl lg:text-5xl "
           className="max-w-5xl mx-auto text-center"
         />
 
@@ -102,7 +101,7 @@ export default function Testimonials() {
                 </span>
 
                 {/* Name */}
-                <span className="text-base font-semibold text-white md:text-[17px]">
+                <span className="type-card-title text-white">
                   {testimonial.name}
                 </span>
               </div>

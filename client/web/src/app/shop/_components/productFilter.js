@@ -150,11 +150,11 @@ export default function ProductFilter() {
     <div>
       {/* Header */}
       <Section>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-neutral-500">
+        <p className="type-eyebrow text-neutral-500">
           Shop
         </p>
 
-        <h2 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl mb-8">
+        <h2 className="mt-2 type-title text-neutral-900 mb-8">
           All Categories
         </h2>
 
@@ -165,7 +165,7 @@ export default function ProductFilter() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <aside className="hidden lg:col-span-3 lg:block">
             <div className="lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pr-2">
-              <h2 className="mb-6 text-lg font-semibold text-neutral-900">
+              <h2 className="mb-6 type-card-title font-bold text-neutral-900">
                 Filters
               </h2>
 

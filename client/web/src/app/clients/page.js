@@ -29,7 +29,6 @@ export default function ClientsPage() {
           heading="TRUSTED BY LEADING BRANDS"
           subheading={`${clients.length}+ organisations across IT, healthcare, retail, travel, manufacturing and defence have furnished their workspaces with us.`}
           eyebrowClassName="justify-center"
-          headingClassName="text-3xl sm:text-4xl lg:text-5xl"
           className="mx-auto max-w-4xl text-center"
         />
 

@@ -60,7 +60,7 @@ export default function OfficeMap({ offices }) {
         {/* Floating address card */}
         <div className="pointer-events-none absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-sm">
           <div className="pointer-events-auto rounded-md bg-[#f7f5f1]/95 p-4 shadow-lg backdrop-blur">
-            <p className="text-xs uppercase tracking-widest text-[#6b655a]">
+            <p className="type-eyebrow text-[#6b655a]">
               {office.title}
             </p>
             <p className="mt-1 text-sm leading-relaxed text-[#3a352f]">

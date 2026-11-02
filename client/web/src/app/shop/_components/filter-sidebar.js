@@ -84,14 +84,14 @@ export function FilterSidebar({ categories = [] }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
+        <p className="type-eyebrow text-neutral-500">
           Category
         </p>
         {isAnyFilterActive && (
           <button
             type="button"
             onClick={clearFilters}
-            className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-neutral-500 transition-colors hover:text-neutral-900"
+            className="inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.04em] text-neutral-500 transition-colors hover:text-neutral-900"
           >
             <XCircle className="h-3.5 w-3.5" />
             Clear

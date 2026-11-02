@@ -14,7 +14,7 @@ export default function Heading({
       {eyebrow && (
         <span
           className={cn(
-            "relative inline-flex items-center pl-3 text-sm font-medium text-primary",
+            "relative inline-flex items-center pl-3 type-eyebrow text-primary",
             eyebrowClassName,
           )}
         >
@@ -28,7 +28,7 @@ export default function Heading({
 
       <h2
         className={cn(
-          "mt-3 font-display   text-3xl font-semi-bold   text-foreground sm:text-4xl lg:text-5xl",
+          "mt-3 font-display type-title text-foreground",
           headingClassName,
         )}
       >
@@ -38,7 +38,7 @@ export default function Heading({
       {subheading && (
         <p
           className={cn(
-            "mt-4 font-body text-base leading-relaxed ",
+            "mt-4 font-body type-lead",
             subheadingClassName,
           )}
         >

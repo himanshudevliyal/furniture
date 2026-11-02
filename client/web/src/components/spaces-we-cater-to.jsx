@@ -133,7 +133,7 @@ function SpaceCard({
 
       {/* Content */}
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 transition-transform duration-500 ease-out group-hover:-translate-y-1 sm:p-8">
-        <h3 className="text-xl tracking-wide text-white md:text-2xl">
+        <h3 className="type-heading text-white">
           {space.title}
         </h3>
 
@@ -141,7 +141,7 @@ function SpaceCard({
           <span className="h-px w-12 bg-[#C9A165]" aria-hidden />
         )}
 
-        <p className=" text-sm leading-relaxed text-white/85 sm:text-[14px]">
+        <p className="type-small text-white/85">
           {space.description}
         </p>
       </div>
@@ -169,7 +169,6 @@ export default function SpacesWeCaterTo() {
     functional furniture solutions designed for modern, productive, and
     professional workspaces."
   eyebrowClassName="justify-center"
-  headingClassName="text-3xl sm:text-4xl lg:text-5xl"
   className="max-5-xl mx-auto text-center"
 />
 
@@ -227,7 +226,7 @@ export default function SpacesWeCaterTo() {
                   aria-hidden
                 />
                 <div>
-                  <p className="text-xs font-semibold tracking-[0.1em] text-[#1C1710] sm:text-sm">
+                  <p className="text-xs font-semibold tracking-[0.04em] text-[#1C1710] sm:text-sm">
                     {item.title}
                   </p>
                   <p className="mt-1 text-xs text-[#6B6255] sm:text-sm">

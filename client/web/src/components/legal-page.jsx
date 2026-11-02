@@ -9,11 +9,11 @@ import { Section } from "@/components/layout/section";
 
 function Block({ block }) {
   if (typeof block === "string") {
-    return <p className="text-base leading-[1.8] text-neutral-700">{block}</p>;
+    return <p className="type-lead text-neutral-700">{block}</p>;
   }
 
   return (
-    <ul className="list-disc space-y-2 pl-5 text-base leading-[1.8] text-neutral-700 marker:text-neutral-400">
+    <ul className="list-disc space-y-2 pl-5 type-lead text-neutral-700 marker:text-neutral-400">
       {block.list.map((item) => (
         <li key={item}>{item}</li>
       ))}
@@ -38,7 +38,7 @@ export default function LegalPage({ title, href, updated, intro, sections }) {
           {/* Contents */}
           <aside className="hidden lg:block">
             <nav aria-label="On this page" className="sticky top-28">
-              <p className="mb-4 text-sm font-medium uppercase tracking-wide text-neutral-500">
+              <p className="mb-4 type-eyebrow text-neutral-500">
                 On this page
               </p>
               <ol className="space-y-2.5 border-l border-gray-200">
@@ -71,7 +71,7 @@ export default function LegalPage({ title, href, updated, intro, sections }) {
                 id={s.id}
                 className="scroll-mt-28 border-b border-gray-200 py-10 last:border-b-0"
               >
-                <h2 className="mb-5 font-display text-2xl font-medium text-neutral-900 sm:text-3xl">
+                <h2 className="mb-5 font-display type-subtitle text-neutral-900">
                   {i + 1}. {s.heading}
                 </h2>
                 <div className="space-y-4">
@@ -83,10 +83,10 @@ export default function LegalPage({ title, href, updated, intro, sections }) {
             ))}
 
             <div className="mt-6 bg-[#f4f0eb] p-8">
-              <h2 className="mb-3 text-xl font-medium text-neutral-900">
+              <h2 className="mb-3 type-heading text-neutral-900">
                 Questions?
               </h2>
-              <p className="text-base leading-[1.8] text-neutral-700">
+              <p className="type-lead text-neutral-700">
                 Write to us at{" "}
                 <a
                   href="mailto:sales@natrajfurniture.com"

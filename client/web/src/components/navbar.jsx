@@ -47,7 +47,7 @@ const navLinks = [
 ];
 
 const linkClass =
-  "flex items-center gap-1.5 whitespace-nowrap text-[13px] font-semibold tracking-[0.08em] text-neutral-800 transition-colors hover:text-black xl:text-[15px] xl:tracking-[0.1em]";
+  "flex items-center gap-1.5 whitespace-nowrap type-nav text-neutral-800 transition-colors hover:text-black";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -181,7 +181,7 @@ export default function Navbar() {
     variant: "default",
     size: "default",
     className:
-      "group !hidden bg-black py-5 text-white items-center gap-2.5 whitespace-nowrap text-[13px] font-semibold lg:!flex xl:text-[15px]",
+      "group !hidden bg-black py-5 text-white items-center gap-2.5 whitespace-nowrap type-button lg:!flex",
   })}
 >
   Get Inquiry

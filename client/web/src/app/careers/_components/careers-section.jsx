@@ -29,7 +29,6 @@ export default function CareersSection({ jobs = [] }) {
               : "There are no open positions right now, but we are always happy to hear from talented people."
           }
           eyebrowClassName="justify-center"
-          headingClassName="text-3xl sm:text-4xl lg:text-5xl"
           className="mx-auto max-w-3xl text-center"
         />
 

@@ -37,19 +37,19 @@ function JobCard({ job, onApply }) {
           {(job.department || job.job_type) && (
             <div className="mb-3 flex flex-wrap gap-2">
               {job.department && (
-                <span className="rounded-full bg-[#f4f0eb] px-3 py-1 text-xs font-semibold tracking-wide text-neutral-800">
+                <span className="rounded-full bg-[#f4f0eb] px-3 py-1 text-xs font-semibold text-neutral-800">
                   {job.department}
                 </span>
               )}
               {job.job_type && (
-                <span className="rounded-full border border-gray-200 px-3 py-1 text-xs font-semibold tracking-wide text-neutral-700">
+                <span className="rounded-full border border-gray-200 px-3 py-1 text-xs font-semibold text-neutral-700">
                   {job.job_type}
                 </span>
               )}
             </div>
           )}
 
-          <h3 className="text-2xl font-medium leading-snug text-neutral-900 lg:text-3xl">
+          <h3 className="type-subtitle text-neutral-900">
             {job.title}
           </h3>
 
@@ -104,7 +104,7 @@ function JobCard({ job, onApply }) {
           <div className="overflow-hidden" inert={!open}>
             <div className="border-t border-gray-200 px-6 py-8 sm:px-8">
               <div
-                className="max-w-3xl text-base leading-[1.75] text-neutral-700 [&_a]:font-medium [&_a]:text-neutral-900 [&_a]:underline [&_h1]:mt-7 [&_h1]:text-xl [&_h1]:font-medium [&_h1]:text-neutral-900 [&_h2]:mt-7 [&_h2]:text-xl [&_h2]:font-medium [&_h2]:text-neutral-900 [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-neutral-900 [&_li]:mt-1.5 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mt-3 [&_strong]:font-semibold [&_strong]:text-neutral-900 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5 [&>*:first-child]:mt-0"
+                className="max-w-3xl type-lead text-neutral-700 [&_a]:font-medium [&_a]:text-neutral-900 [&_a]:underline [&_h1]:mt-7 [&_h1]:text-xl [&_h1]:font-medium [&_h1]:text-neutral-900 [&_h2]:mt-7 [&_h2]:text-xl [&_h2]:font-medium [&_h2]:text-neutral-900 [&_h3]:mt-6 [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-neutral-900 [&_li]:mt-1.5 [&_ol]:mt-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mt-3 [&_strong]:font-semibold [&_strong]:text-neutral-900 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5 [&>*:first-child]:mt-0"
                 dangerouslySetInnerHTML={{ __html: job.description }}
               />
               <button
@@ -140,8 +140,8 @@ export default function JobList({ jobs, onApply }) {
         <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#f4f0eb]">
           <BriefcaseBusiness size={30} strokeWidth={1.5} aria-hidden />
         </div>
-        <h3 className="text-2xl font-medium">No openings right now</h3>
-        <p className="mt-3 max-w-md text-base leading-7 text-neutral-700">
+        <h3 className="type-subtitle">No openings right now</h3>
+        <p className="mt-3 max-w-md type-lead text-neutral-700">
           Send us your CV anyway. We will get in touch as soon as a matching
           role opens up.
         </p>

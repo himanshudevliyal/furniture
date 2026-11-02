@@ -279,7 +279,7 @@ export default function SearchBar({ open, onClose, categories = [] }) {
                     <button
                       type="button"
                       onClick={goToAllResults}
-                      className="group inline-flex items-center gap-3 rounded-md bg-black py-2.5 pl-5 pr-2.5 text-sm font-semibold text-white transition-colors duration-300 hover:bg-neutral-800"
+                      className="group inline-flex items-center gap-3 rounded-md bg-black py-2.5 pl-5 pr-2.5 type-button text-white transition-colors duration-300 hover:bg-neutral-800"
                     >
                       View all results for &ldquo;{trimmed}&rdquo;
                       <span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-700 transition-transform duration-300 group-hover:translate-x-0.5">
@@ -291,7 +291,7 @@ export default function SearchBar({ open, onClose, categories = [] }) {
               ) : (
                 !waiting && (
                   <div className="py-6 text-center">
-                    <p className="text-base font-medium text-neutral-900">
+                    <p className="type-card-title text-neutral-900">
                       No products found for &ldquo;{debouncedQuery}&rdquo;
                     </p>
                     <p className="mt-1 text-sm text-neutral-600">

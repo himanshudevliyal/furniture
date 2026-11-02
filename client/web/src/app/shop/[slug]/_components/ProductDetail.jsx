@@ -89,23 +89,23 @@ export default function ProductDetail({ product }) {
           {/* Product Information */}
           <div className="flex flex-col gap-4">
             {breadcrumb && (
-              <p className="text-sm font-medium uppercase tracking-wide text-neutral-500">
+              <p className="type-eyebrow text-neutral-500">
                 {breadcrumb}
               </p>
             )}
 
-            <h1 className="text-4xl font-semibold tracking-tight text-neutral-900 sm:text-5xl">
+            <h1 className="type-display text-neutral-900">
               {heading}
             </h1>
 
             {subheading && (
-              <p className="text-xl font-medium text-neutral-900">
+              <p className="type-heading font-medium text-neutral-900">
                 {subheading}
               </p>
             )}
 
             {description && (
-              <p className="max-w-md text-[15px] leading-relaxed text-neutral-500">
+              <p className="max-w-md type-lead text-neutral-500">
                 {description}
               </p>
             )}
@@ -141,7 +141,7 @@ export default function ProductDetail({ product }) {
               <Button
                 size="lg"
                 onClick={handleAddToCart}
-                className="h-12 flex-1 rounded-full bg-neutral-900 px-10 text-sm font-medium uppercase tracking-[0.15em] text-white hover:bg-neutral-800"
+                className="h-12 flex-1 rounded-full bg-neutral-900 px-10 type-button uppercase text-white hover:bg-neutral-800"
               >
                 Add to cart
               </Button>

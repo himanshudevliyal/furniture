@@ -41,7 +41,6 @@ export default function ProductFaqs({ product }) {
             heading="Frequently Asked Questions"
             subheading={`Common questions about ${product?.title || "this product"}. Can't find what you're looking for? Our team is happy to help.`}
             eyebrowClassName="text-[#e30613]"
-            headingClassName="text-3xl sm:text-4xl"
           />
           <Link
             href="/contact"
@@ -71,7 +70,7 @@ export default function ProductFaqs({ product }) {
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <span className="flex-1 text-lg font-medium text-neutral-900 transition-colors group-hover:text-neutral-600">
+                  <span className="flex-1 type-card-title text-neutral-900 transition-colors group-hover:text-neutral-600">
                     {faq.question}
                   </span>
                   <span
@@ -86,7 +85,7 @@ export default function ProductFaqs({ product }) {
                   </span>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
-                  <p className="whitespace-pre-line pb-6 pl-9 pr-12 text-base leading-relaxed text-neutral-600">
+                  <p className="whitespace-pre-line pb-6 pl-9 pr-12 type-lead text-neutral-600">
                     {faq.answer}
                   </p>
                 </CollapsibleContent>

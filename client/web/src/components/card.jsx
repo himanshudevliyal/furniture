@@ -39,10 +39,10 @@ export default function Card({ product, fitOnMobile = false }) {
       />
 )}
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
-        <h3 className="text-3xl font-bold text-white sm:text-4xl">
+        <h3 className="type-subtitle text-white">
           {product?.title}
         </h3>
-        <p className="mt-1.5 text-sm text-white/90 sm:text-base">
+        <p className="mt-1.5 type-body text-white/90">
           {product?.subtitle}
         </p>
       </div>

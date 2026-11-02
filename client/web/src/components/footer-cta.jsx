@@ -21,13 +21,13 @@ export default function FooterCta() {
 
       <div className="relative mx-auto flex max-w-[1600px] flex-col items-start gap-5 px-6 py-8 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:gap-10 lg:py-9">
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-white/70">
+          <p className="type-eyebrow text-white/70">
             Let&apos;s plan your workspace
           </p>
-          <h2 className="mt-1.5 text-2xl font-semibold leading-tight sm:text-3xl">
+          <h2 className="mt-1.5 type-subtitle">
             Discuss Your Office Furniture Requirements
           </h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-white/85 sm:text-base">
+          <p className="mt-1.5 type-body text-white/85">
             Share the product range, layout information and applicable finish
             needs.
           </p>
@@ -36,7 +36,7 @@ export default function FooterCta() {
         <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
           <Link
             href="/contact"
-            className="group inline-flex items-center justify-center gap-2 rounded-sm bg-white px-6 py-3 text-sm font-semibold text-[#e30613] shadow-lg shadow-black/10 transition-all hover:bg-neutral-100"
+            className="group inline-flex items-center justify-center gap-2 rounded-sm bg-white px-6 py-3 type-button text-[#e30613] shadow-lg shadow-black/10 transition-all hover:bg-neutral-100"
           >
             Contact Us
             <ArrowRight
@@ -49,7 +49,7 @@ export default function FooterCta() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-sm border border-white/70 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#e30613]"
+            className="inline-flex items-center justify-center gap-2 rounded-sm border border-white/70 px-6 py-3 type-button text-white transition-colors hover:bg-white hover:text-[#e30613]"
           >
             <WhatsappIcon className="h-4 w-4" />
             WhatsApp Us

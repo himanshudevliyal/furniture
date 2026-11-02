@@ -74,7 +74,6 @@ export default function ProjectsGrid({ categories = [] }) {
         heading="PROJECTS WE HAVE DELIVERED"
         subheading="A look at workspaces we have furnished — from open-plan workstations and executive cabins to meeting rooms, receptions and cafeterias."
         eyebrowClassName="justify-center"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="mx-auto max-w-4xl text-center"
       />
 

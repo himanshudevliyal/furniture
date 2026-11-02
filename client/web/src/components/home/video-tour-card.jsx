@@ -69,7 +69,7 @@ export default function VideoTourCard({ video, playingSlug, onPlay }) {
           </span>
           {/* Title */}
           <span className="absolute inset-x-0 bottom-0 p-5 text-left">
-            <span className="block text-lg font-semibold leading-snug text-white">
+            <span className="block type-card-title text-white">
               {video.title}
             </span>
           </span>

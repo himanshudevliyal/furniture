@@ -171,7 +171,7 @@ function FooterCategories() {
           <div key={category.id}>
             <Link
               href={categoryHref(category)}
-              className="block text-sm font-semibold leading-snug text-white transition-colors hover:text-white"
+              className="block text-[16px] font-bold leading-none text-white transition-colors hover:text-white"
             >
               {category.title}
             </Link>
@@ -182,7 +182,7 @@ function FooterCategories() {
                   <li key={sub.id}>
                     <Link
                       href={subCategoryHref(category, sub)}
-                      className="text-[13px] leading-snug text-white/65 transition-colors hover:text-white"
+                      className="text-[14px] leading-normal text-white/65 transition-colors hover:text-white"
                     >
                       {subCategoryLabel(sub)}
                     </Link>
@@ -254,13 +254,13 @@ export default function SiteFooter() {
               </ContactIcon>
 
               <div>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-[16px] font-bold leading-none text-white">
                   E-mail Us
                 </p>
 
                 <a
                   href="mailto:sales@natrajfurniture.com"
-                  className="break-all text-[13px] text-white/70 transition-colors hover:text-white"
+                  className="break-all text-[14px] text-white/70 transition-colors hover:text-white"
                 >
                   sales@natrajfurniture.com
                 </a>
@@ -274,7 +274,7 @@ export default function SiteFooter() {
               </ContactIcon>
 
               <div>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-[16px] font-bold leading-none text-white">
                   Contact Us
                 </p>
 
@@ -282,7 +282,7 @@ export default function SiteFooter() {
                   <a
                     key={phone}
                     href={`tel:${phone.replace(/\s/g, "")}`}
-                    className="flex min-h-6 items-center text-[13px] text-white/70 transition-colors hover:text-white"
+                    className="flex min-h-6 items-center text-[14px] text-white/70 transition-colors hover:text-white"
                   >
                     {phone}
                   </a>
@@ -298,11 +298,11 @@ export default function SiteFooter() {
                 </ContactIcon>
 
                 <div>
-                  <p className="text-sm font-semibold text-white">
+                  <p className="text-[16px] font-bold leading-none text-white">
                     {address.label}
                   </p>
 
-                  <p className="text-[13px] leading-snug text-white/70">
+                  <p className="text-[14px] leading-normal text-white/70">
                     {address.text}
                   </p>
                 </div>
@@ -334,7 +334,7 @@ export default function SiteFooter() {
         {/* Bottom Bar — copyright | quick links | legal links */}
         {/* ---------------------------------------------------------------- */}
 
-        <div className="grid grid-cols-1 items-center gap-3 py-4 text-[13px] text-white/60 lg:grid-cols-[1fr_auto_1fr] lg:gap-6 md:pr-20">
+        <div className="grid grid-cols-1 items-center gap-3 py-4 text-[14px] text-white/60 lg:grid-cols-[1fr_auto_1fr] lg:gap-6 md:pr-20">
 
           <p className="text-center lg:text-left">
             Copyright © {new Date().getFullYear()} Natraj Furniture.

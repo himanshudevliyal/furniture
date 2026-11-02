@@ -3,7 +3,7 @@ export function Paragraph({ children, className, as: Component = "p" }) {
   return (
     <Component
       className={cn(
-        "mt-6 max-w-2xl font-body text-base leading-relaxed text-muted-foreground",
+        "mt-6 max-w-2xl font-body type-lead text-muted-foreground",
         className,
       )}
     >

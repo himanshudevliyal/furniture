@@ -116,7 +116,6 @@ export default function NatrajTimeline() {
         heading="BUILT AROUND BETTER WORKPLACES"
         subheading="From our beginnings to today's evolving workplaces, our journey has always been shaped by quality, functionality, customisation and dependable service."
         eyebrowClassName="justify-center"
-        headingClassName="text-3xl sm:text-4xl lg:text-5xl"
         className="max-w-4xl mx-auto text-center"
       />
 
@@ -314,7 +313,7 @@ export default function NatrajTimeline() {
     </div>
 
     <div className="mt-3 flex items-center justify-between">
-      <span className="text-[10px] uppercase tracking-[0.18em] text-neutral-500">
+      <span className="text-[10px] uppercase tracking-[0.04em] text-neutral-500">
         Our Journey
       </span>
 

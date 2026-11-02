@@ -16,7 +16,6 @@ export default function CertificatesGallery() {
         heading="Certified for Quality, Safety & Sustainability"
         subheading="Independently audited management systems and product compliance. Click any certificate to view the original PDF."
         eyebrowClassName="justify-center"
-        headingClassName="text-3xl sm:text-4xl"
         className="mx-auto mb-10 max-w-3xl text-center"
       />
 

@@ -16,10 +16,10 @@ export default function ProjectQuoteDialog({ open, onOpenChange, category }) {
         <Dialog.Popup className="fixed left-1/2 top-1/2 z-[10000] max-h-[calc(100svh-2rem)] w-[calc(100%-2rem)] max-w-2xl -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-xl bg-white shadow-2xl outline-none transition-all duration-200 data-[ending-style]:scale-95 data-[ending-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:opacity-0">
           {/* Header */}
           <div className="relative border-t-4 border-[#e30613] px-6 pb-4 pt-6 sm:px-8">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#e30613]">
+            <p className="type-eyebrow text-[#e30613]">
               Get a quote
             </p>
-            <Dialog.Title className="mt-1 text-xl font-semibold text-neutral-900 sm:text-2xl">
+            <Dialog.Title className="mt-1 type-subtitle text-neutral-900">
               Request Project Quote
             </Dialog.Title>
             <Dialog.Description className="mt-1.5 text-sm text-neutral-500">
