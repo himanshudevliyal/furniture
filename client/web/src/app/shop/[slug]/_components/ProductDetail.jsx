@@ -84,7 +84,7 @@ export default function ProductDetail({ product }) {
 
   return (
     <div className="bg-[#FBF1E7]">
-      <Section className="pt-8 pb-10 lg:p-0">
+      <Section className="pt-14 pb-10 sm:pt-16 lg:p-0">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Product Information */}
           <div className="flex flex-col gap-4">
@@ -94,7 +94,7 @@ export default function ProductDetail({ product }) {
               </p>
             )}
 
-            <h1 className="type-display text-neutral-900">
+            <h1 className="scroll-mt-24 type-display text-neutral-900">
               {heading}
             </h1>
 
