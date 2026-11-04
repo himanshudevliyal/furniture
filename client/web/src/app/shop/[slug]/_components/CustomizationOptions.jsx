@@ -106,7 +106,7 @@ function FileList({ files, icon: Icon, fallbackTitle }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Download ${file.title || fallbackTitle}`}
-            className="inline-flex h-10 shrink-0 items-center gap-2 border border-neutral-900 px-4 text-sm font-medium text-neutral-900 transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
+            className="rounded-full inline-flex h-10 shrink-0 items-center gap-2 border border-neutral-900 px-4 text-sm font-medium text-neutral-900 transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
           >
             <Download className="h-4 w-4" />
             <span className="hidden sm:inline">Download</span>
@@ -129,7 +129,7 @@ function EmptyPanel({ icon: Icon, title, text }) {
       </p>
       <Link
         href="/contact"
-        className="mt-6 inline-flex h-10 items-center gap-2 border border-neutral-900 px-5 text-sm font-medium text-neutral-900 transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
+        className="rounded-full mt-6 inline-flex h-10 items-center gap-2 border border-neutral-900 px-5 text-sm font-medium text-neutral-900 transition-colors hover:border-[#E87717] hover:bg-[#E87717] hover:text-white"
       >
         Contact Us
         <ChevronRight className="h-4 w-4" />

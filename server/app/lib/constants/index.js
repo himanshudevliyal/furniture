@@ -58,6 +58,8 @@ const constants = {
     QUERY_TABLE: "queries",
     PRODUCT_INQUIRY_TABLE: "product_inquiries",
     PROJECT_QUOTE_TABLE: "project_quotes",
+    APPOINTMENT_TABLE: "appointments",
+    APPOINTMENT_SLOT_BLOCK_TABLE: "appointment_slot_blocks",
     BLOG_TABLE: "blogs",
     JOB_TABLE: "jobs",
     JOB_APPLICATION_TABLE: "job_applications",

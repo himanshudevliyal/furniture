@@ -35,7 +35,7 @@ export default function NotFound(){
 
           <Link
             href="/"
-            className="
+            className="rounded-full 
               min-w-[190px]
               px-7 py-3.5
               bg-black
@@ -54,7 +54,7 @@ export default function NotFound(){
 
           <Link
             href="/contact"
-            className="
+            className="rounded-full 
               min-w-[190px]
               px-7 py-3.5
               bg-white

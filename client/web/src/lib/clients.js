@@ -100,6 +100,13 @@ export const clients = [
   { name: "Wingman", logo: logo("wingman.png") },
   { name: "Sheopal's", logo: logo("sheopals.png") },
   { name: "Skylark Infra Engineering", logo: logo("skylark-infra.png") },
+  { name: "Tech Mahindra", logo: logo("tech-mahindra.png") },
+  { name: "Fortis", logo: logo("fortis.png") },
+  { name: "VinFast", logo: logo("vinfast.png") },
+  { name: "NBCC", logo: logo("nbcc.png") },
+  { name: "Subros", logo: logo("subros.png") },
+  { name: "WattPower", logo: logo("wattpower.png") },
+  { name: "Panoramic Exports", logo: logo("panoramic-exports.png") },
 ];
 
 // Two rows for the homepage marquee (alternating, so both rows mix old/new).

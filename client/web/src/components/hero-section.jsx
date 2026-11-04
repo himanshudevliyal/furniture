@@ -199,7 +199,7 @@ export default function HeroSlider() {
                   <div className="mt-6 flex flex-wrap items-center gap-3 md:mt-8">
                     <Link
                       href={slide.href}
-                      className="group inline-flex items-center gap-2 rounded-sm border border-white px-5 py-3 type-button text-white transition-colors hover:bg-white hover:text-neutral-900 md:px-6"
+                      className="group inline-flex items-center gap-2 rounded-full border border-white px-5 py-3 type-button text-white transition-colors hover:bg-white hover:text-neutral-900 md:px-6"
                     >
                       View {slide.category}
                       <ArrowRight
@@ -215,7 +215,7 @@ export default function HeroSlider() {
                         setQuoteRequested(true);
                         setQuoteOpen(true);
                       }}
-                      className="inline-flex items-center gap-2 rounded-sm border border-[#E87717] bg-[#E87717] px-5 py-3 type-button text-white transition-colors hover:border-[#C9620E] hover:bg-[#C9620E] md:px-6"
+                      className="inline-flex items-center gap-2 rounded-full border border-[#E87717] bg-[#E87717] px-5 py-3 type-button text-white transition-colors hover:border-[#C9620E] hover:bg-[#C9620E] md:px-6"
                     >
                       Request Project Quote
                     </button>

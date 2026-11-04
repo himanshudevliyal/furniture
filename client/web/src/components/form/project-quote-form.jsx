@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlertCircle, ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
+
+import Recaptcha, { RECAPTCHA_MESSAGE, recaptchaEnabled } from "./recaptcha";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -66,6 +68,9 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaError, setCaptchaError] = useState("");
 
   const {
     register,
@@ -84,6 +89,10 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
   });
 
   const onSubmit = async (data) => {
+    if (recaptchaEnabled && !captchaToken) {
+      setCaptchaError(RECAPTCHA_MESSAGE);
+      return;
+    }
     setLoading(true);
     setApiError("");
 
@@ -91,7 +100,11 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
       const response = await fetch(`${API_URL}/project-quotes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, category: category || "" }),
+        body: JSON.stringify({
+          ...data,
+          category: category || "",
+          recaptcha_token: captchaToken,
+        }),
       });
 
       const result = await response.json().catch(() => ({}));
@@ -108,6 +121,8 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
       setApiError(error.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+      // A token works only once.
+      captchaRef.current?.reset();
     }
   };
 
@@ -197,6 +212,16 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
         </Field>
       </div>
 
+      <Recaptcha
+        ref={captchaRef}
+        className="sm:col-span-2"
+        error={captchaError}
+        onChange={(token) => {
+          setCaptchaToken(token);
+          if (token) setCaptchaError("");
+        }}
+      />
+
       {apiError && (
         <div className="flex items-start gap-2.5 rounded-md border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm text-red-700 sm:col-span-2">
           <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
@@ -208,7 +233,7 @@ export default function ProjectQuoteForm({ category, onSuccess }) {
         <button
           type="submit"
           disabled={loading}
-          className="group inline-flex w-full items-center justify-center gap-2 rounded-md bg-[#E87717] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#E87717]/20 transition-all hover:bg-[#C9620E] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+          className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#E87717] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#E87717]/20 transition-all hover:bg-[#C9620E] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading ? (
             <>

@@ -1,7 +1,10 @@
 
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Fancybox } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox/fancybox.css";
+import { Expand } from "lucide-react";
 
 import {
   Carousel,
@@ -19,7 +22,7 @@ export default function FurnitureProductsShowcase({ product }) {
   const [api, setApi] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const galleryImages = product?.gallery?.images ?? [];
+  const galleryImages = useMemo(() => product?.gallery?.images ?? [], [product]);
 
   const imageBaseUrl =
     process.env.NEXT_PUBLIC_FILE_BASE || "";
@@ -40,6 +43,20 @@ const items = useMemo( () => galleryImages .map((file, index) => { if (!file) re
     queueMicrotask(onSelect);
   }, []);
 
+  // Click (not drag) on a slide opens it full size, same lightbox as /cases.
+  useEffect(() => {
+    Fancybox.bind("[data-fancybox=product-gallery]", {
+      animated: true,
+      showClass: "f-fadeIn",
+      hideClass: "f-fadeOut",
+      Thumbs: { autoStart: false },
+    });
+    return () => {
+      Fancybox.unbind("[data-fancybox=product-gallery]");
+      Fancybox.close();
+    };
+  }, []);
+
   // Image bhi nahi hai to pura section hide
   if (items.length === 0) return null;
 
@@ -54,12 +71,22 @@ const items = useMemo( () => galleryImages .map((file, index) => { if (!file) re
         className="w-full"
       >
         <CarouselContent className="-ml-4 sm:-ml-6">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <CarouselItem
               key={item.key}
               className="basis-full pl-4 sm:basis-[66.666%] sm:pl-6"
             >
-              <Card product={item} fitOnMobile />
+              <a
+                href={item.image}
+                data-fancybox="product-gallery"
+                aria-label={`Open image ${index + 1} of ${items.length}`}
+                className="group relative block cursor-zoom-in"
+              >
+                <Card product={item} fit />
+                <span className="pointer-events-none absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/45 text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  <Expand className="h-4 w-4" aria-hidden />
+                </span>
+              </a>
             </CarouselItem>
           ))}
         </CarouselContent>

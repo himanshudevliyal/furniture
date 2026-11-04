@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { BreadcrumbBanner } from "@/components/breadcrumb";
 import BlogDetail from "./_components/blog-detail";
 import BlogSection from "@/components/blog-section";
 import { getImageUrl,stripHtml} from "../../../utils/blog-helpers";
@@ -53,16 +52,7 @@ export default async function BlogDetailPage({ params }) {
 
   return (
     <>
-      <BreadcrumbBanner
-        title="Blog"
-        headingAs="p"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Blogs", href: "/blog" },
-          { label: blog.title, href: `/blog/${blog.slug}` },
-        ]}
-      />
-
+      {/* Hero (cover, title, breadcrumb) is part of BlogDetail */}
       <BlogDetail blog={blog} />
 
       {/* Related blogs */}

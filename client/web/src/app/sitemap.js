@@ -14,6 +14,7 @@ const STATIC_ROUTES = [
   { path: "/workshop", priority: 0.6 },
   { path: "/showroom", priority: 0.6 },
   { path: "/quality", priority: 0.6 },
+  { path: "/book-your-slot", priority: 0.7 },
   { path: "/blog", priority: 0.6 },
   { path: "/clients", priority: 0.6 },
   { path: "/careers", priority: 0.5 },

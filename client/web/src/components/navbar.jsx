@@ -4,12 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowRight, ChevronDown, Search, ShoppingBag } from "lucide-react";
+import { CalendarDays, ChevronDown, Search, ShoppingBag } from "lucide-react";
 import MobileMenu from "@/components/mobile-menu";
 import CategoryMegaMenu from "@/components/category-mega-menu";
 import { useCategories } from "@/hooks/use-categories";
 import { useCart } from "@/hooks/use-cart";
-import { buttonVariants } from "./ui/button";
 import SearchBar from "./search-bar";
 function IconBadge({ count }) {
   if (count === undefined || count === null) return null;
@@ -64,10 +63,11 @@ const navLinks = [
 ];
 
 const linkClass =
-  "flex items-center gap-1.5 whitespace-nowrap type-nav text-neutral-800 transition-colors hover:text-black";
+  "flex items-center gap-1 whitespace-nowrap text-[14px] font-light text-neutral-700 transition-colors hover:text-black";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const onBooking = pathname === "/book-your-slot";
 
   const { data: categoriesData, isLoading: categoriesLoading } =
     useCategories();
@@ -127,7 +127,7 @@ export default function Navbar() {
       onMouseLeave={scheduleClose}
       className="sticky  relative inset-x-0 top-0 z-[9999] w-full border-b border-neutral-200 bg-white text-neutral-900"
     >
-      <div className="mx-auto flex h-[68px] w-full max-w-[1600px] items-center justify-between gap-4 px-5 md:h-[80px] md:px-10">
+      <div className="mx-auto flex h-[58px] w-full max-w-[1600px] items-center justify-between gap-4 px-5 md:h-[62px] md:px-10">
         {/* LEFT — hamburger (mobile/tablet) + logo */}
         <div className="flex shrink-0 items-center gap-3">
 
@@ -139,7 +139,7 @@ export default function Navbar() {
             <Image
               width={1200}
               height={363}
-              className="h-auto w-[150px] object-contain md:w-[185px]"
+              className="h-auto w-[125px] object-contain md:w-[145px]"
               src="/logo-natraj.png"
               alt="Natraj Office Furniture logo"
               priority
@@ -151,7 +151,7 @@ export default function Navbar() {
         <div className="flex min-w-0 items-center gap-4 xl:gap-8">
           <nav
             aria-label="Main"
-            className="hidden items-center gap-5 lg:flex xl:gap-9"
+            className="hidden items-center gap-5 lg:flex xl:gap-10"
           >
             {/* PRODUCTS — hover opens the mega menu */}
             <Link
@@ -168,7 +168,7 @@ export default function Navbar() {
                 className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 ${
                   productsOpen ? "rotate-180" : ""
                 }`}
-                strokeWidth={2.25}
+                strokeWidth={1.5}
               />
             </Link>
 
@@ -185,7 +185,7 @@ export default function Navbar() {
                     <ChevronDown
                       aria-hidden="true"
                       className="h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover/dd:rotate-180"
-                      strokeWidth={2.25}
+                      strokeWidth={1.5}
                     />
                   </Link>
                   <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover/dd:visible group-hover/dd:opacity-100 group-focus-within/dd:visible group-focus-within/dd:opacity-100">
@@ -216,33 +216,48 @@ export default function Navbar() {
             )}
           </nav>
 
-   <Link
-  href="/contact"
-  onMouseEnter={closeNow}
-  className={buttonVariants({
-    variant: "default",
-    size: "default",
-    className:
-      "group !hidden bg-black py-5 text-white items-center gap-2.5 whitespace-nowrap type-button lg:!flex",
-  })}
->
-  Get Inquiry
-
-  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-neutral-700 text-white transition-transform duration-200 group-hover:translate-x-0.5">
-    <ArrowRight
-      aria-hidden="true"
-      className="h-3.5 w-3.5"
-      strokeWidth={2.25}
-    />
-  </span>
-</Link>
+          {/* Book Your Slot: outlined pill; orange fills in from the left on
+              hover, presses in on click, and stays filled on its own page. */}
+          <Link
+            href="/book-your-slot"
+            onMouseEnter={closeNow}
+            aria-current={onBooking ? "page" : undefined}
+            className={`group relative !hidden h-9 items-center gap-2 whitespace-nowrap rounded-full border pl-4 pr-1 text-[13px] font-medium transition-[color,border-color,box-shadow,transform] duration-300 active:scale-95 lg:!flex ${
+              onBooking
+                ? "border-[#E87717] bg-[#E87717] text-white shadow-[0_4px_14px_rgba(232,119,23,0.35)]"
+                : "border-[#E87717]/50 text-neutral-900 hover:border-[#E87717] hover:text-white hover:shadow-[0_4px_14px_rgba(232,119,23,0.35)] active:bg-[#C9620E]"
+            }`}
+          >
+            {/* Fill is clipped by its own wrapper so the icon can jump out of the button. */}
+            <span aria-hidden="true" className="absolute inset-0 overflow-hidden rounded-full">
+            <span
+              className={`absolute inset-0 origin-left bg-[#E87717] transition-transform duration-300 ease-out group-active:bg-[#C9620E] ${
+                onBooking ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+              }`}
+            />
+            </span>
+            {/* Orange light running around the border (globals.css). */}
+            {!onBooking && (
+              <span aria-hidden="true" className="border-beam-wrap group-hover:opacity-0">
+                <span className="border-beam" />
+              </span>
+            )}
+            <span className="relative">Book Your Slot</span>
+            <span
+              className={`relative flex h-7 w-7 animate-cal-ring items-center justify-center rounded-full shadow-sm transition-colors duration-300 group-hover:[animation-duration:1.3s] motion-reduce:animate-none ${
+                onBooking ? "bg-white text-[#E87717]" : "bg-[#E87717] text-white group-hover:bg-white group-hover:text-[#E87717]"
+              }`}
+            >
+              <CalendarDays aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
+            </span>
+          </Link>
 
           <div
             onMouseEnter={closeNow}
             className="flex items-center gap-1 text-neutral-900 md:gap-2   "
           >
          <IconButton label="Search" onClick={() => setSearchOpen((v) => !v)}>
-  <Search aria-hidden="true" className="h-5 w-5 shrink-0" strokeWidth={1.8} />
+  <Search aria-hidden="true" className="h-[19px] w-[19px] shrink-0" strokeWidth={1.5} />
 </IconButton>
 
             <IconButton
@@ -252,15 +267,15 @@ export default function Navbar() {
             >
               <ShoppingBag
                 aria-hidden="true"
-                className="h-5 w-5 shrink-0"
-                strokeWidth={1.8}
+                className="h-[19px] w-[19px] shrink-0"
+                strokeWidth={1.5}
               />
             </IconButton>
           </div>
 
                     <MobileMenu
                       categories={categories}
-                      links={navLinks.flatMap((link) => link.children ?? [link])}
+                      links={navLinks}
                     />
 
         </div>

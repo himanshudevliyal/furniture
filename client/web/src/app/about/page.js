@@ -9,6 +9,7 @@ import Image from "next/image";
 } from "lucide-react";
 import NatrajTimeline from "@/components/timeline-Section";
 import CertificatesGallery from "@/components/certificates-gallery";
+import TestimonialsMasonryMarquee from "@/components/testimonials-marquee";
 
 export const metadata = {
   title: "About Us",
@@ -158,6 +159,7 @@ export default function AboutPage() {
 <NatrajTimeline></NatrajTimeline>
 
 <CertificatesGallery />
+<TestimonialsMasonryMarquee />
     </>
   );
 }

@@ -12,6 +12,8 @@ import {
   X,
 } from "lucide-react";
 
+import Recaptcha, { RECAPTCHA_MESSAGE, recaptchaEnabled } from "./recaptcha";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // ---------------------------------------------------------------------------
@@ -33,18 +35,17 @@ const REASON_LABELS = {
   become_a_vendor: "Become a Vendor",
 };
 
+// Only the mobile number is required.
 const contactSchema = z.object({
-  name: z.string().min(1, "Full name is required"),
-  email: z.email({ message: "Invalid email address" }),
+  name: z.string().trim().max(150).optional().or(z.literal("")),
+  email: z.email({ message: "Invalid email address" }).optional().or(z.literal("")),
   phone: z
     .string()
     .trim()
     .regex(/^[6-9]\d{9}$/, "Enter a valid 10-digit mobile number"),
-  subject: z.string().min(1, "Subject is required"),
+  subject: z.string().trim().max(200).optional().or(z.literal("")),
   message: z.string().optional().or(z.literal("")),
-  reason: z.enum(REASON_FOR_CONTACT, {
-    message: "Please select a reason for contact",
-  }),
+  reason: z.enum(REASON_FOR_CONTACT).optional().or(z.literal("")),
 });
 
 // ---------------------------------------------------------------------------
@@ -127,6 +128,10 @@ export default function ContactForm() {
   const [fileError, setFileError] = useState("");
   const fileInputRef = useRef(null);
 
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaError, setCaptchaError] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -179,6 +184,10 @@ export default function ContactForm() {
   // Submit — saare fields + file ek hi request me /queries par
   // ---------------------------------------------------------------------
   const onSubmit = async (data) => {
+    if (recaptchaEnabled && !captchaToken) {
+      setCaptchaError(RECAPTCHA_MESSAGE);
+      return;
+    }
     setLoading(true);
     setSuccess("");
     setApiError("");
@@ -216,7 +225,7 @@ export default function ContactForm() {
       const response = await fetch(`${API_URL}/queries`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, attachment }),
+        body: JSON.stringify({ ...data, attachment, recaptcha_token: captchaToken }),
       });
 
       const result = await response.json().catch(() => ({}));
@@ -233,6 +242,8 @@ export default function ContactForm() {
       setApiError(error.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+      // A token works only once.
+      captchaRef.current?.reset();
     }
   };
 
@@ -256,7 +267,8 @@ export default function ContactForm() {
       {/* Reason for Contact */}
       <fieldset className="md:col-span-2">
         <legend className="mb-3 text-sm font-medium text-[#3a352f]">
-          Reason for Contact <span className="text-[#E87717]">*</span>
+          Reason for Contact{" "}
+          <span className="font-normal text-[#6b655a]">(optional)</span>
         </legend>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
@@ -306,7 +318,9 @@ export default function ContactForm() {
 
       {/* Name */}
       <div className="flex flex-col gap-2">
-        <FieldLabel htmlFor="name">Full Name</FieldLabel>
+        <FieldLabel htmlFor="name" optional>
+          Full Name
+        </FieldLabel>
         <input
           id="name"
           type="text"
@@ -319,7 +333,9 @@ export default function ContactForm() {
 
       {/* Email */}
       <div className="flex flex-col gap-2">
-        <FieldLabel htmlFor="email">Email Address</FieldLabel>
+        <FieldLabel htmlFor="email" optional>
+          Email Address
+        </FieldLabel>
         <input
           id="email"
           type="email"
@@ -352,7 +368,9 @@ export default function ContactForm() {
 
       {/* Subject */}
       <div className="flex flex-col gap-2">
-        <FieldLabel htmlFor="subject">Subject</FieldLabel>
+        <FieldLabel htmlFor="subject" optional>
+          Subject
+        </FieldLabel>
         <input
           id="subject"
           type="text"
@@ -442,6 +460,17 @@ export default function ContactForm() {
         )}
       </div>
 
+      {/* reCAPTCHA */}
+      <Recaptcha
+        ref={captchaRef}
+        className="md:col-span-2"
+        error={captchaError}
+        onChange={(token) => {
+          setCaptchaToken(token);
+          if (token) setCaptchaError("");
+        }}
+      />
+
       {/* Success */}
       {success && (
         <div className="flex items-start gap-3 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700 md:col-span-2">
@@ -463,7 +492,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={loading}
-          className="rounded-sm bg-[#3a352f] px-8 py-3 text-[#f7f5f1] transition-colors hover:bg-[#4a453d] disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-full bg-[#3a352f] px-8 py-3 text-[#f7f5f1] transition-colors hover:bg-[#4a453d] disabled:cursor-not-allowed disabled:opacity-60"
         >
           {loading ? "Sending..." : "Send Message"}
         </button>

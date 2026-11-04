@@ -11,6 +11,7 @@ import subCategoryRoutes from "../../api/sub-category/routes.js";
 import queryRoutes from "../../api/query/routes.js";
 import productInquiryRoutes from "../../api/product-inquiry/routes.js";
 import projectQuoteRoutes from "../../api/project-quote/routes.js";
+import appointmentRoutes from "../../api/appointment/routes.js";
 import  blogRoutes  from "../../api/blog/routes.js";
 import jobRoutes from "../../api/job/routes.js";
 import jobApplicationRoutes from "../../api/job-application/routes.js";
@@ -34,6 +35,7 @@ export default async function routes(fastify, options) {
   fastify.register(queryRoutes, { prefix: "queries" });
   fastify.register(productInquiryRoutes, { prefix: "product-inquiries" });
   fastify.register(projectQuoteRoutes, { prefix: "project-quotes" });
+  fastify.register(appointmentRoutes, { prefix: "appointments" });
   fastify.register(blogRoutes, { prefix: "blogs" });
   fastify.register(jobRoutes, { prefix: "jobs" });
   fastify.register(jobApplicationRoutes, { prefix: "job-applications" });

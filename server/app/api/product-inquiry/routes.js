@@ -1,5 +1,6 @@
 "use strict";
 import controller from "./controller.js";
+import { requireRecaptcha } from "../../helpers/recaptcha.js";
 
 export default async function routes(fastify, options) {
   fastify.get("/", {}, controller.get);
@@ -10,5 +11,5 @@ export default async function routes(fastify, options) {
 }
 
 export async function productInquiryPublicRoutes(fastify, options) {
-  fastify.post("/", {}, controller.create);
+  fastify.post("/", { preHandler: requireRecaptcha }, controller.create);
 }

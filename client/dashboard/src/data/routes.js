@@ -1,5 +1,6 @@
 import {
   Briefcase,
+  CalendarClock,
   ClipboardList,
   FileQuestion,
   FileText,
@@ -166,6 +167,27 @@ export const sidebarData = [
       {
         title: "Edit",
         url: "/project-quotes/:id/edit",
+        roles: [ROLES.ADMIN],
+        isVisible: false,
+      },
+    ],
+  },
+  {
+    title: "Appointments",
+    url: "/appointments?page=1&limit=10",
+    icon: CalendarClock,
+    roles: [ROLES.ADMIN],
+    isVisible: true,
+    items: [
+      {
+        title: "Manage Slots",
+        url: "/appointments/slots",
+        roles: [ROLES.ADMIN],
+        isVisible: true,
+      },
+      {
+        title: "View",
+        url: "/appointments/:id",
         roles: [ROLES.ADMIN],
         isVisible: false,
       },

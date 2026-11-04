@@ -5,6 +5,7 @@ import {
   productInquirySchema,
   productInquiryUpdateSchema,
 } from "../../validation-schema/product-inquiry-schema.js";
+import { notifyForm } from "../../services/form-mail.js";
 
 const create = async (req, res) => {
   try {
@@ -29,6 +30,31 @@ const create = async (req, res) => {
     }
 
     const record = await table.ProductInquiryModel.create(req);
+
+    const titles = Object.fromEntries(products.map((p, i) => [uniqueProductIds[i], p?.title]));
+    const items = validateData.products
+      .map((p) => `${titles[p.product_id] || p.product_id}${p.quantity ? ` × ${p.quantity}` : ""}`)
+      .join("\n");
+    const v = validateData;
+    notifyForm({
+      form: "Product Inquiry",
+      summary: v.full_name,
+      replyTo: v.email,
+      rows: [
+        ["Name", v.full_name],
+        ["Company", v.company_name],
+        ["Email", v.email],
+        ["Phone", v.contact_number],
+        ["City", v.city],
+        ["State", v.state],
+        ["Products", items],
+        ["Message", v.message],
+      ],
+      ack: {
+        message: `Hi ${v.full_name}, thank you for your product inquiry. Our team will get back to you shortly.`,
+        rows: [["Products", items]],
+      },
+    });
 
     res
       .code(StatusCodes.CREATED)

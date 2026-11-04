@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,6 +16,8 @@ import {
   UploadCloud,
   X,
 } from "lucide-react";
+
+import Recaptcha, { RECAPTCHA_MESSAGE, recaptchaEnabled } from "@/components/form/recaptcha";
 
 import Heading from "@/components/layout/heading";
 
@@ -142,6 +144,9 @@ const contactInfo = [
 export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange }) {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaError, setCaptchaError] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const [file, setFile] = useState(null);
@@ -197,6 +202,10 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
       setFileError("Please attach your CV.");
       return;
     }
+    if (recaptchaEnabled && !captchaToken) {
+      setCaptchaError(RECAPTCHA_MESSAGE);
+      return;
+    }
 
     setLoading(true);
     setApiError("");
@@ -209,6 +218,7 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
       Object.entries(fields).forEach(([key, value]) => fd.append(key, value ?? ""));
       fd.append("job_id", job?.id ?? "");
       fd.append("applying_for", job?.title ?? GENERAL_LABEL);
+      fd.append("recaptcha_token", captchaToken);
       fd.append("resume", file);
 
       const response = await fetch(`${API_URL}/careers/apply`, {
@@ -230,6 +240,8 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
       setApiError(error.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+      // A token works only once.
+      captchaRef.current?.reset();
     }
   };
 
@@ -524,6 +536,16 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
               )}
             </div>
 
+            <Recaptcha
+              ref={captchaRef}
+              className="md:col-span-2"
+              error={captchaError}
+              onChange={(token) => {
+                setCaptchaToken(token);
+                if (token) setCaptchaError("");
+              }}
+            />
+
             {apiError && (
               <div
                 role="alert"
@@ -538,7 +560,7 @@ export default function CareerForm({ jobs, selectedJobId, onSelectedJobChange })
               <button
                 type="submit"
                 disabled={loading}
-                className="group inline-flex items-center gap-3 rounded-md bg-black py-2.5 pl-6 pr-2.5 text-[15px] font-semibold text-white transition-colors duration-300 hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+                className="group inline-flex items-center gap-3 rounded-full bg-black py-2.5 pl-6 pr-2.5 text-[15px] font-semibold text-white transition-colors duration-300 hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {loading ? "Submitting..." : "Submit Application"}
                 <span className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-700 transition-transform duration-300 group-hover:translate-x-0.5">

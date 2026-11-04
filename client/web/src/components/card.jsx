@@ -2,27 +2,27 @@ import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-// fitOnMobile: on phones every card is the same 4:3 frame and the photo is
-// shown whole (never cropped), with a blurred copy of it filling any spare
-// space. Desktop (sm+) stays a 500px cover image.
-export default function Card({ product, fitOnMobile = false }) {
+// fit: the photo is always shown whole (never cropped), with a blurred copy
+// of it filling any spare space. Phones use a 4:3 frame, sm+ a 500px frame.
+// Without it the photo covers the card (homepage projects carousel).
+export default function Card({ product, fit = false }) {
   return (
     <div
       className={cn(
         "relative w-full overflow-hidden rounded-2xl sm:h-[500px]",
-        fitOnMobile ? "aspect-[4/3] sm:aspect-auto" : "h-[420px]",
+        fit ? "aspect-[4/3] sm:aspect-auto" : "h-[420px]",
       )}
     >
-      {/* Mobile only: blurred copy fills the frame behind the photo, so the
-          photo itself can be shown whole without empty bars. */}
-      {fitOnMobile && (
+      {/* Blurred copy fills the frame behind the photo, so the photo itself
+          can be shown whole without empty bars. */}
+      {fit && (
         <Image
           src={product.image}
           alt=""
           aria-hidden
           fill
           sizes="100vw"
-          className="scale-110 object-cover blur-2xl brightness-95 sm:hidden"
+          className="scale-110 object-cover blur-2xl brightness-95"
         />
       )}
       <Image
@@ -30,7 +30,7 @@ export default function Card({ product, fitOnMobile = false }) {
         alt={`${product?.title} — ${product?.subtitle}`}
         fill
         sizes="(min-width: 640px) 50vw, 100vw"
-        className={fitOnMobile ? "object-contain sm:object-cover" : "object-cover"}
+        className={fit ? "object-contain" : "object-cover"}
       />
 {product?.title && (
       <div

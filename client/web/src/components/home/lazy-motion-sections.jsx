@@ -26,10 +26,10 @@ export function LazyIndustriesWeServe() {
   );
 }
 
-export function LazyParallaxShowcase() {
+export function LazyParallaxShowcase(props) {
   return (
-    <LoadWhenVisible fallback={<ParallaxStatic />}>
-      <ParallaxShowcase />
+    <LoadWhenVisible fallback={<ParallaxStatic {...props} />}>
+      <ParallaxShowcase {...props} />
     </LoadWhenVisible>
   );
 }

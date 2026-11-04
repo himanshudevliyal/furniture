@@ -40,7 +40,7 @@ export default function MaterialsColorsPage() {
             href={absoluteFileUrl(SWATCH_PDF)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-sm bg-[#E87717] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-[#C9620E]"
+            className="inline-flex items-center gap-2 rounded-full bg-[#E87717] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-[#C9620E]"
           >
             <Download className="h-4 w-4" aria-hidden />
             Download Color Swatch (PDF)

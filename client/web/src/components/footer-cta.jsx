@@ -36,7 +36,7 @@ export default function FooterCta() {
         <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row">
           <Link
             href="/contact"
-            className="group inline-flex items-center justify-center gap-2 rounded-sm bg-white px-6 py-3 type-button text-[#E87717] shadow-lg shadow-black/10 transition-all hover:bg-neutral-100"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 type-button text-[#E87717] shadow-lg shadow-black/10 transition-all hover:bg-neutral-100"
           >
             Contact Us
             <ArrowRight
@@ -49,7 +49,7 @@ export default function FooterCta() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-sm border border-white/70 px-6 py-3 type-button text-white transition-colors hover:bg-white hover:text-[#E87717]"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-white/70 px-6 py-3 type-button text-white transition-colors hover:bg-white hover:text-[#E87717]"
           >
             <WhatsappIcon className="h-4 w-4" />
             WhatsApp Us

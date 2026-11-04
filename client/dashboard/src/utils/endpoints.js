@@ -24,6 +24,11 @@ export const endpoints = {
   queries: { getAll: "/queries" },
   productInquiries: { getAll: "/product-inquiries" },
   projectQuotes: { getAll: "/project-quotes" },
+  appointments: {
+    getAll: "/appointments",
+    slots: "/appointments/manage/slots",
+    slotBlocks: "/appointments/manage/slot-blocks",
+  },
   blogs: { getAll: "/blogs" },
   jobs: { getAll: "/jobs" },
   jobApplications: { getAll: "/job-applications" },

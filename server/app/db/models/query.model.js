@@ -17,11 +17,11 @@ const init = async (sequelize) => {
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       phone: {
         type: DataTypes.STRING,
@@ -29,16 +29,16 @@ const init = async (sequelize) => {
       },
       subject: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       message: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       // domestic_sales_enquiry | export_sales_enquiry | after_sales_services | career | become_a_vendor
       reason: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       // Optional reference image/PDF for custom requests.
       attachment: {
@@ -62,12 +62,12 @@ const create = async (req, transaction) => {
 
   const data = await UserQueryModel.create(
     {
-      name: req.body.name,
-      email: req.body.email,
+      name: req.body.name || null,
+      email: req.body.email || null,
       phone: req.body.phone,
-      subject: req.body.subject,
-      message: req.body.message,
-      reason: req.body.reason,
+      subject: req.body.subject || null,
+      message: req.body.message || null,
+      reason: req.body.reason || null,
       attachment: req.body.attachment || null,
     },
     options,

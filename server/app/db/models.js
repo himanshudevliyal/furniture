@@ -12,6 +12,8 @@ import subCategoryModel from "./models/sub-category.model.js";
 import queryModel from "./models/query.model.js";
 import productInquiryModel from "./models/product-inquiry.model.js";
 import projectQuoteModel from "./models/project-quote.model.js";
+import appointmentModel from "./models/appointment.model.js";
+import appointmentSlotBlockModel from "./models/appointment-slot-block.model.js";
 import blogModel from "./models/blog.model.js";
 import jobModel from "./models/job.model.js";
 import jobApplicationModel from "./models/job-application.model.js";
@@ -31,6 +33,8 @@ export default {
   QueryModel: queryModel,
   ProductInquiryModel: productInquiryModel,
   ProjectQuoteModel: projectQuoteModel,
+  AppointmentModel: appointmentModel,
+  AppointmentSlotBlockModel: appointmentSlotBlockModel,
   BlogModel: blogModel,
   JobModel: jobModel,
   JobApplicationModel: jobApplicationModel,

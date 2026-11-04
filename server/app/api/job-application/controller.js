@@ -2,6 +2,10 @@
 import table from "../../db/models.js";
 import { StatusCodes } from "http-status-codes";
 import { cleanupFiles } from "../../helpers/cleanup-files.js";
+import fs from "fs";
+import path from "path";
+import { notifyForm } from "../../services/form-mail.js";
+import { RECAPTCHA_MESSAGE, verifyRecaptcha } from "../../helpers/recaptcha.js";
 import {
   jobApplicationSchema,
   JOB_APPLICATION_STATUSES,
@@ -16,6 +20,11 @@ const badRequest = async (req, res, message) => {
 
 const create = async (req, res) => {
   try {
+    // Multipart, so the reCAPTCHA check runs here (uploaded CV is removed on fail).
+    if (!(await verifyRecaptcha(req.body?.recaptcha_token, req.ip))) {
+      return badRequest(req, res, RECAPTCHA_MESSAGE);
+    }
+
     const resume = req.body?.resume?.[0];
     if (!resume) {
       return badRequest(req, res, "Please attach your CV.");
@@ -42,6 +51,31 @@ const create = async (req, res) => {
 
     req.body = { ...body, resume };
     await table.JobApplicationModel.create(req);
+
+    // CV is attached when the file is on this server's disk.
+    const resumePath = path.join(process.cwd(), resume);
+    notifyForm({
+      form: "Job Application",
+      summary: `${body.name}${body.applying_for ? ` – ${body.applying_for}` : ""}`,
+      replyTo: body.email,
+      rows: [
+        ["Applying for", body.applying_for],
+        ["Name", body.name],
+        ["Email", body.email],
+        ["Phone", body.phone],
+        ["Experience", body.experience],
+        ["Current location", body.current_location],
+        ["LinkedIn", body.linkedin],
+        ["Message", body.message],
+        ["CV", `https://api.natrajfurniture.com/${String(resume).replace(/^\/+/, "")}`],
+      ],
+      attachments: fs.existsSync(resumePath)
+        ? [{ filename: path.basename(resume).replace(/^\d+_/, ""), path: resumePath }]
+        : undefined,
+      ack: {
+        message: `Hi ${body.name}, thank you for applying${body.applying_for ? ` for ${body.applying_for}` : ""}. Our team will review your CV and contact you if your profile matches.`,
+      },
+    });
 
     res.code(StatusCodes.CREATED).send({
       status: true,

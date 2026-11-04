@@ -5,12 +5,31 @@ import {
   projectQuoteSchema,
   projectQuoteUpdateSchema,
 } from "../../validation-schema/project-quote-schema.js";
+import { notifyForm } from "../../services/form-mail.js";
 
 const create = async (req, res) => {
   try {
     req.body = projectQuoteSchema.parse(req.body);
 
     const record = await table.ProjectQuoteModel.create(req);
+
+    const b = req.body;
+    notifyForm({
+      form: "Project Quote Request",
+      summary: b.name,
+      replyTo: b.email,
+      rows: [
+        ["Name", b.name],
+        ["Mobile", b.phone],
+        ["Email", b.email],
+        ["Company", b.company],
+        ["Category", b.category],
+        ["Details", b.message],
+      ],
+      ack: {
+        message: `Hi ${b.name}, thank you for your quote request. Our team will get back to you within one working day.`,
+      },
+    });
 
     res
       .code(StatusCodes.CREATED)

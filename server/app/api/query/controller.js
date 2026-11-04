@@ -2,6 +2,7 @@
 import constants from "../../lib/constants/index.js";
 import table from "../../db/models.js";
 import { userQuerySchema } from "../../validation-schema/user-query-schema.js";
+import { notifyForm } from "../../services/form-mail.js";
 
 const { NOT_FOUND } = constants.http.status;
 
@@ -10,6 +11,27 @@ const create = async (req, res) => {
     const validatedData = userQuerySchema.parse(req.body);
 
     await table.QueryModel.create(req);
+
+    const q = validatedData;
+    notifyForm({
+      form: "Contact Enquiry",
+      summary: [q.name, q.subject].filter(Boolean).join(" – ") || q.phone,
+      replyTo: q.email,
+      rows: [
+        ["Name", q.name],
+        ["Email", q.email],
+        ["Phone", q.phone],
+        ["Reason", q.reason],
+        ["Subject", q.subject],
+        ["Message", q.message],
+        ["Attachment", q.attachment ? `https://api.natrajfurniture.com/${String(q.attachment).replace(/^\/+/, "")}` : ""],
+      ],
+      ack: {
+        message: `Hi${q.name ? ` ${q.name}` : ""}, thank you for contacting Natraj Office Furniture. We have received your message and will reply soon.`,
+        rows: [["Subject", q.subject]],
+      },
+    });
+
     res.send({ status: true, message: "Query sent." });
   } catch (error) {
     throw error;

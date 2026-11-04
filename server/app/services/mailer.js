@@ -6,17 +6,21 @@ import path from "path";
 import fs from "fs";
 import ejs from "ejs";
 
-const mailer = nodemailer.createTransport({
-  service: "gmail",
+export const mailer = nodemailer.createTransport({
+  host: config.smtp_host,
+  port: config.smtp_port,
+  secure: config.smtp_port === 465,
   auth: {
-    user: "vishal.gautam.5812@gmail.com",
+    user: config.smtp_user,
     pass: config.smtp_password,
   },
 });
 
+export const MAIL_FROM = `"Natraj Office Furniture" <${config.smtp_from_email}>`;
+
 export const sendSampleMail = async (to) => {
   const info = await mailer.sendMail({
-    from: `"Infrakeys" <vishal.gautam.5812@gmail.com>`,
+    from: MAIL_FROM,
     to: to,
     subject: "Hello ✔",
     text: "Hello world?",
@@ -41,9 +45,9 @@ export const sendResetUsernameEmail = async (userEmail, token) => {
 
     const mailOptions = {
       // from: config.smtp_from_email,
-      from: '"Infrakeys" <vishal.gautam.5812@gmail.com>',
+      from: MAIL_FROM,
       to: userEmail,
-      subject: "Reset Your Username – Infrakeys",
+      subject: "Reset Your Username – Natraj Office Furniture",
       html: htmlContent,
     };
 
@@ -70,9 +74,9 @@ export const sendResetPasswordEmail = async (userEmail, token) => {
     });
 
     const mailOptions = {
-      from: `"Infrakeys" <vishal.gautam.5812@gmail.com>`,
+      from: MAIL_FROM,
       to: userEmail,
-      subject: "Reset Your Password – Infrakeys",
+      subject: "Reset Your Password – Natraj Office Furniture",
       html: htmlContent,
     };
 
@@ -94,7 +98,7 @@ export async function sendEmail({ to, templateKey, payload, subject }) {
   try {
     const html = await renderEmail(templateKey, payload);
     return mailer.sendMail({
-      from: `"Infrakeys" <vishal.gautam.5812@gmail.com>`,
+      from: MAIL_FROM,
       to,
       subject,
       html,

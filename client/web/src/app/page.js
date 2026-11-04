@@ -2,18 +2,15 @@
 import BlogSection from "@/components/blog-section";
 import FurnitureCategories from "@/components/home/furniture-categories";
 import HeroSection from "@/components/hero-section";
-import {
-  LazyIndustriesWeServe as IndustriesWeServe,
-  LazyParallaxShowcase as ParallaxShowcase,
-} from "@/components/home/lazy-motion-sections";
-import Certifications from "@/components/our-certificate";
+import { LazyParallaxShowcase as ParallaxShowcase } from "@/components/home/lazy-motion-sections";
+import IndustriesWeServe from "@/components/home/industries-we-serve";
 import OurClient from "@/components/our-client";
 import CaseCategories from "@/components/home/case-categories";
 import VideoTours from "@/components/home/video-tours";
 import { getProjectCategories } from "@/lib/projects";
 import ProjectSupport from "@/components/home/project-support";
+import WhyChooseUs from "@/components/home/why-choose-us";
 import StatsSection from "@/components/stats-section";
-import TestimonialsMasonryMarquee from "@/components/testimonials-marquee";
 
 export const metadata = {
   title: { absolute: "Natraj Office Furniture | Workstations, Seating & Storage" },
@@ -44,15 +41,21 @@ export default function Home() {
       <ParallaxShowcase />
 
       {/* 5. How we deliver + proof of work */}
+      <WhyChooseUs />
       <ProjectSupport />
       <CaseCategories categories={getProjectCategories()} />
       <VideoTours />
 
       {/* 6. Trust */}
       <OurClient />
-      <Certifications />
-      {/* <Testimonials /> */}
-      <TestimonialsMasonryMarquee />
+      <ParallaxShowcase
+        image="/img/become-partner.webp"
+        label="Become a partner"
+        title="Build Better Workspaces Together"
+        text="Let’s create spaces that inspire collaboration and growth for your team."
+        cta={{ label: "Become a Partner", href: "/contact#enquiry" }}
+        className="h-[75vh] min-h-[460px]"
+      />
 
       {/* 7. Content */}
       <BlogSection />

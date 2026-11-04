@@ -79,7 +79,7 @@ export default function ShowroomPage() {
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center rounded-sm bg-[#E87717] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#C9620E]"
+            className="inline-flex items-center justify-center rounded-full bg-[#E87717] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#C9620E]"
           >
             Book a Visit
           </Link>

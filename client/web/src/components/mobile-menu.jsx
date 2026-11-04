@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { ArrowRight, ChevronDown, Menu } from "lucide-react";
+import { CalendarDays, ChevronDown, Menu } from "lucide-react";
 
 import {
   Sheet,
@@ -124,6 +124,46 @@ function ProductsAccordion({ categories, onNavigate }) {
   );
 }
 
+// A nav link with children (Inspiration, About): same dropdown as Products.
+function LinkAccordion({ link, onNavigate }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        className={rowClass}
+      >
+        {link.label}
+        <ChevronDown
+          aria-hidden="true"
+          className={`h-4 w-4 transition-transform duration-300 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      <Collapse open={open}>
+        <ul className="pb-3 pl-3">
+          {link.children.map((child) => (
+            <li key={child.href} className="border-l border-neutral-200">
+              <Link
+                href={child.href}
+                onClick={onNavigate}
+                className="block py-3 pl-4 text-[16px] font-normal text-neutral-800 transition-colors hover:text-black"
+              >
+                {child.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Collapse>
+    </div>
+  );
+}
+
 export default function MobileMenu({ categories = [], links = [] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -176,30 +216,38 @@ export default function MobileMenu({ categories = [], links = [] }) {
               <ProductsAccordion categories={categories} onNavigate={close} />
             </div>
 
-            {links.map((link, i) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                onClick={close}
-                className={`${rowClass} ${staggerClass}`}
-                style={{
-                  animationDelay: `${STAGGER_START + (i + 1) * STAGGER_STEP}ms`,
-                }}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {links.map((link, i) => {
+              const delay = {
+                animationDelay: `${STAGGER_START + (i + 1) * STAGGER_STEP}ms`,
+              };
+
+              return link.children ? (
+                <div key={link.label} className={staggerClass} style={delay}>
+                  <LinkAccordion link={link} onNavigate={close} />
+                </div>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  onClick={close}
+                  className={`${rowClass} ${staggerClass}`}
+                  style={delay}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </div>
         </nav>
 
         <div className="border-t border-neutral-200 p-6">
           <Link
-            href="/contact"
+            href="/book-your-slot"
             onClick={close}
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 type-button text-white transition-colors hover:bg-neutral-800"
+            className="group flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 type-button text-white transition-colors hover:bg-[#E87717] active:bg-[#C9620E]"
           >
-            Get Inquiry
-            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            <CalendarDays aria-hidden="true" className="h-5 w-5 animate-cal-ring [--cal-lift:-22px] group-hover:[animation-duration:1.3s] motion-reduce:animate-none" strokeWidth={2} />
+            Book Your Slot
           </Link>
         </div>
       </SheetContent>

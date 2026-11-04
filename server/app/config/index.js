@@ -23,12 +23,16 @@ const config = {
     ? process.env.ALLOWED_ORIGINS.split(",")
     : [],
 
-  // smtp
-  smtp_from_email: process.env.SMTP_EMAIL,
+  // smtp (natrajfurniture.com mail is on Google Workspace)
   smtp_port: parseInt(process.env.SMTP_PORT) || 465,
-  smtp_host: process.env.SMTP_HOST || "smtp.gmail.com",
-  smtp_user: process.env.SMTP_USER,
+  smtp_host: process.env.SMTP_SERVER || process.env.SMTP_HOST || "smtp.gmail.com",
+  smtp_user: process.env.SMTP_USERNAME || process.env.SMTP_USER,
   smtp_password: process.env.SMTP_PASSWORD,
+  smtp_from_email:
+    process.env.SMTP_EMAIL || process.env.SMTP_USERNAME || process.env.SMTP_USER,
+  // Where website form submissions are sent (defaults to the SMTP mailbox).
+  notify_email:
+    process.env.NOTIFY_EMAIL || process.env.SMTP_USERNAME || process.env.SMTP_USER,
 
   // payu
   payu_merchant_key: process.env.PAYU_MERCHANT_KEY,

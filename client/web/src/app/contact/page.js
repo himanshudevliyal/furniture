@@ -126,7 +126,7 @@ export default function ContactPage() {
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.45fr_1fr] lg:gap-10">
             {/* Contact Form */}
-            <div className="rounded-md border-t-4 border-[#E87717] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10">
+            <div id="enquiry" className="scroll-mt-24 rounded-md border-t-4 border-[#E87717] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10">
               <ContactForm />
             </div>
 
@@ -196,7 +196,7 @@ export default function ContactPage() {
                 <div>
                   <p className="text-sm font-medium">Working Hours</p>
                   <p className="text-sm text-white/85">
-                    Mon – Sat · 10:00 AM – 7:00 PM
+                    Mon – Sat · 10:00 AM – 7:30 PM
                   </p>
                 </div>
               </div>

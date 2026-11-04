@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,7 @@ import { useCart } from "@/hooks/use-cart";
 import { createProductInquiry } from "@/services/product-inquiry-service";
 import { handleError } from "@/lib/handle-error-toast";
 import config from "@/config";
+import Recaptcha, { RECAPTCHA_MESSAGE, recaptchaEnabled } from "@/components/form/recaptcha";
 
 // Matches the existing backend product-inquiry validation schema exactly.
 const inquirySchema = z.object({
@@ -39,6 +41,9 @@ export default function CheckoutPage() {
   const router = useRouter();
   const { cartItems, subtotal, clearCart } = useCart();
   const hasPricing = cartItems.some((item) => item.price);
+  const captchaRef = useRef(null);
+  const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaError, setCaptchaError] = useState("");
 
   const {
     register,
@@ -66,10 +71,16 @@ export default function CheckoutPage() {
       reset();
     },
     onError: (error) => handleError(error, "Failed to submit inquiry"),
+    // A token works only once.
+    onSettled: () => captchaRef.current?.reset(),
   });
 
   const onSubmit = (formData) => {
     if (cartItems.length === 0) return;
+    if (recaptchaEnabled && !captchaToken) {
+      setCaptchaError(RECAPTCHA_MESSAGE);
+      return;
+    }
 
     inquiryMutation.mutate({
       ...formData,
@@ -77,6 +88,7 @@ export default function CheckoutPage() {
         product_id: item.id,
         quantity: item.quantity,
       })),
+      recaptcha_token: captchaToken,
     });
   };
 
@@ -226,6 +238,16 @@ export default function CheckoutPage() {
                     inquiry.
                   </div>
                 )}
+
+                <Recaptcha
+                  ref={captchaRef}
+                  className="mb-4"
+                  error={captchaError}
+                  onChange={(token) => {
+                    setCaptchaToken(token);
+                    if (token) setCaptchaError("");
+                  }}
+                />
 
                 <Button
                   type="submit"
