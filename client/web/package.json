@@ -12,6 +12,7 @@
     "@base-ui/react": "^1.7.0",
     "@fancyapps/ui": "^6.1.15",
     "@hookform/resolvers": "^5.9.1",
+    "@next/third-parties": "^16.3.3",
     "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tanstack/react-query": "^5.102.8",

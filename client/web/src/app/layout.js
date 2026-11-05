@@ -9,6 +9,7 @@ import { NuqsProvider } from "@/providers/nuqs-provider";
 import ProductProvider from "@/providers/product-povider";
 import CartSidebar from "@/components/ui/cart-sidebar";
 import { Toaster } from "sonner";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import FloatingCta from "@/components/cta";
 import FooterCta from "@/components/footer-cta";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
@@ -78,6 +79,10 @@ export const metadata = {
     locale: "en_IN",
   },
   twitter: { card: "summary_large_image" },
+  // Bing Webmaster Tools site verification.
+  verification: {
+    other: { "msvalidate.01": "6E72AC23AE4D4B73804848E30B8EACDA" },
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -102,6 +107,7 @@ export default function RootLayout({ children }) {
         </QueryProvider>
 </ProductProvider>
       </body>
+      <GoogleAnalytics gaId="G-E85V524NH7" />
     </html>
   );
 }
