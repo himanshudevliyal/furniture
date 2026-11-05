@@ -61,7 +61,7 @@ const items = useMemo( () => galleryImages .map((file, index) => { if (!file) re
   if (items.length === 0) return null;
 
   return (
-    <Section id="product-applications" className="w-full scroll-mt-[140px] bg-white py-14 sm:py-16 md:scroll-mt-[150px]">
+    <Section id="product-applications" className="w-full scroll-mt-[130px] bg-white py-14 sm:py-16 md:scroll-mt-[132px]">
       <Carousel
         setApi={handleSetApi}
         opts={{

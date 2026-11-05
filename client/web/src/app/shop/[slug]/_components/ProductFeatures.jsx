@@ -30,7 +30,7 @@ export default function ProductFeatures({ product }) {
     setActive((i) => (i + step + items.length) % items.length);
 
   return (
-    <Section id="product-features" className="scroll-mt-[140px] bg-[#f4f0eb] md:scroll-mt-[150px]">
+    <Section id="product-features" className="scroll-mt-[130px] bg-[#f4f0eb] md:scroll-mt-[132px]">
       <Heading
         eyebrow="FEATURES"
         heading={heading}

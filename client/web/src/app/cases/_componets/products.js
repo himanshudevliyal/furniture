@@ -78,7 +78,7 @@ export default function ProjectsGrid({ categories = [], initialCategory }) {
       />
 
       {/* Category tabs — stay under the navbar while scrolling the grid */}
-      <div className="sticky top-[68px] z-20 -mx-4 mt-10 bg-white/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/80 md:top-[80px] md:mx-0 md:px-0">
+      <div className="sticky top-[58px] z-20 -mx-4 mt-10 bg-white/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-white/80 md:top-[62px] md:mx-0 md:px-0">
         <div
           role="tablist"
           aria-label="Project categories"

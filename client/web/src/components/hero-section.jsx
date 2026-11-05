@@ -142,8 +142,8 @@ export default function HeroSlider() {
               aria-label={`${index + 1} of ${slides.length}`}
               className="pl-0"
             >
-              {/* Full screen minus navbar: 68px / 80px (md) + 1px border */}
-              <div className="relative h-[calc(100svh-69px)] min-h-[440px] w-full md:h-[calc(100svh-81px)]">
+              {/* Full screen minus navbar: 58px / 62px (md) + 1px border */}
+              <div className="relative h-[calc(100svh-59px)] min-h-[440px] w-full md:h-[calc(100svh-63px)]">
                 {(index === 0 || restSlidesReady) && (
                   <Image
                     src={slide.image}

@@ -181,7 +181,7 @@ export default function ProductTabs({ product, children }) {
       className="mx-auto w-full gap-0"
     >
       {/* ---------------- Tab bar (sticky, just below the site header) ---------------- */}
-      <div ref={barRef} className="sticky top-[68px] z-40 border-b bg-gray-100 md:top-[80px]">
+      <div ref={barRef} className="sticky top-[58px] z-40 border-b bg-gray-100 md:top-[62px]">
         <div className="mx-auto flex w-full max-w-7xl overflow-x-auto px-2 py-2 [scrollbar-width:none] lg:px-3">
           <TabsList className="h-auto! w-auto! shrink-0 justify-start! gap-0 rounded-none bg-transparent p-0">
             {tabs.map(({ value, label, icon: Icon }) => (
@@ -228,7 +228,7 @@ export default function ProductTabs({ product, children }) {
         </div>
       </div>
 
-      <div ref={panelTopRef} className="scroll-mt-[140px] md:scroll-mt-[150px]" />
+      <div ref={panelTopRef} className="scroll-mt-[130px] md:scroll-mt-[132px]" />
       <Section className="py-0">
         {/* ---------------- Overview ---------------- */}
         <TabsContent value="overview" className="mt-0">

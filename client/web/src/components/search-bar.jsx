@@ -137,7 +137,7 @@ export default function SearchBar({ open, onClose, categories = [] }) {
         aria-label="Close search"
         tabIndex={-1}
         onClick={onClose}
-        className="fixed inset-0 top-[69px] z-[9998] cursor-default bg-black/40 animate-in fade-in-0 duration-300 md:top-[81px]"
+        className="fixed inset-0 top-[59px] z-[9998] cursor-default bg-black/40 animate-in fade-in-0 duration-300 md:top-[63px]"
       />
 
       {/* panel */}

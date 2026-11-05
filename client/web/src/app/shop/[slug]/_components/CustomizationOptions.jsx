@@ -206,7 +206,7 @@ export default function CustomizationOptions({ product }) {
   const current = panels.find((p) => p.value === active) ?? panels[0];
 
   return (
-    <Section id="product-resources" className="scroll-mt-[140px] bg-white md:scroll-mt-[150px]">
+    <Section id="product-resources" className="scroll-mt-[130px] bg-white md:scroll-mt-[132px]">
       <Heading
         eyebrow="CUSTOMIZATION"
         heading="Customization Options"

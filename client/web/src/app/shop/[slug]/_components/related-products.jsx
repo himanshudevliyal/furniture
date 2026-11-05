@@ -37,7 +37,7 @@ export default function RelatedProducts({ product }) {
   if (!isLoading && products.length === 0) return null;
 
   return (
-    <Section id="product-related" className="scroll-mt-[140px] bg-neutral-50/60 md:scroll-mt-[150px]">
+    <Section id="product-related" className="scroll-mt-[130px] bg-neutral-50/60 md:scroll-mt-[132px]">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <Heading
           heading="Related Products"

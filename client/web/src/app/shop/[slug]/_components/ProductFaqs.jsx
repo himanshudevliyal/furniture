@@ -33,7 +33,7 @@ export default function ProductFaqs({ product }) {
   };
 
   return (
-    <Section id="product-faqs" className="scroll-mt-[140px] bg-white md:scroll-mt-[150px]">
+    <Section id="product-faqs" className="scroll-mt-[130px] bg-white md:scroll-mt-[132px]">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[360px_1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Heading
