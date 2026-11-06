@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -12,15 +11,8 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 
-// Loaded on first click: the form (zod + react-hook-form) is not needed to
-// render the hero, so it stays out of the homepage's initial JavaScript.
-const ProjectQuoteDialog = dynamic(
-  () => import("@/components/project-quote-dialog"),
-  { ssr: false },
-);
-
 // Images /public/img/hero/ mein hain (1920px wide, landscape).
-// `category` quote form ke saath server par jaata hai, `href` "View" button ka link hai.
+// `href` "View" button ka link hai; "Request Project Quote" /contact#enquiry par jaata hai.
 // A slide with `actions` shows those links instead of View + Request Quote.
 const slides = [
   {
@@ -31,7 +23,7 @@ const slides = [
       "Curate a space that fuels productivity, supports well-being, and perfectly captures your brand identity.",
     actions: [
       { label: "Visit Our Showroom", href: "/showroom" },
-      { label: "Book Consultation", href: "/book-your-slot", primary: true },
+      { label: "Book Consultation", href: "/contact#enquiry", primary: true },
     ],
   },
   {
@@ -87,9 +79,6 @@ export default function HeroSlider() {
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [quoteOpen, setQuoteOpen] = useState(false);
-  const [quoteRequested, setQuoteRequested] = useState(false);
-  const [quoteCategory, setQuoteCategory] = useState("");
 
   // Images of slides 2+ are fetched shortly after the first paint, so they
   // don't compete with the first slide (the page's LCP image) for bandwidth.
@@ -119,10 +108,10 @@ export default function HeroSlider() {
 
   // Autoplay. The hero fills the screen, so it does NOT pause on hover (the
   // cursor is almost always over it). It pauses only while a keyboard user is
-  // focused inside it or the quote dialog is open. Reduced-motion users still
-  // get the rotation, just as an instant switch instead of a slide.
+  // focused inside it. Reduced-motion users still get the rotation, just as an
+  // instant switch instead of a slide.
   useEffect(() => {
-    if (!api || paused || quoteOpen) return;
+    if (!api || paused) return;
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -133,7 +122,7 @@ export default function HeroSlider() {
       api.scrollTo(next, reduceMotion);
     }, AUTOPLAY_MS);
     return () => clearInterval(id);
-  }, [api, paused, quoteOpen]);
+  }, [api, paused]);
 
   return (
     <section
@@ -240,17 +229,12 @@ export default function HeroSlider() {
                       />
                     </Link>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setQuoteCategory(slide.category);
-                        setQuoteRequested(true);
-                        setQuoteOpen(true);
-                      }}
+                    <Link
+                      href="/contact#enquiry"
                       className="inline-flex items-center gap-2 rounded-full border border-[#E87717] bg-[#E87717] px-5 py-3 type-button text-white transition-colors hover:border-[#C9620E] hover:bg-[#C9620E] md:px-6"
                     >
                       Request Project Quote
-                    </button>
+                    </Link>
                     </>
                     )}
                   </div>
@@ -287,15 +271,6 @@ export default function HeroSlider() {
           ))}
         </div>
       </div>
-
-      {/* Mounted after the first request, then kept so closing can animate. */}
-      {quoteRequested && (
-        <ProjectQuoteDialog
-          open={quoteOpen}
-          onOpenChange={setQuoteOpen}
-          category={quoteCategory}
-        />
-      )}
     </section>
   );
 }
