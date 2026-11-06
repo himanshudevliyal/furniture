@@ -279,9 +279,12 @@ export default function BookSlotForm() {
       setSlotError("Please choose a date and time for your visit.");
       return;
     }
+    if (recaptchaEnabled && !captchaToken) {
+      setCaptchaError(RECAPTCHA_MESSAGE);
+      return;
+    }
     setDetails(values);
     setApiError("");
-    setCaptchaToken("");
     setCaptchaError("");
     setStep("confirm");
   };
@@ -323,8 +326,9 @@ export default function BookSlotForm() {
       setApiError(error.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
-      // A token works only once.
+      // A token works only once: clear it so a fresh tick is asked for.
       captchaRef.current?.reset();
+      setCaptchaToken("");
     }
   };
 
@@ -392,6 +396,8 @@ export default function BookSlotForm() {
           ))}
         </dl>
 
+        {/* Ticked on the form step; asked again only if a submit used the token up. */}
+        {!captchaToken && (
         <Recaptcha
           ref={captchaRef}
           className="mt-5"
@@ -401,6 +407,7 @@ export default function BookSlotForm() {
             if (token) setCaptchaError("");
           }}
         />
+        )}
 
         {apiError && (
           <div className="mt-4 flex items-start gap-2.5 rounded-md border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
@@ -573,6 +580,15 @@ export default function BookSlotForm() {
           </Field>
         </div>
       </div>
+
+      <Recaptcha
+        ref={captchaRef}
+        error={captchaError}
+        onChange={(token) => {
+          setCaptchaToken(token);
+          if (token) setCaptchaError("");
+        }}
+      />
 
       <button
         type="submit"
