@@ -84,7 +84,7 @@ export default function ProductDetail({ product }) {
 
   return (
     <div className="bg-[#FBF1E7]">
-      <Section className="pt-14 pb-10 sm:pt-16 lg:p-0">
+      <Section className="pt-14 pb-10 sm:pt-16 lg:py-14">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Product Information */}
           <div className="flex flex-col gap-4">
@@ -94,7 +94,8 @@ export default function ProductDetail({ product }) {
               </p>
             )}
 
-            <h1 className="scroll-mt-24 type-display text-neutral-900">
+            {/* type-title (max 40px) so long product names stay on 2–3 lines */}
+            <h1 className="scroll-mt-24 type-title text-balance text-neutral-900">
               {heading}
             </h1>
 
@@ -165,14 +166,17 @@ export default function ProductDetail({ product }) {
 
                     return (
                       <CarouselItem key={img ?? index}>
-                        <div className="relative aspect-[4/3] w-full lg:aspect-square">
+                        {/* bg + multiply: white photo backgrounds melt into the
+                            hero colour (the carousel's transform isolates
+                            blending, so the box needs its own background). */}
+                        <div className="relative aspect-[4/3] w-full bg-[#FBF1E7] lg:aspect-square">
                           {imageSrc && (
                             <Image
                               src={imageSrc}
                               alt={`${heading} ${index + 1}`}
                               fill
                               sizes="(min-width: 1024px) 45vw, 100vw"
-                              className="object-contain"
+                              className="object-contain mix-blend-multiply"
                               priority={index === 0}
                             />
                           )}

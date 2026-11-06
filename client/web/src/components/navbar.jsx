@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CalendarDays, ChevronDown, Search, ShoppingBag } from "lucide-react";
+import { ChevronDown, MessageSquareQuote, Search, ShoppingBag } from "lucide-react";
 import MobileMenu from "@/components/mobile-menu";
 import CategoryMegaMenu from "@/components/category-mega-menu";
 import { useCategories } from "@/hooks/use-categories";
@@ -58,8 +58,6 @@ const navLinks = [
     ],
   },
   { label: "Our Clients", href: "/clients" },
-  { label: "Contact Us", href: "/contact" },
-
 ];
 
 const linkClass =
@@ -67,7 +65,7 @@ const linkClass =
 
 export default function Navbar() {
   const pathname = usePathname();
-  const onBooking = pathname === "/book-your-slot";
+  const onQuote = pathname === "/contact";
 
   const { data: categoriesData, isLoading: categoriesLoading } =
     useCategories();
@@ -139,7 +137,7 @@ export default function Navbar() {
             <Image
               width={1200}
               height={363}
-              className="h-auto w-[125px] object-contain md:w-[145px]"
+              className="h-auto w-[150px] object-contain md:w-[180px]"
               src="/logo-natraj.png"
               alt="Natraj Office Furniture logo"
               priority
@@ -216,14 +214,14 @@ export default function Navbar() {
             )}
           </nav>
 
-          {/* Book Your Slot: outlined pill; orange fills in from the left on
-              hover, presses in on click, and stays filled on its own page. */}
+          {/* Get a Quote: outlined pill; orange fills in from the left on
+              hover, presses in on click, and stays filled on the contact page. */}
           <Link
-            href="/book-your-slot"
+            href="/contact#enquiry"
             onMouseEnter={closeNow}
-            aria-current={onBooking ? "page" : undefined}
+            aria-current={onQuote ? "page" : undefined}
             className={`group relative !hidden h-9 items-center gap-2 whitespace-nowrap rounded-full border pl-4 pr-1 text-[13px] font-medium transition-[color,border-color,box-shadow,transform] duration-300 active:scale-95 lg:!flex ${
-              onBooking
+              onQuote
                 ? "border-[#E87717] bg-[#E87717] text-white shadow-[0_4px_14px_rgba(232,119,23,0.35)]"
                 : "border-[#E87717]/50 text-neutral-900 hover:border-[#E87717] hover:text-white hover:shadow-[0_4px_14px_rgba(232,119,23,0.35)] active:bg-[#C9620E]"
             }`}
@@ -232,23 +230,23 @@ export default function Navbar() {
             <span aria-hidden="true" className="absolute inset-0 overflow-hidden rounded-full">
             <span
               className={`absolute inset-0 origin-left bg-[#E87717] transition-transform duration-300 ease-out group-active:bg-[#C9620E] ${
-                onBooking ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                onQuote ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
               }`}
             />
             </span>
             {/* Orange light running around the border (globals.css). */}
-            {!onBooking && (
+            {!onQuote && (
               <span aria-hidden="true" className="border-beam-wrap group-hover:opacity-0">
                 <span className="border-beam" />
               </span>
             )}
-            <span className="relative">Book Your Slot</span>
+            <span className="relative">Get a Quote</span>
             <span
               className={`relative flex h-7 w-7 animate-cal-ring items-center justify-center rounded-full shadow-sm transition-colors duration-300 group-hover:[animation-duration:1.3s] motion-reduce:animate-none ${
-                onBooking ? "bg-white text-[#E87717]" : "bg-[#E87717] text-white group-hover:bg-white group-hover:text-[#E87717]"
+                onQuote ? "bg-white text-[#E87717]" : "bg-[#E87717] text-white group-hover:bg-white group-hover:text-[#E87717]"
               }`}
             >
-              <CalendarDays aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
+              <MessageSquareQuote aria-hidden="true" className="h-4 w-4" strokeWidth={2} />
             </span>
           </Link>
 

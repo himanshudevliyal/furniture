@@ -21,7 +21,19 @@ const ProjectQuoteDialog = dynamic(
 
 // Images /public/img/hero/ mein hain (1920px wide, landscape).
 // `category` quote form ke saath server par jaata hai, `href` "View" button ka link hai.
+// A slide with `actions` shows those links instead of View + Request Quote.
 const slides = [
+  {
+    image: "/img/hero/built-to-inspire.webp",
+    imagePosition: "object-[62%_50%]",
+    title: "Built to Inspire",
+    subtitle:
+      "Curate a space that fuels productivity, supports well-being, and perfectly captures your brand identity.",
+    actions: [
+      { label: "Visit Our Showroom", href: "/showroom" },
+      { label: "Book Consultation", href: "/book-your-slot", primary: true },
+    ],
+  },
   {
     image: "/img/hero/office-furniture.jpg",
     title: "Commercial Office Furniture for Every Project",
@@ -151,7 +163,7 @@ export default function HeroSlider() {
                     fill
                     sizes="100vw"
                     priority={index === 0}
-                    className="object-cover"
+                    className={`object-cover ${slide.imagePosition ?? ""}`}
                   />
                 )}
 
@@ -197,6 +209,26 @@ export default function HeroSlider() {
 
                   {/* Actions */}
                   <div className="mt-6 flex flex-wrap items-center gap-3 md:mt-8">
+                    {slide.actions ? (
+                      slide.actions.map((action) => (
+                        <Link
+                          key={action.href}
+                          href={action.href}
+                          className={
+                            action.primary
+                              ? "group inline-flex items-center gap-2 rounded-full border border-[#E87717] bg-[#E87717] px-5 py-3 type-button text-white transition-colors hover:border-[#C9620E] hover:bg-[#C9620E] md:px-6"
+                              : "group inline-flex items-center gap-2 rounded-full border border-white px-5 py-3 type-button text-white transition-colors hover:bg-white hover:text-neutral-900 md:px-6"
+                          }
+                        >
+                          {action.label}
+                          <ArrowRight
+                            className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                            aria-hidden
+                          />
+                        </Link>
+                      ))
+                    ) : (
+                    <>
                     <Link
                       href={slide.href}
                       className="group inline-flex items-center gap-2 rounded-full border border-white px-5 py-3 type-button text-white transition-colors hover:bg-white hover:text-neutral-900 md:px-6"
@@ -219,6 +251,8 @@ export default function HeroSlider() {
                     >
                       Request Project Quote
                     </button>
+                    </>
+                    )}
                   </div>
                 </div>
               </div>

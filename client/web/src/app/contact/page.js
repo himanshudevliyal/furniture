@@ -1,5 +1,17 @@
-import { BreadcrumbBanner } from "@/components/breadcrumb";
+import Image from "next/image";
+import Link from "next/link";
+
 import ContactForm from "@/components/form/contact-us";
+import {
+  ClockIcon,
+  IconBadge,
+  LocationCards,
+  LocationsMap,
+  MailIcon,
+  OFFICES,
+  PhoneIcon,
+  WORKING_HOURS,
+} from "@/components/locations";
 
 export const metadata = {
   title: "Contact Us",
@@ -8,250 +20,138 @@ export const metadata = {
   alternates: { canonical: "/contact" },
 };
 
-const MAP_EMBED_URL =
-  "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d4168.576030413097!2d77.2772822722426!3d28.529479233657067!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce1f027a4e285%3A0xc427c7545c446ce9!2sNatraj%20Office%20Workstation%20Furniture-%20Furniture%20Store%20Experience%20Centre!5e0!3m2!1sen!2sin!4v1790148661935!5m2!1sen!2sin";
-
-const MAP_DIRECTIONS_URL =
-  "https://www.google.com/maps/dir/?api=1&destination=" +
-  encodeURIComponent(
-    "Natraj Office Workstation Furniture Experience Centre, Okhla Industrial Estate Phase I, New Delhi"
-  );
-
-const offices = [
-  {
-    city: "New Delhi",
-    title: "Experience Centre",
-    address:
-      "Plot No. C-40, Okhla Industrial Estate Phase I, New Delhi 110020",
-    phones: ["+91 9810418877", "+91 9810438876"],
-    email: "sales@natrajfurniture.com",
-  },
-  {
-    city: "Faridabad",
-    title: "Works",
-    address:
-      "Plot No. 7A, 12/6 Gurukul Industrial Estate, Faridabad, Haryana 121003",
-    phones: ["+91 9810438876", "+91 9810418877"],
-    email: "sales@natrajfurniture.com",
-  },
-  {
-    city: "Faridabad",
-    title: "Works 2",
-    address:
-      "Plot No. 92B, DLF Industrial Estate, Faridabad 121010",
-    phones: ["+91 9810438876", "+91 9810418877"],
-    email: "sales@natrajfurniture.com",
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Small inline icons (no extra dependency)
-// ---------------------------------------------------------------------------
-const Icon = ({ children }) => (
-  <svg
-    viewBox="0 0 24 24"
-    className="h-4 w-4"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    {children}
-  </svg>
-);
-
-const PinIcon = () => (
-  <Icon>
-    <path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z" />
-    <circle cx="12" cy="9.5" r="2.5" />
-  </Icon>
-);
-
-const PhoneIcon = () => (
-  <Icon>
-    <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z" />
-  </Icon>
-);
-
-const MailIcon = () => (
-  <Icon>
-    <rect x="3" y="5" width="18" height="14" rx="2" />
-    <path d="m3 7 9 6 9-6" />
-  </Icon>
-);
-
-const ClockIcon = () => (
-  <Icon>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M12 7v5l3 2" />
-  </Icon>
-);
-
-const IconBadge = ({ children }) => (
-  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#E87717]/10 text-[#E87717]">
-    {children}
-  </span>
-);
+// Hero photo — replace with the final showroom photo (keep the subject on the right).
+const HERO_IMAGE = "/img/contact/contact-hero.webp";
 
 export default function ContactPage() {
+  const hq = OFFICES[0];
   return (
     <>
-      <BreadcrumbBanner
-        backgroundImage ="/img/projects/meeting/meeting-10.jpg"
-        title="Contact Us"
-        breadcrumbs={[
-          { label: "Home", href: "/" },
-          { label: "Contact", href: "/contact" },
-        ]}
-      />
+      {/* Hero — photo on the right, white fade on the left for the text */}
+      <section className="relative isolate overflow-hidden bg-white">
+        <Image
+          src={HERO_IMAGE}
+          alt="Natraj Experience Centre"
+          fill
+          priority
+          sizes="100vw"
+          className="-z-20 object-cover object-[78%_center]"
+        />
+        {/* White fade on the left so the text reads over the window/plant */}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 via-white/60 to-white/10 md:from-white/80 md:via-white/35 md:via-35% md:to-transparent md:to-60%" />
 
-      <section className=" px-4 py-16 lg:px-10 lg:py-24">
+        <div className="mx-auto flex min-h-[420px] max-w-7xl flex-col justify-center px-4 py-16 sm:min-h-[480px] lg:min-h-[560px] lg:px-10">
+          <p className="type-eyebrow text-[#E87717]">
+            Try it out in person at our Experience Centre
+          </p>
+          <h1 className="mt-3 max-w-xl type-display text-neutral-900">
+            Visit Our Showroom
+          </h1>
+          <div className="mt-6 flex flex-wrap items-center gap-3 md:mt-8">
+            <Link
+              href="/book-your-slot"
+              className="inline-flex items-center gap-2 rounded-full border border-[#E87717] bg-[#E87717] px-5 py-3 type-button text-white transition-colors hover:border-[#C9620E] hover:bg-[#C9620E] md:px-6"
+            >
+              Book Now
+            </Link>
+            <a
+              href="#enquiry"
+              className="inline-flex items-center gap-2 rounded-full border border-neutral-900 px-5 py-3 type-button text-neutral-900 transition-colors hover:bg-neutral-900 hover:text-white md:px-6"
+            >
+              Send an Enquiry
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Locations — showroom-style cards */}
+      <section className="px-4 py-16 lg:px-10 lg:py-24">
         <div className="mx-auto max-w-7xl">
-          {/* Intro */}
           <div className="mb-12 max-w-2xl">
-            <p className="mb-3 type-eyebrow text-[#E87717]">
-              Get in touch
-            </p>
-            <h2 className="type-title text-[#3a352f]">
-              Let&apos;s talk about your space
-            </h2>
+            <p className="mb-3 type-eyebrow text-[#E87717]">Visit us</p>
+            <h2 className="type-title text-[#3a352f]">Visit our showroom</h2>
             <p className="mt-4 text-[#5c564c]">
-              Whether it&apos;s a sales enquiry, after-sales support or a
-              partnership, send us a message and our team will get back to you
-              within one working day.
+              Walk through complete office setups, compare finishes and try
+              the chairs before you decide. Book a visit and our team will be
+              ready for you.
             </p>
           </div>
+          <LocationCards />
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.45fr_1fr] lg:gap-10">
-            {/* Contact Form */}
-            <div id="enquiry" className="scroll-mt-24 rounded-md border-t-4 border-[#E87717] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10">
+      {/* Enquiry form + quick contact (sticky on desktop) */}
+      <section className="bg-[#FBF1E7] px-4 py-16 lg:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.45fr_1fr] lg:gap-10">
+            <div
+              id="enquiry"
+              className="scroll-mt-24 rounded-md border-t-4 border-[#E87717] bg-white p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-8 lg:p-10"
+            >
+              <p className="mb-3 type-eyebrow text-[#E87717]">Get in touch</p>
+              <h2 className="mb-6 type-subtitle text-[#3a352f]">
+                Let&apos;s talk about your space
+              </h2>
               <ContactForm />
             </div>
 
-            {/* Office Cards */}
-            <div className="flex flex-col gap-6">
-              {offices.map((office) => (
-                <article
-                  key={office.title}
-                  className="rounded-md border-t-4 border-[#E87717] bg-[#f7f5f1] p-6 shadow-sm ring-1 ring-[#e3ded4] transition-all hover:-translate-y-0.5 hover:shadow-lg hover:ring-[#E87717]/40 sm:p-7"
-                >
-                  <div className="mb-5 flex items-baseline justify-between gap-3 border-b border-[#e3ded4] pb-4">
-                    <h3 className="type-heading uppercase text-[#3a352f]">
-                      {office.city}
-                    </h3>
-                    <span className="rounded-full bg-[#E87717] px-3 py-1 text-xs font-medium text-white">
-                      {office.title}
-                    </span>
-                  </div>
+            {/* Sticks below the navbar while the form scrolls */}
+            <div className="flex flex-col gap-6 lg:sticky lg:top-24">
+              <div className="rounded-md bg-white p-6 shadow-sm ring-1 ring-[#e3ded4] sm:p-7">
+                <h3 className="type-heading text-[#3a352f]">Prefer to talk?</h3>
+                <p className="mt-2 text-sm text-[#5c564c]">
+                  Sales enquiries, after-sales support or partnerships — our
+                  team replies within one working day.
+                </p>
+                <ul className="mt-5 flex flex-col gap-4 text-sm">
+                  <li className="flex gap-3">
+                    <IconBadge>
+                      <PhoneIcon />
+                    </IconBadge>
+                    <div className="flex flex-col gap-1 self-center">
+                      {hq.phones.map((phone) => (
+                        <a
+                          key={phone}
+                          href={`tel:${phone.replace(/\s/g, "")}`}
+                          className="text-[#5c564c] transition-colors hover:text-[#E87717]"
+                        >
+                          {phone}
+                        </a>
+                      ))}
+                    </div>
+                  </li>
+                  <li className="flex gap-3">
+                    <IconBadge>
+                      <MailIcon />
+                    </IconBadge>
+                    <a
+                      href={`mailto:${hq.email}`}
+                      className="self-center break-all text-[#5c564c] transition-colors hover:text-[#E87717]"
+                    >
+                      {hq.email}
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-                  <ul className="flex flex-col gap-4 text-sm">
-                    <li className="flex gap-3">
-                      <IconBadge>
-                        <PinIcon />
-                      </IconBadge>
-                      <p className="type-body text-[#5c564c]">
-                        {office.address}
-                      </p>
-                    </li>
-
-                    <li className="flex gap-3">
-                      <IconBadge>
-                        <PhoneIcon />
-                      </IconBadge>
-                      <div className="flex flex-col gap-1">
-                        {office.phones.map((phone) => (
-                          <a
-                            key={phone}
-                            href={`tel:${phone.replace(/\s/g, "")}`}
-                            className="text-[#5c564c] transition-colors hover:text-[#E87717]"
-                          >
-                            {phone}
-                          </a>
-                        ))}
-                      </div>
-                    </li>
-
-                    <li className="flex gap-3">
-                      <IconBadge>
-                        <MailIcon />
-                      </IconBadge>
-                      <a
-                        href={`mailto:${office.email}`}
-                        className="self-center break-all text-[#5c564c] transition-colors hover:text-[#E87717]"
-                      >
-                        {office.email}
-                      </a>
-                    </li>
-                  </ul>
-                </article>
-              ))}
-
-              {/* Hours */}
               <div className="flex items-center gap-4 rounded-md bg-gradient-to-r from-[#E87717] to-[#B5560A] p-6 text-white shadow-md">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20">
                   <ClockIcon />
                 </span>
                 <div>
                   <p className="text-sm font-medium">Working Hours</p>
-                  <p className="text-sm text-white/85">
-                    Mon – Sat · 10:00 AM – 7:30 PM
-                  </p>
+                  <p className="text-sm text-white/85">{WORKING_HOURS}</p>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Map */}
-          <div className="mt-16">
-            <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <p className="mb-2 type-eyebrow text-[#E87717]">
-                  Visit us
-                </p>
-                <h2 className="type-subtitle text-[#3a352f]">
-                  Our Experience Centre
-                </h2>
-              </div>
-              <a
-                href={MAP_DIRECTIONS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-sm bg-[#3a352f] px-5 py-2.5 text-sm text-[#f7f5f1] transition-colors hover:bg-[#4a453d]"
-              >
-                Get Directions
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M7 17 17 7M8 7h9v9" />
-                </svg>
-              </a>
-            </div>
-
-            <div className="relative overflow-hidden rounded-md shadow-sm ring-1 ring-[#e3ded4]">
-              <div className="relative h-[360px] w-full sm:h-[450px]">
-                <iframe
-                  title="Natraj Furniture Experience Centre location"
-                  src={MAP_EMBED_URL}
-                  className="absolute inset-0 h-full w-full border-0"
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
-              </div>
-
-              {/* Floating address card */}
-              <div className="pointer-events-none absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-sm">
-                <div className="pointer-events-auto rounded-md border-l-4 border-[#E87717] bg-[#f7f5f1]/95 p-4 shadow-lg backdrop-blur">
-                  <p className="type-eyebrow text-[#6b655a]">
-                    New Delhi · Experience Centre
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-[#3a352f]">
-                    {offices[0].address}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Map */}
+      <section className="px-4 py-16 lg:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <LocationsMap />
         </div>
       </section>
     </>

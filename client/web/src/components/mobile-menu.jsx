@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { CalendarDays, ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, Menu, MessageSquareQuote } from "lucide-react";
 
 import {
   Sheet,
@@ -242,12 +242,12 @@ export default function MobileMenu({ categories = [], links = [] }) {
 
         <div className="border-t border-neutral-200 p-6">
           <Link
-            href="/book-your-slot"
+            href="/contact#enquiry"
             onClick={close}
             className="group flex w-full items-center justify-center gap-2 rounded-full bg-black px-5 py-3 type-button text-white transition-colors hover:bg-[#E87717] active:bg-[#C9620E]"
           >
-            <CalendarDays aria-hidden="true" className="h-5 w-5 animate-cal-ring [--cal-lift:-22px] group-hover:[animation-duration:1.3s] motion-reduce:animate-none" strokeWidth={2} />
-            Book Your Slot
+            <MessageSquareQuote aria-hidden="true" className="h-5 w-5 animate-cal-ring [--cal-lift:-22px] group-hover:[animation-duration:1.3s] motion-reduce:animate-none" strokeWidth={2} />
+            Get a Quote
           </Link>
         </div>
       </SheetContent>

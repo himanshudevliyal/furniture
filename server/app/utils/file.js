@@ -3,6 +3,9 @@ import path from "path";
 import sharp from "sharp";
 
 const IMAGE_CONFIG = {
+  // false = save images exactly as uploaded (no resize / webp conversion).
+  // Set back to true to turn the compressor on again.
+  compress: false,
   maxWidth: 1600,
   maxHeight: 1600,
   webpQuality: 75,
@@ -69,7 +72,12 @@ export const saveFile = async (file) => {
   let filename;
   let filePath;
 
-  if (type === "image") {
+  // HEIC can't be shown in browsers, so it is always converted.
+  if (type === "image" && !IMAGE_CONFIG.compress && ext !== "heic") {
+    filename = `${Date.now()}_${safeBaseName}.${ext === "jpeg" ? "jpg" : ext}`;
+    filePath = path.join(folder, filename);
+    await fs.promises.writeFile(filePath, buffer);
+  } else if (type === "image") {
     filename = `${Date.now()}_${safeBaseName}.webp`;
     filePath = path.join(folder, filename);
     console.log({ filePath });
