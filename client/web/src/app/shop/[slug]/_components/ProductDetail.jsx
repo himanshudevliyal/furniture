@@ -166,17 +166,16 @@ export default function ProductDetail({ product }) {
 
                     return (
                       <CarouselItem key={img ?? index}>
-                        {/* bg + multiply: white photo backgrounds melt into the
-                            hero colour (the carousel's transform isolates
-                            blending, so the box needs its own background). */}
-                        <div className="relative aspect-[4/3] w-full bg-[#FBF1E7] lg:aspect-square">
+                        <div className="relative aspect-[4/3] w-full lg:aspect-square">
                           {imageSrc && (
                             <Image
                               src={imageSrc}
                               alt={`${heading} ${index + 1}`}
                               fill
                               sizes="(min-width: 1024px) 45vw, 100vw"
-                              className="object-contain mix-blend-multiply"
+                              // scale-down: big photos fit the box, small ones stay at
+                              // their real size instead of being stretched (blurry).
+                              className="object-scale-down"
                               priority={index === 0}
                             />
                           )}

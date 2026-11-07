@@ -74,7 +74,11 @@ const items = useMemo( () => galleryImages .map((file, index) => { if (!file) re
           {items.map((item, index) => (
             <CarouselItem
               key={item.key}
-              className="basis-full pl-4 sm:basis-[66.666%] sm:pl-6"
+              // A single photo takes the full width instead of leaving a third empty.
+              className={cn(
+                "basis-full pl-4 sm:pl-6",
+                items.length > 1 && "sm:basis-[66.666%]",
+              )}
             >
               <a
                 href={item.image}
